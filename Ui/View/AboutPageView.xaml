@@ -1,4 +1,4 @@
-﻿﻿<styles:WindowChromeBase x:Class="Lemora.View.AboutPageView"
+﻿<styles:WindowChromeBase x:Class="Lemora.View.AboutPageView"
                          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -103,7 +103,7 @@
                             <!-- avviso di copyright richiesto dalla licenza GPL-3.0 (sezione 5d: va mostrato nell'interfaccia) -->
                             <StackPanel Orientation="Vertical">
                                 <TextBlock Style="{StaticResource EditorGroupTextBlockTitle}" Text="License"></TextBlock>
-                                <TextBlock TextWrapping="Wrap" Text="GPL-3.0. Contiene codice © VShawn e contributori."></TextBlock>
+                                <TextBlock TextWrapping="Wrap" Text="GPL-3.0. Versione modificata di 1Remote: contiene codice © VShawn e contributori. Dettagli e sorgenti: github.com/CODEX-cpp/Lemora (NOTICE.md)."></TextBlock>
                             </StackPanel>
                         </StackPanel>
                         <Grid Grid.Column="1">
