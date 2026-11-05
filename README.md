@@ -99,4 +99,6 @@ ui-map/tools/        end-to-end test scripts and fake servers
 
 ## License and credits
 
-[GNU General Public License v3.0](LICENSE). Lemora contains code © VShawn and the [1Remote](https://github.com/1Remote/1Remote) contributors under the same license; the bundled libraries keep their own licenses (see the folders of [Dragablz](Dragablz), [VncSharpCore](VncSharpCore) and `Ui/Resources`).
+[GNU General Public License v3.0](LICENSE). Lemora is a modified version of [1Remote](https://github.com/1Remote/1Remote) and contains code © VShawn and the 1Remote contributors under the same license. Lemora is not affiliated with the 1Remote project.
+
+See **[NOTICE.md](NOTICE.md)** for the attribution, the list of changes with their date, where to find the source code, and the licenses of the bundled third-party components.
