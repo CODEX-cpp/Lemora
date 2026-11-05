@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="Lemora.View.Guidance.Intro"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:fpx="clr-namespace:Lemora.Utils"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Lemora.View.Guidance"
+             xmlns:controls="clr-namespace:Shawn.Utils.Wpf.Controls;assembly=Shawn.Utils.Wpf"
+             xmlns:service="clr-namespace:Lemora.Service"
+             xmlns:Rm="clr-namespace:Lemora" xmlns:ctl="clr-namespace:Lemora.Controls"
+             mc:Ignorable="d" Background="{DynamicResource BackgroundBrush}"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <!-- questa finestra sta su BackgroundBrush: sfumature e testi derivano dal colore del testo dello sfondo (con i temi chiari quello del tema primario e' bianco) -->
+        <SolidColorBrush x:Key="IslandSecondaryTextBrush" Color="{DynamicResource BackgroundTextColor}" Opacity="0.7" />
+        <SolidColorBrush x:Key="IslandButtonBorderBrush" Color="{DynamicResource BackgroundTextColor}" Opacity="0.35" />
+        <SolidColorBrush x:Key="IslandSubCardBrush" Color="{DynamicResource BackgroundTextColor}" Opacity="0.04" />
+        <SolidColorBrush x:Key="IslandBorderBrush" Color="{DynamicResource BackgroundTextColor}" Opacity="0.18" />
+        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="Foreground" Value="{DynamicResource BackgroundTextBrush}" />
+        </Style>
+        <!-- riquadro funzione: bordo sottile, titolo 15/600 e riga di testo secondaria -->
+        <Style x:Key="FeatureCard" TargetType="Border" BasedOn="{StaticResource IslandBorder}">
+            <Setter Property="Background" Value="{DynamicResource IslandSubCardBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource IslandBorderBrush}" />
+            <Setter Property="Padding" Value="16 16" />
+            <Setter Property="Margin" Value="6 0" />
+        </Style>
+    </UserControl.Resources>
+
+    <!-- primo avvio, passo 1 (blueprint §12): logo + nome, testo, tre riquadri, suggerimento della scorciatoia -->
+    <StackPanel Margin="40 56 40 0">
+        <StackPanel Orientation="Horizontal">
+            <ctl:AppLogoImage Width="64" Height="64" />
+            <StackPanel Margin="18 0 0 0" VerticalAlignment="Center">
+                <TextBlock FontSize="{fpx:FontPx 28}" FontWeight="SemiBold" Text="{x:Static Rm:Assert.APP_DISPLAY_NAME}" />
+                <TextBlock FontSize="{fpx:FontPx 14}" Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{DynamicResource guidance_subtitle}" />
+            </StackPanel>
+        </StackPanel>
+
+        <TextBlock Margin="0 26 0 0" FontSize="{fpx:FontPx 15}" TextWrapping="Wrap" LineHeight="22" Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{DynamicResource guidance_introduce}" />
+
+        <UniformGrid Rows="1" Margin="-6 26 -6 0">
+            <Border Style="{StaticResource FeatureCard}">
+                <StackPanel>
+                    <TextBlock FontSize="{fpx:FontPx 15}" FontWeight="SemiBold" TextWrapping="Wrap" Text="{DynamicResource guidance_card_folders_title}" />
+                    <TextBlock Margin="0 8 0 0" TextWrapping="Wrap" Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{DynamicResource guidance_card_folders_text}" />
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource FeatureCard}">
+                <StackPanel>
+                    <TextBlock FontSize="{fpx:FontPx 15}" FontWeight="SemiBold" TextWrapping="Wrap" Text="{DynamicResource guidance_card_tabs_title}" />
+                    <TextBlock Margin="0 8 0 0" TextWrapping="Wrap" Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{DynamicResource guidance_card_tabs_text}" />
+                </StackPanel>
+            </Border>
+            <Border Style="{StaticResource FeatureCard}">
+                <StackPanel>
+                    <TextBlock FontSize="{fpx:FontPx 15}" FontWeight="SemiBold" TextWrapping="Wrap" Text="{DynamicResource guidance_card_launcher_title}" />
+                    <TextBlock Margin="0 8 0 0" TextWrapping="Wrap" Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{DynamicResource guidance_card_launcher_text}" />
+                </StackPanel>
+            </Border>
+        </UniformGrid>
+
+        <StackPanel Orientation="Horizontal" Margin="0 22 0 0">
+            <TextBlock VerticalAlignment="Center" Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{DynamicResource guidance_feature_launcher_key}" />
+            <Border Margin="10 0 0 0" Padding="10 3" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource IslandButtonBorderBrush}">
+                <TextBlock FontWeight="SemiBold">Alt + M</TextBlock>
+            </Border>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

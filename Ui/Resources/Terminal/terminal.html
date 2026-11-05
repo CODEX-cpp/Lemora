@@ -1,0 +1,83 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>/*XTERM_CSS*/</style>
+<style>
+  :root { --bg: #101010; --fg: #dcdcdc; --hdr: #303030; --bd: #6a6a6a; }
+  html, body { margin: 0; height: 100%; background: var(--bg); overflow: hidden; display: flex; flex-direction: column; font-family: "Segoe UI", sans-serif; }
+  #wrap { flex: 1; min-height: 0; display: flex; gap: 10px; padding: 10px 10px 4px; }
+  #panel { flex: 1; min-width: 0; display: flex; border: 1px solid var(--hdr); border-radius: 6px; overflow: hidden; }
+  #t { position: relative; flex: 1; min-width: 0; padding-top: 8px; box-sizing: border-box; }
+  #bgl { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .xterm { position: relative; z-index: 1; padding: 0 16px; }
+  .xterm-decoration { z-index: 6; }
+  .xterm-viewport { background-color: transparent !important; scrollbar-width: none; }
+  #sb { position: relative; width: 16px; flex: none; background: #141414; border-left: 1px solid #222; user-select: none; cursor: default; }
+  #sbt { position: absolute; left: 3px; right: 3px; background: #ffffff33; border-radius: 4px; }
+  #sbt:hover { background: #ffffff55; }
+  #sb .mk { position: absolute; left: 2px; right: 2px; height: 3px; cursor: pointer; border-radius: 1px; }
+  #hist { display: none; flex-direction: column; width: 300px; flex: none; background: #141414; border: 1px solid var(--hdr); border-radius: 6px; color: #e6e6e6; font-size: 13px; overflow: hidden; }
+  #hist .ht { display: flex; align-items: center; padding: 0 8px 0 14px; height: 44px; border-bottom: 1px solid #262626; }
+  #hist .ht .tab { font-weight: 600; font-size: 14px; height: 100%; display: flex; align-items: center; border-bottom: 2px solid #60CDFF; box-sizing: border-box; padding-top: 2px; }
+  #hist .ht button { margin-left: auto; background: none; border: 0; color: #a8a8a8; cursor: pointer; font-size: 15px; border-radius: 4px; padding: 4px 8px; }
+  #hist .ht button:hover { background: #ffffff1a; }
+  #hist .hs { margin: 10px 10px 6px; display: flex; align-items: center; gap: 8px; padding: 0 10px; background: #1a1a1a; border: 1px solid #3a3a3a; border-radius: 4px; color: #8a8a8a; }
+  #hist .hs:focus-within { border-color: #60CDFF; }
+  #hq { flex: 1; padding: 8px 0; background: none; border: 0; color: #e6e6e6; outline: none; font: inherit; }
+  #hl { flex: 1; overflow-y: auto; padding: 0; scrollbar-width: thin; scrollbar-color: #444 #141414; }
+  .hi { display: flex; align-items: flex-start; gap: 10px; padding: 9px 12px; cursor: pointer; border-bottom: 1px solid #1f1f1f; }
+  .hi:hover { background: #60CDFF1f; }
+  .hi .dot { width: 7px; height: 7px; border-radius: 50%; flex: none; margin-top: 6px; }
+  .hi .cc { flex: 1; min-width: 0; }
+  .hi .ct { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: "Cascadia Mono", Consolas, monospace; font-size: 12.5px; }
+  .hi .cs { color: #8a8a8a; font-size: 11.5px; margin-top: 1px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: "Cascadia Mono", Consolas, monospace; }
+  .hi .tm { color: #8a8a8a; font-size: 11.5px; flex: none; margin-top: 2px; }
+  .he { color: #8a8a8a; padding: 14px 12px; }
+  #hist .hf { padding: 10px 14px; color: #8a8a8a; font-size: 12px; border-top: 1px solid #262626; }
+  #panel { position: relative; }
+  #find { display: none; position: absolute; top: 8px; right: 30px; z-index: 30; align-items: center; gap: 6px; background: #262626; border: 1px solid #3a3a3a; border-bottom: 2px solid #60CDFF; border-radius: 6px; padding: 8px 10px; color: #e6e6e6; font-size: 13px; box-shadow: 0 6px 18px #0008; }
+  #fq { width: 230px; background: none; border: 0; outline: none; color: #e6e6e6; font: inherit; font-size: 14px; }
+  #fn { color: #a8a8a8; min-width: 54px; text-align: right; white-space: nowrap; }
+  #find button { background: none; border: 0; color: #cfcfcf; cursor: pointer; border-radius: 4px; min-width: 26px; height: 24px; font: inherit; font-size: 13px; }
+  #find button:hover { background: #ffffff1a; }
+  #find button.on { background: #60CDFF33; color: #60CDFF; outline: 1px solid #60CDFF; }
+  #tobottom { display: none; position: absolute; right: 34px; bottom: 14px; z-index: 25; background: #60CDFF; color: #00283B; border: 0; border-radius: 4px; padding: 6px 12px; font: 600 12.5px "Segoe UI", sans-serif; cursor: pointer; box-shadow: 0 4px 12px #0007; }
+  #sticky { display: none; position: absolute; z-index: 5; box-sizing: border-box; overflow: hidden; white-space: pre; cursor: pointer; border-left: 4px solid #6ccb5f; border-right: 1px solid #6a6a6a; border-bottom: 1px solid #6a6a6a; }
+  #keys { display: none; flex: none; gap: 6px; padding: 4px 16px 0; flex-wrap: wrap; }
+  #keys button { background: #262626; border: 1px solid #3a3a3a; color: #dcdcdc; border-radius: 4px; padding: 3px 10px; cursor: pointer; font: 12px "Cascadia Mono", Consolas, monospace; }
+  #keys button:hover { border-color: #60CDFF; color: #fff; }
+  #panel.bell { outline: 2px solid #60CDFF88; outline-offset: -2px; }
+  #status { height: 26px; flex: none; display: flex; align-items: center; gap: 22px; padding: 0 16px; color: #a8a8a8; font-size: 12.5px; }
+  #status .sp { flex: 1; }
+  #st-si i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 7px; vertical-align: 1px; }
+  #st-collapse { background: none; border: 0; color: #60CDFF; cursor: pointer; font: inherit; padding: 2px 0; }
+  #st-collapse:hover { text-decoration: underline; }
+</style></head>
+<body>
+<div id="wrap">
+  <div id="panel">
+    <div id="t"></div>
+    <div id="sb"></div>
+    <div id="find"><input id="fq" placeholder="Cerca nell'output" spellcheck="false" autocomplete="off"><span id="fn"></span>
+      <button id="fprev" title="Precedente (Maiusc+Invio)">&#8593;</button><button id="fnext" title="Successivo (Invio)">&#8595;</button>
+      <button id="fcs" title="Maiuscole/minuscole">Aa</button><button id="frx" title="Espressione regolare">.*</button><button id="fx" title="Chiudi (Esc)">&#10005;</button></div>
+    <button id="tobottom">Vai in fondo &#8595;</button>
+  </div>
+  <div id="hist">
+    <div class="ht"><span class="tab">Cronologia</span><button id="hx" title="Chiudi (Ctrl+Maiusc+H)">&#10005;</button></div>
+    <div class="hs"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3.5 3.5"/></svg><input id="hq" placeholder="Cerca nella cronologia" spellcheck="false" autocomplete="off"></div>
+    <div id="hl"></div>
+    <div class="hf">Clic = inserisce &#183; doppio clic = invia</div>
+  </div>
+</div>
+<div id="keys"></div>
+<div id="status">
+  <span id="st-cwd"></span><span id="st-size">80 &#215; 24</span><span>UTF-8</span><span id="st-lat" title="Tempo di risposta: dalla pressione di un tasto alla risposta del server"></span><span id="st-si"></span><span id="st-count">0 comandi</span>
+  <button id="st-collapse" style="display:none">Collassa tutti</button>
+</div>
+<script>/*XTERM_JS*/</script>
+<script>/*FIT_JS*/</script>
+<script>/*SER_JS*/</script>
+<script>/*SEARCH_JS*/</script>
+<script>/*LINKS_JS*/</script>
+<script>/*APP_JS*/</script>
+</body></html>

@@ -1,0 +1,127 @@
+﻿<styles:WindowChromeBase x:Class="Lemora.View.Utils.AlternateAddressSwitchingView"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:fpx="clr-namespace:Lemora.Utils"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:utils="clr-namespace:Lemora.View.Utils"
+                  xmlns:ctl="clr-namespace:Lemora.Controls"
+                  xmlns:styles="clr-namespace:Shawn.Utils.WpfResources.Theme.Styles;assembly=Shawn.Utils.WpfResources"
+                  mc:Ignorable="d"
+                  d:DataContext="{d:DesignInstance utils:AlternateAddressSwitchingViewModel}"
+                  ResizeMode="NoResize"
+                  WindowStyle="None"
+                  Background="Transparent"
+                  AllowsTransparency="True"
+                  ShowInTaskbar="False"
+                  SizeToContent="Height"
+                  Width="460" MaxHeight="520">
+    <!-- verifica raggiungibilita' (blueprint §12, A3): una riga per indirizzo con stato tondo, nome + indirizzo in monospazio, esito a destra -->
+    <ctl:DialogFrame Margin="16" Title="{Binding Title}" CloseCommand="{Binding CmdCloseEnd}">
+        <StackPanel>
+            <Grid Margin="20 12 20 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 13}" Foreground="#FF9B94" TextWrapping="Wrap" VerticalAlignment="Center"
+                           Text="{Binding Message}" Visibility="{Binding Message, Converter={StaticResource ConverterEqual2Collapsed}, ConverterParameter=''}" />
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 12}" Foreground="{DynamicResource IslandSecondaryTextBrush}" VerticalAlignment="Center"
+                               Visibility="{Binding Eta, Converter={StaticResource ConverterEqual2Collapsed}, ConverterParameter=0}"
+                               Text="{Binding Eta, StringFormat={}{0}s}" />
+                    <Button Style="{StaticResource BtnSecondary}" Height="26" Padding="10 0" Margin="10 0 0 0" Content="&#x2013;" ToolTip="{Binding Title}" Command="{Binding CmdCloseContinue}" />
+                </StackPanel>
+            </Grid>
+
+            <ProgressBar Height="3" Minimum="0" Maximum="1" Value="{Binding EtaFraction, Mode=OneWay}" Margin="0 6 0 0" BorderThickness="0"
+                         Background="Transparent" Foreground="{DynamicResource AccentMidBrush}"
+                         Visibility="{Binding Eta, Converter={StaticResource ConverterEqual2Collapsed}, ConverterParameter=0}" />
+
+            <ItemsControl ItemsSource="{Binding PingTestItems}" Margin="20 10 20 18">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0 6" Background="Transparent">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="34" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- stato: cerchio con il simbolo (✓ riuscito, ✕ non risponde, … in corso) -->
+                            <Border Width="24" Height="24" CornerRadius="12" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                <TextBlock x:Name="Glyph" Text="&#x2026;" FontSize="{fpx:FontPx 12}" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="#6B6B6B" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Status}" Value="{x:Static utils:PingStatus.Success}">
+                                                <Setter Property="Background" Value="#6CCB5F" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="{x:Static utils:PingStatus.Failed}">
+                                                <Setter Property="Background" Value="#FF9B94" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+                            <TextBlock Margin="0 0 0 0" Text="&#x2713;" FontSize="{fpx:FontPx 12}" FontWeight="Bold" Foreground="#0F3D0A" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="7 0 0 0">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Status}" Value="{x:Static utils:PingStatus.Success}">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBlock Text="&#x2715;" FontSize="{fpx:FontPx 12}" FontWeight="Bold" Foreground="#3A0B08" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="7 0 0 0">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Status}" Value="{x:Static utils:PingStatus.Failed}">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="4 0 12 0">
+                                <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 14}" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryTextBrush}"
+                                           Text="{Binding Name}" ToolTip="{Binding Name}" TextTrimming="CharacterEllipsis" />
+                                <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 12}" FontFamily="Cascadia Mono, Consolas" Foreground="{DynamicResource IslandSecondaryTextBrush}"
+                                           Text="{Binding Address}" ToolTip="{Binding Address}" TextTrimming="CharacterEllipsis" />
+                            </StackPanel>
+
+                            <!-- esito: tempo di risposta, "Non risponde" o "Verifica..." -->
+                            <TextBlock Grid.Column="2" VerticalAlignment="Center" FontSize="{fpx:FontPx 13}" TextAlignment="Right">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+                                        <Setter Property="Foreground" Value="{DynamicResource IslandSecondaryTextBrush}" />
+                                        <Setter Property="Text" Value="{DynamicResource ping_checking}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Status}" Value="{x:Static utils:PingStatus.Success}">
+                                                <Setter Property="Text" Value="{Binding Ping, StringFormat={}{0} ms}" />
+                                                <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="{x:Static utils:PingStatus.Failed}">
+                                                <Setter Property="Text" Value="{DynamicResource ping_failed}" />
+                                                <Setter Property="Foreground" Value="#FF9B94" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Status}" Value="{x:Static utils:PingStatus.Canceled}">
+                                                <Setter Property="Opacity" Value="0.4" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </ctl:DialogFrame>
+</styles:WindowChromeBase>

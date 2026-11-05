@@ -1,0 +1,164 @@
+﻿<UserControl x:Class="Lemora.View.Settings.General.GeneralSettingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Lemora.View.Settings.General"
+             xmlns:controls="clr-namespace:Shawn.Utils.Wpf.Controls;assembly=Shawn.Utils.Wpf"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance local:GeneralSettingViewModel}"
+             d:DesignHeight="850" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
+    <Grid Background="{DynamicResource BackgroundBrush}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel MaxWidth="840" HorizontalAlignment="Stretch" Margin="32 24 32 32">
+
+                <TextBlock Style="{StaticResource SettingPageTitle}" Text="{DynamicResource system_options_general_title}" />
+
+                <!-- lingua e avvio -->
+                <TextBlock Style="{StaticResource SettingSection}" Text="{DynamicResource settings_sec_lang}" />
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource Language}" Tag="{DynamicResource settings_lang_desc}">
+                    <ComboBox Width="230" ItemsSource="{Binding Languages}" SelectedValue="{Binding Language}" SelectedValuePath="Key" DisplayMemberPath="Value" />
+                </HeaderedContentControl>
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource settings_startup_title}" Tag="{DynamicResource settings_startup_desc}">
+                    <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding AppStartAutomatically, Mode=TwoWay}" />
+                </HeaderedContentControl>
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{Binding MoraTitle}" Tag="{Binding MoraInfo}">
+                    <Button Style="{StaticResource BtnSecondary}" Height="36" Padding="14 0" Content="{Binding MoraButton}" Command="{Binding CmdRegisterMora}"
+                            AutomationProperties.AutomationId="OptRegisterMora" />
+                </HeaderedContentControl>
+
+                <!-- Teams: connessioni salvate di questo PC verso il server (solo PC abbinato; interruttore solo con Richieste o Scrittura) -->
+                <StackPanel Visibility="{Binding TeamsShareVisible, Converter={StaticResource BoolToVis}}">
+                    <TextBlock Style="{StaticResource SettingSection}" Text="Teams" />
+                    <!-- sola lettura: una sola riga discreta, unica indicazione dell'invio nell'app -->
+                    <TextBlock Text="{Binding TeamsShareInfo}" Margin="2 10" FontSize="12.5" TextWrapping="Wrap" Foreground="{DynamicResource IslandSecondaryTextBrush}"
+                               Visibility="{Binding TeamsShareRoVisible, Converter={StaticResource BoolToVis}}" AutomationProperties.AutomationId="OptTeamsShareReadOnly" />
+                    <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{Binding TeamsShareTitle}" Tag="{Binding TeamsShareInfo}"
+                                            Visibility="{Binding TeamsShareRowVisible, Converter={StaticResource BoolToVis}}">
+                        <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding TeamsSharePersonal, Mode=TwoWay}" AutomationProperties.AutomationId="OptTeamsSharePersonal"
+                                  Visibility="{Binding TeamsShareToggleVisible, Converter={StaticResource BoolToVis}}" />
+                    </HeaderedContentControl>
+                </StackPanel>
+                <!-- Teams: PC non abbinato (anche installato in modo Locale) = "Collega a un server Teams"; richiesta in attesa = stato e pulsante per vederla/annullarla -->
+                <StackPanel Visibility="{Binding TeamsJoinVisible, Converter={StaticResource BoolToVis}}">
+                    <TextBlock Style="{StaticResource SettingSection}" Text="Teams" />
+                    <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{Binding TeamsJoinTitle}" Tag="{Binding TeamsJoinInfo}">
+                        <Button Style="{StaticResource BtnSecondary}" Height="36" Padding="14 0" Content="{Binding TeamsJoinButton}" Command="{Binding CmdTeamsJoin}"
+                                AutomationProperties.AutomationId="OptTeamsJoin" />
+                    </HeaderedContentControl>
+                </StackPanel>
+
+                <!-- finestra -->
+                <TextBlock Style="{StaticResource SettingSection}" Text="{DynamicResource settings_sec_window}" />
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource 'Close button behavior'}" Tag="{DynamicResource settings_close_desc}">
+                    <ListBox Style="{StaticResource SegmentedListBox}" SelectedIndex="{Binding CloseButtonBehavior}">
+                        <ListBoxItem Content="{DynamicResource Exit}" />
+                        <ListBoxItem Content="{DynamicResource 'Minimize to system tray'}" />
+                    </ListBox>
+                </HeaderedContentControl>
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource settings_keep_sessions_title}" Tag="{DynamicResource settings_keep_sessions_desc}"
+                                        Visibility="{Binding ShowKeepSessionsOption, Converter={StaticResource BoolToVis}}">
+                    <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding KeepSessionsInBackground, Mode=TwoWay}" />
+                </HeaderedContentControl>
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource settings_alttab_title}" Tag="{DynamicResource settings_alttab_desc}">
+                    <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding SendAltTabToVnc, Mode=TwoWay}" />
+                </HeaderedContentControl>
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource 'Confirm before closing'}">
+                    <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding ConfirmBeforeClosingSession, Mode=TwoWay}" />
+                </HeaderedContentControl>
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource 'Show current session icon instead of the app icon when connected'}">
+                    <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding ShowSessionIconInSessionWindow, Mode=TwoWay}" />
+                </HeaderedContentControl>
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource 'Place the close button on the left side to prevent accidental touches'}">
+                    <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding TabWindowCloseButtonOnLeft, Mode=TwoWay}" />
+                </HeaderedContentControl>
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource 'Set focus to local desktop when the mouse is moved out of RDP desktop'}">
+                    <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding TabWindowSetFocusToLocalDesktopOnMouseLeaveRdpWindow, Mode=TwoWay}" />
+                </HeaderedContentControl>
+
+                <!-- sicurezza -->
+                <TextBlock Style="{StaticResource SettingSection}" Text="{DynamicResource settings_sec_security}" />
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource settings_vault_title}" Tag="{DynamicResource settings_vault_desc}">
+                    <Button Style="{StaticResource BtnSecondary}" Height="36" Padding="14 0" Content="{DynamicResource settings_vault_button}" Command="{Binding CmdChangeVaultPassword}"
+                            AutomationProperties.AutomationId="OptChangeVaultPassword" />
+                </HeaderedContentControl>
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource settings_keep_unlocked_title}" Tag="{DynamicResource settings_keep_unlocked_desc}">
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox Width="150" SelectedIndex="{Binding VaultKeepUnlockedIndex, Mode=TwoWay}" AutomationProperties.AutomationId="OptKeepUnlocked">
+                            <ComboBoxItem Content="{DynamicResource settings_keep_unlocked_never}" />
+                            <ComboBoxItem Content="15 min" />
+                            <ComboBoxItem Content="30 min" />
+                            <ComboBoxItem Content="{DynamicResource settings_keep_unlocked_1h}" />
+                            <ComboBoxItem Content="{DynamicResource settings_keep_unlocked_2h}" />
+                            <ComboBoxItem Content="{DynamicResource settings_keep_unlocked_4h}" />
+                            <ComboBoxItem Content="{DynamicResource settings_keep_unlocked_8h}" />
+                        </ComboBox>
+                        <Button Style="{StaticResource BtnSecondary}" Margin="8 0 0 0" Height="36" Padding="14 0" Content="{DynamicResource vault_lock_close}" Command="{Binding CmdLockAndClose}"
+                                AutomationProperties.AutomationId="OptLockAndClose" />
+                    </StackPanel>
+                </HeaderedContentControl>
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource 'Windows credentials verification is required to view passwords'}">
+                    <CheckBox x:Name="CbRequireWindowsPasswordBeforeSensitiveOperation" Style="{StaticResource ToggleSwitch}"
+                              PreviewMouseDown="CbRequireWindowsPasswordBeforeSensitiveOperation_OnPreviewMouseDown" />
+                </HeaderedContentControl>
+
+                <!-- varie -->
+                <TextBlock Style="{StaticResource SettingSection}" Text="{DynamicResource settings_sec_misc}" />
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource 'Copy the port along with the address when copying'}">
+                    <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding CopyPortWhenCopyAddress, Mode=TwoWay}" />
+                </HeaderedContentControl>
+                <!-- diagnostica -->
+                <TextBlock Style="{StaticResource SettingSection}" Text="{DynamicResource settings_sec_diag}" />
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource system_options_general_log_file_path}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Width="340" Text="{Binding LogPath, Mode=OneWay}" ToolTip="{Binding LogPath, Mode=OneWay}"
+                                 FontFamily="Cascadia Mono, Consolas" VerticalContentAlignment="Center" IsReadOnly="True" />
+                        <Button Margin="8 0 0 0" Height="36" Style="{StaticResource BtnSecondary}" Padding="14 0"
+                                Command="{Binding CmdExploreTo}" CommandParameter="{Binding}" Content="{DynamicResource 'Explore to...'}" />
+                    </StackPanel>
+                </HeaderedContentControl>
+                <!-- tre livelli; il Registro attivita' (collegamenti e cadute con il motivo) si scrive sempre, a qualsiasi livello -->
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource settings_log_level}" Tag="{Binding LogDetailDesc}">
+                    <ListBox Style="{StaticResource SegmentedListBox}" SelectedIndex="{Binding LogDetail}" AutomationProperties.AutomationId="OptLogDetail">
+                        <ListBoxItem Content="{DynamicResource settings_log_base}" />
+                        <ListBoxItem Content="{DynamicResource settings_log_medium}" />
+                        <ListBoxItem Content="{DynamicResource settings_log_deep}" />
+                    </ListBox>
+                </HeaderedContentControl>
+
+                <!-- trasferimento file (sessioni VNC con TightVNC 2.x) -->
+                <TextBlock Style="{StaticResource SettingSection}" Text="{DynamicResource ft_settings_section}" />
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource ft_settings_max_file}" Tag="{DynamicResource ft_settings_max_file_desc}">
+                    <TextBox Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding FtMaxFileSizeGB, UpdateSourceTrigger=LostFocus}" />
+                </HeaderedContentControl>
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource ft_settings_max_job}" Tag="{DynamicResource ft_settings_max_job_desc}">
+                    <TextBox Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding FtMaxJobSizeGB, UpdateSourceTrigger=LostFocus}" />
+                </HeaderedContentControl>
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource ft_settings_local_dir}" Tag="{DynamicResource ft_settings_local_dir_desc}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Width="260" VerticalContentAlignment="Center" IsReadOnly="True" Text="{Binding FtDefaultLocalFolder, Mode=OneWay}" />
+                        <Button Style="{StaticResource BtnSecondary}" Height="32" Margin="8 0 0 0" Padding="14 0" Content="{DynamicResource ft_settings_browse}" Command="{Binding CmdBrowseLocalFolder}" />
+                    </StackPanel>
+                </HeaderedContentControl>
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource ft_settings_conflict}" Tag="{DynamicResource ft_settings_conflict_desc}">
+                    <ListBox Style="{StaticResource SegmentedListBox}" SelectedIndex="{Binding FtConflictPolicy}">
+                        <ListBoxItem Content="{DynamicResource ft_conflict_opt_ask}" />
+                        <ListBoxItem Content="{DynamicResource ft_conflict_opt_replace}" />
+                        <ListBoxItem Content="{DynamicResource ft_conflict_opt_skip}" />
+                        <ListBoxItem Content="{DynamicResource ft_conflict_opt_both}" />
+                    </ListBox>
+                </HeaderedContentControl>
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource ft_settings_temp_names}" Tag="{DynamicResource ft_settings_temp_names_desc}">
+                    <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding FtUseTemporaryNames, Mode=TwoWay}" />
+                </HeaderedContentControl>
+                <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource ft_settings_confirm_delete}">
+                    <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding FtConfirmRemoteDelete, Mode=TwoWay}" />
+                </HeaderedContentControl>
+                <TextBlock Margin="0 6 0 0" Text="{DynamicResource ft_settings_note}" TextWrapping="Wrap" Foreground="{DynamicResource IslandSecondaryTextBrush}" Style="{StaticResource TextBlockBase}" />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

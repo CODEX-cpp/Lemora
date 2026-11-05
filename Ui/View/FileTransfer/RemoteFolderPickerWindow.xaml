@@ -1,0 +1,64 @@
+<styles:WindowChromeBase x:Class="Lemora.View.FileTransfer.RemoteFolderPickerWindow"
+                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:fpx="clr-namespace:Lemora.Utils"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                         xmlns:styles="clr-namespace:Shawn.Utils.WpfResources.Theme.Styles;assembly=Shawn.Utils.WpfResources"
+                         xmlns:controls="clr-namespace:Lemora.Controls"
+                         ShowInTaskbar="False" ResizeMode="NoResize" WindowStyle="None" SizeToContent="Height"
+                         WindowStartupLocation="CenterOwner" Background="Transparent" Width="520" Title="Carica in">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="-1" />
+    </WindowChrome.WindowChrome>
+    <!-- "Carica in...": mini-navigatore delle cartelle del PC remoto; la cartella mostrata in alto e' quella scelta -->
+    <controls:DialogFrame Margin="40" Title="{DynamicResource ft_pick_title}" CanDragWindow="True" CloseCommand="{Binding CmdCancel}">
+        <controls:DialogFrame.Footer>
+            <StackPanel Orientation="Horizontal">
+                <Button MinWidth="90" Style="{StaticResource BtnSecondary}" Content="{DynamicResource ft_cancel}" Command="{Binding CmdCancel}" />
+                <Button MinWidth="90" Margin="10 0 0 0" Style="{StaticResource BtnPrimary}" Content="{DynamicResource ft_pick_choose}" Command="{Binding CmdChoose}" />
+            </StackPanel>
+        </controls:DialogFrame.Footer>
+        <StackPanel Margin="24 20 24 20">
+            <TextBlock Text="{Binding Host}" FontSize="{fpx:FontPx 12}" Foreground="{DynamicResource AccentMidBrush}" FontWeight="SemiBold" Style="{StaticResource TextBlockBase}" />
+            <Grid Margin="0 8 0 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Style="{StaticResource BtnSecondary}" Width="34" Height="34" Padding="0" Content="&#x2191;" ToolTip="{DynamicResource ft_up}" Command="{Binding CmdUp}" />
+                <!-- percorso a pulsanti: ogni parte e' un pulsante che porta in quella cartella -->
+                <Border Grid.Column="1" Margin="8 0 0 0" Height="34" Padding="6 0" BorderThickness="1" CornerRadius="4" BorderBrush="{DynamicResource IslandBorderBrush}" Background="{DynamicResource PrimaryDarkBrush}">
+                    <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" VerticalAlignment="Center">
+                        <ItemsControl ItemsSource="{Binding Crumbs}">
+                            <ItemsControl.ItemsPanel><ItemsPanelTemplate><StackPanel Orientation="Horizontal" /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Name="Sep" Text="&#x203A;" Margin="2 0" Foreground="#7D7D7D" VerticalAlignment="Center" Style="{StaticResource TextBlockBase}" />
+                                        <Button Style="{StaticResource FtTextButton}" Padding="6 3" Margin="0" Content="{Binding Text}" Command="{Binding DataContext.CmdGo, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding Path}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+            <Border Height="260" BorderThickness="1" CornerRadius="4" BorderBrush="{DynamicResource IslandBorderBrush}" Background="{DynamicResource PrimaryDarkBrush}">
+                <Grid>
+                    <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding Selected}" BorderThickness="0" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             MouseDoubleClick="List_OnMouseDoubleClick">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Height="30">
+                                    <Path Data="{StaticResource IconFolder}" Width="16" Height="16" Stretch="Uniform" Stroke="{DynamicResource IslandSecondaryTextBrush}" StrokeThickness="1.5" Margin="4 0 10 0" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Style="{StaticResource TextBlockBase}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <TextBlock Text="{Binding StatusText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="20" Style="{StaticResource TextBlockBase}"
+                               Foreground="{DynamicResource IslandSecondaryTextBrush}" Visibility="{Binding HasStatus, Converter={StaticResource ConverterBool2Visible}}" />
+                </Grid>
+            </Border>
+            <CheckBox Margin="0 14 0 0" IsChecked="{Binding Remember}" Content="{DynamicResource ft_pick_remember}" />
+        </StackPanel>
+    </controls:DialogFrame>
+</styles:WindowChromeBase>

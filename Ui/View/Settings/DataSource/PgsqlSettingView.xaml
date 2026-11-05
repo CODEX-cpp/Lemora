@@ -1,0 +1,123 @@
+﻿<styles:WindowChromeBase x:Class="Lemora.View.Settings.DataSource.PgsqlSettingView"
+                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                         xmlns:local="clr-namespace:Lemora.View.Settings.DataSource"
+                         xmlns:styles="clr-namespace:Shawn.Utils.WpfResources.Theme.Styles;assembly=Shawn.Utils.WpfResources"
+                         xmlns:s="https://github.com/canton7/Stylet"
+                         xmlns:controls="clr-namespace:Lemora.Controls"
+                         mc:Ignorable="d"
+                         ShowInTaskbar="False"
+                         WindowStyle="None"
+                         SizeToContent="WidthAndHeight"
+                         Background="Transparent"
+                         AllowsTransparency="True"
+                         d:DataContext="{d:DesignInstance local:PgsqlSettingViewModel}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="DbDialogResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <!-- finestra di modifica origine dati (blueprint §12, A5): cornice comune, titolo nella barra, piè scuro con le azioni -->
+    <controls:DialogFrame Margin="24" Title="PostgreSQL" CanDragWindow="True" CloseCommand="{Binding CmdCancel}">
+        <Grid IsSharedSizeScope="True">
+            <Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <BlurEffect Radius="2" KernelType="Box"></BlurEffect>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=TopLevelViewModel, Mode=OneWay}" Value="{x:Null}">
+                                <Setter Property="Effect" Value="{x:Null}"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+
+                <StackPanel Width="540">
+                    <StackPanel Margin="28 22 28 6">
+                        <Grid Margin="0 0 0 14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource DbLabel}" Text="{DynamicResource 'Data Source name'}" />
+                            <TextBox Grid.Column="1" Name="TbName" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True, ValidatesOnExceptions=True, ValidatesOnNotifyDataErrors=True}" />
+                        </Grid>
+                        <Grid Margin="0 0 0 14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource DbLabel}" Text="{DynamicResource Hostname}" />
+                            <TextBox Grid.Column="1" Text="{Binding Host, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True, ValidatesOnExceptions=True, ValidatesOnNotifyDataErrors=True}" />
+                        </Grid>
+                        <Grid Margin="0 0 0 14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource DbLabel}" Text="{DynamicResource Port}" />
+                            <TextBox Grid.Column="1" Name="TbPort" Width="120" HorizontalAlignment="Left" Text="{Binding Port, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True, ValidatesOnExceptions=True, ValidatesOnNotifyDataErrors=True}" />
+                        </Grid>
+                        <Grid Margin="0 0 0 14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource DbLabel}" Text="Database" />
+                            <TextBox Grid.Column="1" Text="{Binding DatabaseName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True, ValidatesOnExceptions=True, ValidatesOnNotifyDataErrors=True}" />
+                        </Grid>
+                        <Grid Margin="0 0 0 14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource DbLabel}" Text="{DynamicResource User}" />
+                            <TextBox Grid.Column="1" Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True, ValidatesOnExceptions=True, ValidatesOnNotifyDataErrors=True}" />
+                        </Grid>
+                        <Grid Margin="0 0 0 14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource DbLabel}" Text="{DynamicResource Password}" />
+                            <controls:PasswordInput Grid.Column="1" Height="36" Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True, ValidatesOnExceptions=True, ValidatesOnNotifyDataErrors=True}" />
+                        </Grid>
+                    </StackPanel>
+                    <!-- azioni: test a sinistra, Annulla e Salva a destra -->
+                    <Border Height="1" Background="{DynamicResource IslandBorderBrush}" />
+                    <Grid Background="{DynamicResource PrimaryDarkBrush}">
+                        <Button HorizontalAlignment="Left" Margin="28 14" Style="{StaticResource BtnSecondary}" Padding="16 0" Command="{Binding CmdTestConnection}" Content="{DynamicResource 'Test connection'}" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 14 28 14">
+                            <Button Style="{StaticResource BtnSecondary}" MinWidth="90" Margin="0 0 10 0" Command="{Binding CmdCancel}" Content="{DynamicResource Cancel}" />
+                            <Button Style="{StaticResource BtnPrimary}" MinWidth="100" Command="{Binding CmdSave}" Content="{DynamicResource Save}" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+
+            <Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Visible"></Setter>
+                        <Setter Property="Background" Value="Transparent"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=TopLevelViewModel, Mode=OneWay}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+            </Grid>
+            <ContentControl s:View.Model="{Binding TopLevelViewModel}"></ContentControl>
+        </Grid>
+    </controls:DialogFrame>
+</styles:WindowChromeBase>

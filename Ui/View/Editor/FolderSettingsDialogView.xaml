@@ -1,0 +1,264 @@
+﻿<styles:WindowChromeBase x:Class="Lemora.View.Editor.FolderSettingsDialogView"
+                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:fpx="clr-namespace:Lemora.Utils"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                         xmlns:styles="clr-namespace:Shawn.Utils.WpfResources.Theme.Styles;assembly=Shawn.Utils.WpfResources"
+                         xmlns:editor="clr-namespace:Lemora.View.Editor"
+                         xmlns:controls="clr-namespace:Lemora.Controls"
+                         ShowInTaskbar="False"
+                         ResizeMode="NoResize"
+                         WindowStyle="None"
+                         SizeToContent="Height"
+                         MaxHeight="800"
+                         WindowStartupLocation="CenterOwner"
+                         Background="Transparent"
+                         mc:Ignorable="d"
+                         d:DataContext="{d:DesignInstance editor:FolderSettingsDialogViewModel}"
+                         Title="FolderSettingsDialogView" Width="760">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="-1" />
+    </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <Style x:Key="FieldLabel" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="Foreground" Value="{DynamicResource IslandSecondaryTextBrush}" />
+            <Setter Property="Width" Value="120" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="SectionTitle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="FontSize" Value="{fpx:FontPx 12}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{DynamicResource AccentMidBrush}" />
+            <Setter Property="Margin" Value="0 20 0 12" />
+        </Style>
+        <Style x:Key="Hint" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="FontSize" Value="{fpx:FontPx 12}" />
+            <Setter Property="Foreground" Value="{DynamicResource IslandSecondaryTextBrush}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+
+        <!-- schede in stile tab: la scheda attiva ha il fondo del pannello e un filo accent di 2 px sopra -->
+        <Style TargetType="TabItem">
+            <Setter Property="Foreground" Value="{DynamicResource IslandSecondaryTextBrush}" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="Bd" Margin="0 0 4 0" Padding="22 11" BorderThickness="0 2 0 0" BorderBrush="Transparent" Background="Transparent">
+                            <ContentPresenter ContentSource="Header" TextElement.Foreground="{TemplateBinding Foreground}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource IslandHoverBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource BackgroundBrush}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource AccentMidBrush}" />
+                                <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
+                                <Setter Property="FontWeight" Value="SemiBold" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- gestione cartella (blueprint §12, F2/F3): tre schede, Elimina cartella a sinistra del piè, Annulla / Salva a destra -->
+    <controls:DialogFrame Margin="40" Title="{Binding Title}" CanDragWindow="True" CloseCommand="{Binding CmdQuit}">
+        <controls:DialogFrame.FooterLeft>
+            <Button Style="{StaticResource BtnDanger}" Padding="18 0" Command="{Binding CmdDelete}" Content="{DynamicResource folder_delete}" />
+        </controls:DialogFrame.FooterLeft>
+        <controls:DialogFrame.Footer>
+            <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource BtnSecondary}" MinWidth="90" Margin="0 0 10 0" Command="{Binding CmdQuit}" Content="{DynamicResource Cancel}" />
+                <Button Style="{StaticResource BtnPrimary}" MinWidth="110" Command="{Binding CmdSave}" Content="{DynamicResource Save}" />
+            </StackPanel>
+        </controls:DialogFrame.Footer>
+
+        <TabControl BorderThickness="0" Padding="0" Background="Transparent" SelectedIndex="{Binding SelectedTab, Mode=TwoWay}">
+            <TabControl.Template>
+                <ControlTemplate TargetType="TabControl">
+                    <DockPanel>
+                        <Border DockPanel.Dock="Top" Background="{DynamicResource PrimaryDarkBrush}" Padding="12 8 12 0">
+                            <TabPanel IsItemsHost="True" />
+                        </Border>
+                        <ContentPresenter ContentSource="SelectedContent" />
+                    </DockPanel>
+                </ControlTemplate>
+            </TabControl.Template>
+
+            <!-- 1. credenziali condivise -->
+            <TabItem Header="{DynamicResource folder_tab_credentials}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="520">
+                    <StackPanel Margin="26 18 26 22">
+                        <TextBlock Style="{StaticResource Hint}" FontSize="{fpx:FontPx 13}" Margin="0 0 0 14" Text="{Binding CredentialsHint}" />
+                        <TextBlock Style="{StaticResource Hint}" FontSize="{fpx:FontPx 13}" Margin="0 0 0 12" Text="{DynamicResource folder_credentials_none}"
+                                   Visibility="{Binding HasNoCredentials, Converter={StaticResource ConverterBool2Visible}}" />
+
+                        <Border Style="{StaticResource IslandBorder}" Background="{DynamicResource PrimaryDarkBrush}"
+                                Visibility="{Binding HasNoCredentials, Converter={StaticResource ConverterBool2VisibleInv}}">
+                            <ItemsControl ItemsSource="{Binding Credentials}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="16 10" MinHeight="40">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="170" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel VerticalAlignment="Center">
+                                                <TextBlock Style="{StaticResource TextBlockBase}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Text="{Binding UserName}" />
+                                            </StackPanel>
+                                            <controls:PasswordInput Grid.Column="1" Height="34" Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                            <Button Grid.Column="2" Margin="8 0 0 0" Padding="12 0" Style="{StaticResource BtnSecondary}"
+                                                    Content="{DynamicResource Save}"
+                                                    Visibility="{Binding IsDirty, Converter={StaticResource ConverterBool2Visible}}"
+                                                    Command="{Binding DataContext.CmdSaveRow, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" />
+                                            <TextBlock Grid.Column="3" Margin="14 0 8 0" VerticalAlignment="Center" FontSize="{fpx:FontPx 12}" Style="{StaticResource Hint}"
+                                                       Text="{Binding UsedBy, StringFormat={}{0}}" ToolTip="{DynamicResource folder_credential_used_by}" />
+                                            <Button Grid.Column="4" Width="30" Height="30" Style="{StaticResource BtnSecondary}" Content="&#x2715;" Padding="0"
+                                                    Command="{Binding DataContext.CmdDeleteRow, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Border>
+
+                        <!-- nuova credenziale condivisa: riquadro con bordo accent -->
+                        <Border Margin="0 18 0 0" Padding="22 18" CornerRadius="{StaticResource IslandRadius}" BorderThickness="1" BorderBrush="{DynamicResource AccentMidBrush}"
+                                Background="{DynamicResource IslandSubCardBrush}">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource SectionTitle}" Margin="0 0 0 14" Text="{DynamicResource folder_credential_new_title}" />
+                                <Grid Margin="0 0 0 10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource FieldLabel}" Text="{DynamicResource User}" />
+                                    <TextBox Grid.Column="1" Height="36" VerticalContentAlignment="Center" Padding="8 0" Text="{Binding NewUserName, UpdateSourceTrigger=PropertyChanged}" />
+                                </Grid>
+                                <Grid Margin="0 0 0 10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource FieldLabel}" Text="{DynamicResource Password}" />
+                                    <controls:PasswordInput Grid.Column="1" Height="36" Password="{Binding NewPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource Hint}" VerticalAlignment="Center" Text="{Binding NewCredentialHint}" />
+                                    <Button Grid.Column="1" Style="{StaticResource BtnPrimary}" Padding="18 0" Command="{Binding CmdAdd}" Content="{DynamicResource folder_credential_add}" />
+                                </Grid>
+                                <TextBlock Style="{StaticResource Hint}" Margin="0 10 0 0" Foreground="#FF9B94" Text="{Binding Error}"
+                                           Visibility="{Binding Error, Converter={StaticResource ConverterEqual2Collapsed}, ConverterParameter=''}" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- 2. generale: nome, dentro a, dominio, rete, elementi -->
+            <TabItem Header="{DynamicResource folder_tab_general}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="520">
+                    <StackPanel Margin="26 18 26 22">
+                        <Grid Margin="0 0 0 14">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource FieldLabel}" Text="{DynamicResource Name}" />
+                            <TextBox Grid.Column="1" Height="36" VerticalContentAlignment="Center" Padding="8 0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource FieldLabel}" Text="{DynamicResource folder_parent}" />
+                            <ComboBox Grid.Column="1" Height="36" ItemsSource="{Binding ParentChoices}" DisplayMemberPath="Display" SelectedValuePath="Path" SelectedValue="{Binding Parent}" />
+                        </Grid>
+
+                        <TextBlock Style="{StaticResource SectionTitle}" Text="{DynamicResource folder_section_domain}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource FieldLabel}" Text="{DynamicResource folder_domain}" />
+                            <TextBox Grid.Column="1" Width="260" Height="36" VerticalContentAlignment="Center" Padding="8 0" Tag="{Binding SuggestedDomain}" Text="{Binding Domain, UpdateSourceTrigger=PropertyChanged}" />
+                            <Button Grid.Column="2" Margin="8 0 0 0" Style="{StaticResource BtnSecondary}" Padding="12 0" Command="{Binding CmdUseSuggestedDomain}"
+                                    Content="{DynamicResource folder_use_suggested}" ToolTip="{Binding SuggestedDomain}" />
+                        </Grid>
+
+                        <CheckBox Margin="120 12 0 0" Content="{Binding ApplyDomainText}" IsChecked="{Binding ApplyDomainToServers}" />
+
+                        <TextBlock Style="{StaticResource SectionTitle}" Text="{DynamicResource folder_section_network}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource FieldLabel}" Text="{DynamicResource folder_section_network_label}" />
+                            <TextBox Grid.Column="1" Width="260" Height="36" VerticalContentAlignment="Center" Padding="8 0" FontFamily="Cascadia Mono, Consolas"
+                                     Tag="{Binding SuggestedIpPrefix}" Text="{Binding IpPrefix, UpdateSourceTrigger=PropertyChanged}" />
+                            <Button Grid.Column="2" Margin="8 0 0 0" Style="{StaticResource BtnSecondary}" Padding="12 0" Command="{Binding CmdUseSuggestedIpPrefix}"
+                                    Content="{DynamicResource folder_use_suggested}" ToolTip="{Binding SuggestedIpPrefix}" />
+                        </Grid>
+                        <TextBlock Style="{StaticResource Hint}" Margin="120 8 0 0" Text="{DynamicResource folder_network_hint_short}" />
+
+                        <TextBlock Style="{StaticResource SectionTitle}" Text="{DynamicResource folder_section_items}" />
+                        <TextBlock Style="{StaticResource TextBlockBase}" Text="{Binding Summary}" />
+                        <Button Style="{StaticResource BtnSecondary}" HorizontalAlignment="Left" Margin="0 14 0 0" Padding="16 0"
+                                Command="{Binding CmdNewSubfolder}" Content="{DynamicResource folder_new_subfolder}" />
+                        <TextBlock Style="{StaticResource Hint}" Margin="0 10 0 0" Foreground="#FF9B94" Text="{Binding Error}"
+                                   Visibility="{Binding Error, Converter={StaticResource ConverterEqual2Collapsed}, ConverterParameter=''}" />
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- 3. server contenuti -->
+            <TabItem Header="{Binding ServersTabTitle}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="520">
+                    <StackPanel Margin="26 18 26 22">
+                        <TextBlock Style="{StaticResource Hint}" FontSize="{fpx:FontPx 13}" Text="{DynamicResource folder_servers_empty}"
+                                   Visibility="{Binding HasNoServers, Converter={StaticResource ConverterBool2Visible}}" />
+                        <Border Style="{StaticResource IslandBorder}" Background="{DynamicResource PrimaryDarkBrush}">
+                            <ItemsControl ItemsSource="{Binding Servers}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid MinHeight="46" Margin="16 0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="70" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 12}" FontWeight="Bold" VerticalAlignment="Center" Text="{Binding Protocol}"
+                                                       Foreground="{DynamicResource ProtocolOtherBrush}">
+                                                <TextBlock.Resources>
+                                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}" />
+                                                </TextBlock.Resources>
+                                            </TextBlock>
+                                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0 6">
+                                                <TextBlock Style="{StaticResource TextBlockBase}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Text="{Binding Name}" />
+                                                <TextBlock Style="{StaticResource Hint}" TextTrimming="CharacterEllipsis" Text="{Binding Address}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </controls:DialogFrame>
+</styles:WindowChromeBase>

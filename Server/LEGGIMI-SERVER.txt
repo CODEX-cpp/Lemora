@@ -1,0 +1,28 @@
+LEMORA SERVER (Teams) - istruzioni rapide
+=========================================
+
+Un solo file, niente da installare prima (.NET e' incluso).
+
+WINDOWS
+  1. Copia Lemora.Server.exe sul PC/server che restera' acceso.
+  2. Aprilo da un terminale (PowerShell):  .\Lemora.Server.exe
+  3. Conferma la richiesta di amministratore: si installa come servizio e parte da solo.
+  4. Il terminale mostra indirizzo della console, impronta del certificato e codice di avvio.
+  5. Apri l'indirizzo nel browser (avviso del certificato: normale, e' autofirmato), inserisci il codice e crea l'amministratore.
+
+LINUX (con systemd)
+  1. Copia Lemora.Server sul server:  chmod +x Lemora.Server
+  2. Lancialo come root:  sudo ./Lemora.Server
+  3. Stessi passi 4 e 5 di Windows. Il firewall (ufw/firewalld) viene aperto in automatico.
+
+PROVA SENZA INSTALLARE
+  Lemora.Server --foreground      gira nel terminale, si ferma con Ctrl+C
+
+DISINSTALLARE
+  Lemora.Server --uninstall           toglie il servizio, tiene i dati
+  Lemora.Server --uninstall --purge   toglie anche i dati
+
+BACKUP
+  Copia l'intera cartella dei dati e il file server.key (senza la chiave le connessioni condivise non si leggono).
+
+Opzioni: --port N  --data cartella

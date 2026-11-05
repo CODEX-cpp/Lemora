@@ -1,0 +1,845 @@
+﻿<styles:WindowChromeBase x:Class="Lemora.View.MainWindowView"
+                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:fpx="clr-namespace:Lemora.Utils" xmlns:ft="clr-namespace:Lemora.View.FileTransfer"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                         xmlns:attachProperty="clr-namespace:Shawn.Utils.WpfResources.Theme.AttachProperty;assembly=Shawn.Utils.WpfResources"
+                         xmlns:s="https://github.com/canton7/Stylet"
+                         xmlns:view="clr-namespace:Lemora.View"
+                         xmlns:styles="clr-namespace:Shawn.Utils.WpfResources.Theme.Styles;assembly=Shawn.Utils.WpfResources"
+                         xmlns:service="clr-namespace:Lemora.Service"
+                         xmlns:Rm="clr-namespace:Lemora"
+                         xmlns:locality="clr-namespace:Lemora.Service.Locality"
+                         xmlns:controls="clr-namespace:Lemora.Controls"
+                         mc:Ignorable="d"
+                         BorderThickness="0"
+                         BorderBrush="Transparent"
+                         Background="{DynamicResource BackgroundBrush}"
+                         KeyDown="MainWindow_OnKeyDown"
+                         d:DataContext="{d:DesignInstance view:MainWindowViewModel}"
+                         Style="{StaticResource WindowChromeBaseBaseStyle}"
+                         Title="{x:Static Rm:Assert.APP_DISPLAY_NAME}" 
+                         Height="560" Width="900" 
+                         MinWidth="300" MinHeight="300">
+    <styles:WindowChromeBase.Resources>
+        <ResourceDictionary>
+            <RoutedUICommand x:Key="CommandFocusFilter" Text="Focus on filter" />
+        </ResourceDictionary>
+    </styles:WindowChromeBase.Resources>
+    <styles:WindowChromeBase.CommandBindings>
+        <CommandBinding Command="{StaticResource CommandFocusFilter}" Executed="CommandFocusFilter_OnExecuted"></CommandBinding>
+    </styles:WindowChromeBase.CommandBindings>
+    <styles:WindowChromeBase.InputBindings>
+        <!-- map ctrl + f to focus on filter-->
+        <KeyBinding Gesture="Ctrl+F" Command="{StaticResource CommandFocusFilter}"></KeyBinding>
+    </styles:WindowChromeBase.InputBindings>
+
+    <Grid Background="{DynamicResource PrimaryDarkBrush}">
+        <Grid>
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <BlurEffect Radius="2" KernelType="Box"></BlurEffect>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=TopLevelViewModel, Mode=OneWay}" Value="{x:Null}">
+                            <Setter Property="Effect" Value="{x:Null}"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <!-- solo con l'installazione Teams: stato del collegamento al server, un clic apre la schermata di collegamento -->
+            <Border Name="TeamsBar" Grid.Row="2" Visibility="Collapsed" Cursor="Hand" Padding="14 5" Background="Transparent" MouseLeftButtonUp="TeamsBar_OnMouseLeftButtonUp">
+                <DockPanel LastChildFill="True">
+                    <Button Name="BtnTeamsSync" DockPanel.Dock="Right" Visibility="Collapsed" Padding="10 0" Margin="12 0 0 0" FontSize="12" Cursor="Hand" Click="BtnTeamsSync_OnClick" />
+                    <TextBlock Name="TxtTeamsBar" FontSize="12" VerticalAlignment="Center" Foreground="{DynamicResource PrimaryTextBrush}" Opacity="0.75" />
+                </DockPanel>
+            </Border>
+
+            <Grid Background="Transparent" Name="WinTitleBar">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid Background="Transparent" Width="28" Height="28" Margin="8 0 6 0" VerticalAlignment="Center">
+                    <!-- logo: riquadro bianco con segno nero su fondo scuro, nero con segno bianco su fondo chiaro (si sceglie da codice, vedi AppIcons) -->
+                    <Image Name="ImgTitleLogo" Width="28" Height="28" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <Image Source="/Resources/Image/Logo/logo32.png" Opacity="0" AutomationProperties.AutomationId="MainWindowLogo"></Image>
+                </Grid>
+                <!-- schede in stile browser: larghe finche' ci stanno, poi si restringono tutte insieme -->
+                <ItemsControl Grid.Column="1" ItemsSource="{Binding Tabs}" Focusable="False" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="12 0 210 0">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <controls:TabStripPanel PreferredTabWidth="176" MinTabWidth="72" Gap="4" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding Command}" Padding="12 0 6 0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ToolTip="{Binding ToolTipText}"
+                                    AllowDrop="True" PreviewMouseLeftButtonDown="Tab_PreviewMouseLeftButtonDown" PreviewMouseMove="Tab_PreviewMouseMove" DragOver="Tab_DragOver" DragLeave="Tab_DragLeave" Drop="Tab_Drop">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource BtnTab}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsAdd}" Value="True">
+                                                <Setter Property="Tag" Value="Add" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsActive}" Value="True">
+                                                <Setter Property="Tag" Value="True" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Grid>
+                                    <!-- scheda divisa: icona, le due sessioni affiancate (la attiva e' evidenziata) e una sola ✕ -->
+                                    <Grid Margin="-12 0 -6 0" Visibility="{Binding IsSplit, Converter={StaticResource ConverterBool2Visible}}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="34" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="32" />
+                                        </Grid.ColumnDefinitions>
+                                        <Path Data="{StaticResource IconSplit}" Width="16" Height="16" Stretch="Uniform" StrokeThickness="1.6" Stroke="{DynamicResource AccentMidBrush}" StrokeLineJoin="Round" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        <Button Grid.Column="1" Command="{Binding Seg1Command}" Focusable="False" Cursor="Hand" ToolTip="{Binding Seg1Title}">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="Bd" Background="Transparent" BorderBrush="{DynamicResource IslandBorderBrush}" BorderThickness="1 0 0 0" Padding="10 0">
+                                                        <ContentPresenter VerticalAlignment="Center" />
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding Seg1Active}" Value="True"><Setter TargetName="Bd" Property="Background" Value="{DynamicResource PrimaryLightBrush}" /></DataTrigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Seg1Proto}" FontSize="{fpx:FontPx 11}" FontWeight="Bold" Foreground="#81C995" Margin="0 0 7 0" VerticalAlignment="Center" Style="{StaticResource TextBlockBase}" />
+                                                <TextBlock Text="{Binding Seg1Title}" FontSize="{fpx:FontPx 13}" TextTrimming="CharacterEllipsis" MaxWidth="110" VerticalAlignment="Center" Style="{StaticResource TextBlockBase}" />
+                                                <Ellipse Width="7" Height="7" Fill="{Binding Seg1StatusBrush}" Margin="8 0 0 0" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Grid.Column="2" Command="{Binding Seg2Command}" Focusable="False" Cursor="Hand" ToolTip="{Binding Seg2Title}">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="Bd" Background="Transparent" BorderBrush="{DynamicResource IslandBorderBrush}" BorderThickness="1 0 0 0" Padding="10 0">
+                                                        <ContentPresenter VerticalAlignment="Center" />
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding Seg2Active}" Value="True"><Setter TargetName="Bd" Property="Background" Value="{DynamicResource PrimaryLightBrush}" /></DataTrigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Seg2Proto}" FontSize="{fpx:FontPx 11}" FontWeight="Bold" Foreground="#81C995" Margin="0 0 7 0" VerticalAlignment="Center" Style="{StaticResource TextBlockBase}" />
+                                                <TextBlock Text="{Binding Seg2Title}" FontSize="{fpx:FontPx 13}" TextTrimming="CharacterEllipsis" MaxWidth="110" VerticalAlignment="Center" Style="{StaticResource TextBlockBase}" />
+                                                <Ellipse Width="7" Height="7" Fill="{Binding Seg2StatusBrush}" Margin="8 0 0 0" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Grid.Column="3" Width="24" Height="24" Padding="0" Cursor="Hand" Focusable="False" ToolTip="{DynamicResource tab_close}" Command="{Binding CloseCommand}">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="Bd" Background="Transparent" CornerRadius="3">
+                                                        <TextBlock Text="✕" FontSize="{fpx:FontPx 11}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource IslandSecondaryTextBrush}" />
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Bd" Property="Background" Value="{DynamicResource IslandHoverBrush}" /></Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </Grid>
+                                    <Grid>
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSplit}" Value="True"><Setter Property="Visibility" Value="Collapsed" /></DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Ellipse Width="8" Height="8" Fill="{Binding StatusBrush}" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                             Visibility="{Binding IsSession, Converter={StaticResource ConverterBool2Visible}}" />
+                                    <TextBlock VerticalAlignment="Center" FontSize="{fpx:FontPx 13}" TextTrimming="CharacterEllipsis" Text="{Binding Title}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSession}" Value="True">
+                                                        <Setter Property="Margin" Value="16 0 0 0" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsAdd}" Value="True">
+                                                        <Setter Property="FontSize" Value="{fpx:FontPx 22}" />
+                                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                                        <Setter Property="Grid.ColumnSpan" Value="2" />
+                                                        <Setter Property="Margin" Value="-8 -3 0 0" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsActive}" Value="True">
+                                                        <Setter Property="FontWeight" Value="SemiBold" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <Button Grid.Column="1" Width="24" Height="24" Margin="0 0 30 0" Padding="0" Cursor="Hand" Focusable="False" ToolTip="F11"
+                                            Command="{Binding FullScreenCommand}"
+                                            Visibility="{Binding CanFullScreen, Converter={StaticResource ConverterBool2Visible}}">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border x:Name="Bd" Background="Transparent" CornerRadius="3">
+                                                    <TextBlock Text="⛶" FontSize="{fpx:FontPx 13}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource IslandSecondaryTextBrush}" />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Bd" Property="Background" Value="{DynamicResource IslandHoverBrush}" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                    <Button Grid.Column="1" Width="24" Height="24" Margin="6 0 0 0" Padding="0" Cursor="Hand" Focusable="False" ToolTip="{DynamicResource tab_close}"
+                                            Command="{Binding CloseCommand}"
+                                            Visibility="{Binding CanClose, Converter={StaticResource ConverterBool2Visible}}">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border x:Name="Bd" Background="Transparent" CornerRadius="3">
+                                                    <TextBlock Text="✕" FontSize="{fpx:FontPx 11}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource IslandSecondaryTextBrush}" />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Bd" Property="Background" Value="{DynamicResource IslandHoverBrush}" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                    </Grid>
+                                </Grid>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+
+            <!-- System Button Area -->
+            <StackPanel Grid.Row="0"
+                        Orientation="Horizontal" HorizontalAlignment="Right">
+
+                <Button Name="BtnMinimize" Style="{StaticResource ButtonBarPrimaryStyle}" Background="Transparent"
+                               Width="45" Height="35" VerticalAlignment="Top" BorderThickness="0">
+                    <Rectangle Width="10" Height="1" Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" StrokeThickness="0.5" />
+                </Button>
+
+                <Button Name="BtnMaximize" Style="{StaticResource ButtonBarPrimaryStyle}" Background="Transparent" Width="45" Height="35" VerticalAlignment="Top">
+                    <Grid>
+                        <Path Height="10" Width="10"
+                              StrokeThickness="0.5" 
+                              Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}"
+                              Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}"
+                              Data="F1 M 5.500000 -82.500000 L 82.500000 -82.500000 L 82.500000 -5.500000 L 5.500000 -5.500000 Z M 77.000000 -11.000000 L 77.000000 -77.000000 L 11.000000 -77.000000 L 11.000000 -11.000000 Z "
+                              Stretch="Uniform">
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=WindowState}" Value="Maximized">
+                                            <Setter Property="Visibility" Value="Hidden"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+
+                        <Path Height="10" Width="10"
+                              StrokeThickness="1" 
+                              Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}"
+                              Data="M2,2 L2,0 L8,0 L8,6 L6,6 M0,2 L6,2 L6,8 L0,8 Z"
+                              Stretch="Uniform">
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Setter Property="Visibility" Value="Hidden"></Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=WindowState}" Value="Maximized">
+                                            <Setter Property="Visibility" Value="Visible"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </Grid>
+                </Button>
+
+                <Button Name="BtnClose" Width="45" Height="35" VerticalAlignment="Top"
+                    Style="{StaticResource ButtonBarPrimaryStyle}" Background="Transparent"
+                    attachProperty:VisionElement.ForegroundAccent="White"
+                    attachProperty:VisionElement.BackgroundAccent="Red"
+                    attachProperty:VisionElement.ForegroundOnMouseDown="White"
+                    attachProperty:VisionElement.BackgroundOnMouseDown="Red">
+                    <Path Height="10" Width="10"
+                          StrokeThickness="0.5" 
+                          Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}"
+                          Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}"
+                          Data="F1 M 47.910156 -44.000000 L 87.183594 -4.683594 L 83.316406 -0.816406 L 44.000000 -40.089844 L 4.683594 -0.816406 L 0.816406 -4.683594 L 40.089844 -44.000000 L 0.816406 -83.316406 L 4.683594 -87.183594 L 44.000000 -47.910156 L 83.316406 -87.183594 L 87.183594 -83.316406 Z "
+                          Stretch="Uniform">
+                    </Path>
+                </Button>
+            </StackPanel>
+
+
+            <!-- Paging Area -->
+            <Grid Grid.Row="1" x:Name="PagingArea">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <BlurEffect Radius="1" KernelType="Box"></BlurEffect>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=TopLevelViewModel, Mode=OneWay}" Value="{x:Null}">
+                                <Setter Property="Effect" Value="{x:Null}"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+
+                <ContentControl s:View.Model="{Binding ActiveServerViewModel}"/>
+
+
+                <ContentControl s:View.Model="{Binding SettingViewModel}">
+                    <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                            <Style.Triggers>
+                                <!-- come la creazione: dissolvenza breve, nessuno scorrimento -->
+                                <DataTrigger Binding="{Binding ShowSetting}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"></Setter>
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.16"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                </ContentControl>
+                <ContentControl s:View.Model="{Binding EditorViewModel}">
+                    <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding EditorViewModel}" Value="{x:Null}">
+                                    <DataTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.16"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.ExitActions>
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                                    <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Collapsed}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                </ContentControl>
+
+                <!-- ricerca: vive nella barra strumenti della lista (sopra ci andranno le tab) -->
+                    <TextBox x:Name="TbMainFilter" Width="440" Height="34" FontSize="{fpx:FontPx 13}" Padding="8 0 86 0"
+                             attachProperty:FocusExtension.IsFocused="{Binding MainFilterIsFocused}"
+                             attachProperty:TextBoxAttachProperty.CaretIndex="{Binding MainFilterCaretIndex, UpdateSourceTrigger=PropertyChanged}"
+                             Text="{Binding MainFilterString, UpdateSourceTrigger=PropertyChanged}"
+                             Tag="{DynamicResource 'Connect/Search'}"
+                             PreviewKeyDown="MainFilter_OnPreviewKeyDown" 
+                             VerticalAlignment="Top" HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+                             Margin="18 10 0 0">
+                        <TextBox.Style>
+                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxAccentStyle}">
+                                <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"></Setter>
+                                <Setter Property="Background" Value="Transparent"></Setter>
+                                <Setter Property="Opacity" Value="0.5"></Setter>
+                                <Setter Property="CaretBrush" Value="{DynamicResource PrimaryTextBrush}"></Setter>
+                                <Setter Property="IsEnabled" Value="False"></Setter>
+                                <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding EditorViewModel}" Value="{x:Null}"></Condition>
+                                            <Condition Binding="{Binding ShowSetting}" Value="False"></Condition>
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" AccelerationRatio="0.9" To="1" Duration="0:0:0.5"/>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </MultiDataTrigger.EnterActions>
+                                        <MultiDataTrigger.ExitActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" AccelerationRatio="0.9" To="0" Duration="0:0:0.5"/>
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Collapsed}"/>
+                                                    </ObjectAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </MultiDataTrigger.ExitActions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter Property="IsEnabled" Value="True"></Setter>
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+
+                    <!-- tipo di connessione rapida (Invio con un IP nella ricerca): menu a tendina, predefinito VNC -->
+                    <CheckBox x:Name="CbQuickProtocol" Width="74" Height="24" Margin="378 15 0 0"
+                              HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="Hand" FocusVisualStyle="{x:Null}"
+                              Visibility="{Binding Visibility, ElementName=TbMainFilter}"
+                              ToolTip="{DynamicResource Connect}">
+                        <CheckBox.Template>
+                            <ControlTemplate TargetType="CheckBox">
+                                <Border x:Name="Bd" Background="{DynamicResource IslandSelectedBrush}" CornerRadius="{StaticResource IslandRadius}" Padding="8 0">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding QuickProtocolName}" FontSize="{fpx:FontPx 12}" FontWeight="SemiBold" Foreground="{DynamicResource AccentMidBrush}" />
+                                        <Path Data="M 0,0 L 7,0 L 3.5,4.5 Z" Fill="{DynamicResource AccentMidBrush}" Margin="6 1 0 0" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentDarkBrush}" />
+                                    </Trigger>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentDarkBrush}" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </CheckBox.Template>
+                    </CheckBox>
+                    <Popup IsOpen="{Binding ElementName=CbQuickProtocol, Path=IsChecked}"
+                           StaysOpen="False" AllowsTransparency="True" Placement="Bottom"
+                           PlacementTarget="{Binding ElementName=CbQuickProtocol}">
+                        <Border Margin="0 4 0 0" Padding="4" MinWidth="130" Background="{DynamicResource PrimaryDarkBrush}"
+                                BorderBrush="{DynamicResource IslandBorderBrush}" BorderThickness="1" CornerRadius="{StaticResource IslandRadius}">
+                            <ItemsControl ItemsSource="{Binding QuickProtocols}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource BtnNav}" Height="32" HorizontalContentAlignment="Left"
+                                                Content="{Binding ProtocolDisplayName}" Click="QuickProtocolItem_OnClick" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Border>
+                    </Popup>
+
+                    <!-- sessioni aperte come schede: sopra a tutto, una per sessione (si nascondono, non si smontano: il client VNC e' una finestra nativa) -->
+                    <Grid x:Name="SessionLayer" Background="{DynamicResource PrimaryDarkBrush}" Panel.ZIndex="100" Visibility="Collapsed">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!-- popup del trasferimento file (VNC): sotto la barra sessione, e' una finestra a parte e sta anche sopra lo schermo nativo -->
+                        <Popup x:Name="FtPopup" DataContext="{Binding SessionBar.FileTransfer}" IsOpen="{Binding IsPopupOpen, Mode=TwoWay}" StaysOpen="False" AllowsTransparency="True"
+                               Placement="Custom" PlacementTarget="{Binding ElementName=SessionBarBorder}">
+                            <ft:FileTransferPopupView DataContext="{Binding}" />
+                        </Popup>
+
+                        <!-- barra sessione: sigla, nome, stato e pulsanti -->
+                        <Border x:Name="SessionBarBorder" Grid.Row="0" Margin="0" Padding="14 0 8 0" MinHeight="37" BorderThickness="0 0 0 1" CornerRadius="0"
+                                DataContext="{Binding SessionBar}">
+                            <Border.Style>
+                                <Style TargetType="Border" BasedOn="{StaticResource IslandBorder}">
+                                    <Style.Triggers>
+                                        <!-- file trascinati sullo schermo: il contorno e' sotto la barra (sopra lo schermo nativo non si disegna) -->
+                                        <DataTrigger Binding="{Binding FileTransfer.IsDragActive}" Value="True">
+                                            <Setter Property="BorderBrush" Value="{DynamicResource AccentMidBrush}" />
+                                            <Setter Property="BorderThickness" Value="0 0 0 3" />
+                                        </DataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding FileTransfer.IsDragActive}" Value="True" />
+                                                <Condition Binding="{Binding FileTransfer.IsDragDenied}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="BorderBrush" Value="#FF9B94" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <!-- barra bassa, una sola riga: sigla, nome e indirizzo affiancati, stato -->
+                                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0 2 0 0">
+                                    <TextBlock Text="{Binding ProtocolText}" FontWeight="Bold" FontSize="{fpx:FontPx 11.5}" Margin="0 0 10 0" VerticalAlignment="Center"
+                                               Foreground="{DynamicResource AccentMidBrush}" Style="{StaticResource TextBlockBase}" />
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0 0 14 0">
+                                        <TextBlock Text="{Binding Name}" FontSize="{fpx:FontPx 13}" FontWeight="SemiBold" MaxWidth="520" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Style="{StaticResource TextBlockBase}" />
+                                        <TextBlock Text="{Binding SubText}" ToolTip="{Binding SubText}" FontSize="{fpx:FontPx 10}" MaxWidth="480" Margin="10 0 0 0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource IslandSecondaryTextBrush}">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Tag, ElementName=SessionBarBorder}" Value="1"><Setter Property="Visibility" Value="Collapsed" /></DataTrigger>
+                                                        <DataTrigger Binding="{Binding Tag, ElementName=SessionBarBorder}" Value="2"><Setter Property="Visibility" Value="Collapsed" /></DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <!-- terminale: lucchetto, l'impronta del server sta nel suggerimento -->
+                                    <Path Data="{StaticResource IconLock}" Width="16" Height="16" Stretch="Uniform" Stroke="#81C995" StrokeThickness="1.6" StrokeLineJoin="Round"
+                                          StrokeStartLineCap="Round" StrokeEndLineCap="Round" Margin="0 0 10 0" VerticalAlignment="Center"
+                                          ToolTip="{Binding FingerprintTooltip}" Visibility="{Binding HasFingerprint, Converter={StaticResource ConverterBool2Visible}}" />
+                                    <Ellipse Width="7" Height="7" Margin="0 0 7 0" VerticalAlignment="Center">
+                                        <Ellipse.Style>
+                                            <Style TargetType="Ellipse">
+                                                <Setter Property="Fill" Value="{DynamicResource IslandSecondaryTextBrush}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsConnected}" Value="True"><Setter Property="Fill" Value="#81C995" /></DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsReconnecting}" Value="True"><Setter Property="Fill" Value="#F2C66D" /></DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsError}" Value="True"><Setter Property="Fill" Value="#F28B82" /></DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Ellipse.Style>
+                                    </Ellipse>
+                                    <TextBlock Text="{Binding StatusText}" FontSize="{fpx:FontPx 11.5}" VerticalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Tag, ElementName=SessionBarBorder}" Value="2"><Setter Property="Visibility" Value="Collapsed" /></DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <WrapPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="12 0 0 0">
+                                    <!-- terminale: cerca, impostazioni, cronologia -->
+                                    <Button Style="{StaticResource SessionIconButton}" Command="{Binding CmdSearch}" ToolTip="Cerca nell'output (Ctrl+F)"
+                                            Visibility="{Binding IsTerminal, Converter={StaticResource ConverterBool2Visible}}">
+                                        <Path Style="{StaticResource SessionIcon}" Data="{StaticResource IconSearch}" />
+                                    </Button>
+                                    <Button Command="{Binding CmdSplit}" ToolTip="Dividi la vista: affianca una seconda sessione" Visibility="{Binding IsTerminal, Converter={StaticResource ConverterBool2Visible}}">
+                                        <Button.Style>
+                                            <Style TargetType="Button" BasedOn="{StaticResource SessionIconButton}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSplit}" Value="True"><Setter Property="Tag" Value="Active" /></DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                        <Path Style="{StaticResource SessionIcon}" Data="{StaticResource IconSplit}" />
+                                    </Button>
+                                    <Button Style="{StaticResource SessionIconButton}" Command="{Binding CmdTerminalSettings}" ToolTip="Impostazioni terminale"
+                                            Visibility="{Binding IsTerminal, Converter={StaticResource ConverterBool2Visible}}">
+                                        <Path Style="{StaticResource SessionIcon}" Data="{StaticResource IconGear}" />
+                                    </Button>
+                                    <Border Style="{StaticResource SessionBarSeparator}" Visibility="{Binding IsTerminal, Converter={StaticResource ConverterBool2Visible}}" />
+                                    <Button Command="{Binding CmdHistory}" ToolTip="Cronologia comandi (Ctrl+Maiusc+H)" Visibility="{Binding IsTerminal, Converter={StaticResource ConverterBool2Visible}}">
+                                        <Button.Style>
+                                            <Style TargetType="Button" BasedOn="{StaticResource SessionIconButton}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsHistoryOpen}" Value="True"><Setter Property="Tag" Value="Active" /></DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                        <Path Style="{StaticResource SessionIcon}" Data="{StaticResource IconHistory}" />
+                                    </Button>
+                                    <Border Style="{StaticResource SessionBarSeparator}" Visibility="{Binding IsTerminal, Converter={StaticResource ConverterBool2Visible}}" />
+                                    <!-- schermo: RDP = impostazioni schermo, avanzate, schermo intero; VNC con piu' monitor = un solo pulsante "Adatta · zoom" con menu -->
+                                    <Button Style="{StaticResource SessionIconButton}" Command="{Binding CmdDisplaySettings}" ToolTip="{DynamicResource session_settings_display}"
+                                            Visibility="{Binding CanChangeDisplayMode, Converter={StaticResource ConverterBool2Visible}}">
+                                        <Path Style="{StaticResource SessionIcon}" Data="{StaticResource IconMonitor}" />
+                                    </Button>
+                                    <Button Style="{StaticResource SessionIconButton}" Command="{Binding CmdAdvancedSettings}" ToolTip="{DynamicResource session_settings_advanced}"
+                                            Visibility="{Binding CanChangeDisplayMode, Converter={StaticResource ConverterBool2Visible}}">
+                                        <Path Style="{StaticResource SessionIcon}" Data="{StaticResource IconSliders}" />
+                                    </Button>
+                                    <Button Style="{StaticResource SessionIconButton}" Command="{Binding CmdFullScreen}" ToolTip="{DynamicResource session_fullscreen}"
+                                            Visibility="{Binding CanFullScreenButton, Converter={StaticResource ConverterBool2Visible}}">
+                                        <Path Style="{StaticResource SessionIcon}" Data="{StaticResource IconFullscreen}" />
+                                    </Button>
+                                    <Button Style="{StaticResource SessionTextButton}" Command="{Binding CmdFit}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                                            Visibility="{Binding HasViewControls, Converter={StaticResource ConverterBool2Visible}}" AutomationProperties.AutomationId="VncFitButton">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Path Style="{StaticResource SessionIcon}" Width="16" Height="16" Data="{StaticResource IconFullscreen}" />
+                                            <TextBlock Text="{Binding FitLabel}" Margin="8 0 0 0" VerticalAlignment="Center" />
+                                            <Path Data="M 0,0 L 3.5,3.5 L 7,0" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" StrokeThickness="1.5" Margin="8 1 0 0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Border Style="{StaticResource SessionBarSeparator}" Visibility="{Binding HasScreenGroup, Converter={StaticResource ConverterBool2Visible}}" />
+                                    <!-- tasti -->
+                                    <Button Style="{StaticResource SessionKeysButton}" Command="{Binding CmdCtrlAltDel}" Content="Ctrl Alt Canc" ToolTip="Ctrl + Alt + Canc"
+                                            Visibility="{Binding CanCtrlAltDel, Converter={StaticResource ConverterBool2Visible}}" />
+                                    <Border Style="{StaticResource SessionBarSeparator}" Visibility="{Binding CanCtrlAltDel, Converter={StaticResource ConverterBool2Visible}}" />
+                                    <!-- file (solo VNC): cartella con freccia, anello di avanzamento e conteggio; apre il popup della coda -->
+                                    <Grid Visibility="{Binding HasFileTransfer, Converter={StaticResource ConverterBool2Visible}}">
+                                        <StackPanel Orientation="Horizontal" DataContext="{Binding FileTransfer}">
+                                            <!-- copia file: i file selezionati sul PC remoto arrivano negli appunti di questo PC (poi Ctrl+V li incolla) -->
+                                            <Button Style="{StaticResource SessionTextButton}" Command="{Binding CmdCopyFromRemote}" ToolTip="{DynamicResource ft_copy_tooltip}" AutomationProperties.AutomationId="FileTransferCopyButton">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Path Style="{StaticResource SessionIcon}" Width="16" Height="16" Data="{StaticResource IconCopy}" />
+                                                    <TextBlock Text="{DynamicResource ft_copy_button}" Margin="8 0 0 0" VerticalAlignment="Center">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Tag, ElementName=SessionBarBorder}" Value="1"><Setter Property="Visibility" Value="Collapsed" /></DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Tag, ElementName=SessionBarBorder}" Value="2"><Setter Property="Visibility" Value="Collapsed" /></DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </Button>
+                                            <Button Style="{StaticResource SessionIconButton}" Command="{Binding CmdTogglePopup}" ToolTip="{Binding ButtonTooltip}" AutomationProperties.AutomationId="FileTransferButton">
+                                                <Grid>
+                                                    <Path Data="M 3,7 L 9,7 L 11,9 L 21,9 L 21,19 L 3,19 Z M 12,11.5 L 12,16.5 M 9.5,14 L 12,16.5 L 14.5,14">
+                                                        <Path.Style>
+                                                            <Style TargetType="Path" BasedOn="{StaticResource SessionIcon}">
+                                                                <Style.Triggers><DataTrigger Binding="{Binding IsUnavailable}" Value="True"><Setter Property="Stroke" Value="#7D7D7D" /></DataTrigger></Style.Triggers>
+                                                            </Style>
+                                                        </Path.Style>
+                                                    </Path>
+                                                    <!-- non disponibile: icona grigia barrata -->
+                                                    <Path Data="M 4,20 L 20,4" Width="16" Height="16" Stretch="Uniform" Stroke="#7D7D7D" StrokeThickness="1.8" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                                                          Visibility="{Binding IsUnavailable, Converter={StaticResource ConverterBool2Visible}}" />
+                                                    <!-- anello: avanzamento complessivo (o verifica in corso) -->
+                                                    <Ellipse Width="28" Height="28" StrokeThickness="2" Stroke="{DynamicResource AccentMidBrush}" StrokeDashArray="{Binding RingDash}" RenderTransformOrigin="0.5 0.5" IsHitTestVisible="False"
+                                                             Visibility="{Binding ShowRing, Converter={StaticResource ConverterBool2Visible}}">
+                                                        <Ellipse.RenderTransform><RotateTransform Angle="-90" /></Ellipse.RenderTransform>
+                                                    </Ellipse>
+                                                    <Border Width="16" Height="16" CornerRadius="8" Background="{DynamicResource AccentMidBrush}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 -10 -10 0" IsHitTestVisible="False"
+                                                            Visibility="{Binding ShowBadge, Converter={StaticResource ConverterBool2Visible}}">
+                                                        <TextBlock Text="{Binding BadgeText}" FontSize="10" FontWeight="Bold" Foreground="{DynamicResource AccentTextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                    </Border>
+                                                    <!-- avviso (giallo) o errore (rosso): da controllare nel pannello -->
+                                                    <Border Width="14" Height="14" CornerRadius="7" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 -8 -8 0" IsHitTestVisible="False"
+                                                            Visibility="{Binding HasIssue, Converter={StaticResource ConverterBool2Visible}, FallbackValue=Collapsed}">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Background" Value="#FFC83D" />
+                                                                <Style.Triggers><DataTrigger Binding="{Binding IssueIsError}" Value="True"><Setter Property="Background" Value="#E5484D" /></DataTrigger></Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock Text="!" FontSize="10" FontWeight="Bold" Foreground="#1B1B1B" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                    </Border>
+                                                </Grid>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Border Style="{StaticResource SessionBarSeparator}" Visibility="{Binding HasFileTransfer, Converter={StaticResource ConverterBool2Visible}}" />
+                                    <!-- finestra -->
+                                    <Button Command="{Binding CmdSplit}" ToolTip="Dividi la vista: affianca un'altra sessione (o trascina una scheda su questa)" Visibility="{Binding ShowSplitButtonNonTerminal, Converter={StaticResource ConverterBool2Visible}}">
+                                        <Button.Style>
+                                            <Style TargetType="Button" BasedOn="{StaticResource SessionIconButton}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSplit}" Value="True"><Setter Property="Tag" Value="Active" /></DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                        <Path Style="{StaticResource SessionIcon}" Data="{StaticResource IconSplit}" />
+                                    </Button>
+                                    <Button Style="{StaticResource SessionIconButton}" Command="{Binding CmdDetach}" ToolTip="{DynamicResource session_detach}">
+                                        <Path Style="{StaticResource SessionIcon}" Data="{StaticResource IconDetach}" />
+                                    </Button>
+                                    <Button Style="{StaticResource SessionIconButton}" Command="{Binding CmdPip}" ToolTip="{DynamicResource session_pip}"
+                                            Visibility="{Binding IsNotTerminal, Converter={StaticResource ConverterBool2Visible}}">
+                                        <Path Style="{StaticResource SessionIcon}" Data="{StaticResource IconPip}" />
+                                    </Button>
+                                    <Border Style="{StaticResource SessionBarSeparator}" />
+                                    <!-- connessione -->
+                                    <Button Style="{StaticResource SessionIconButton}" Command="{Binding CmdReconnect}" ToolTip="{DynamicResource session_reconnect}">
+                                        <Path Style="{StaticResource SessionIcon}" Data="{StaticResource IconRefresh}" />
+                                    </Button>
+                                    <Button Style="{StaticResource SessionIconButton}" Command="{Binding CmdOpenSftp}" ToolTip="Apri SFTP su questo server"
+                                            Visibility="{Binding IsTerminal, Converter={StaticResource ConverterBool2Visible}}">
+                                        <Path Style="{StaticResource SessionIcon}" Data="{StaticResource IconFolder}" />
+                                    </Button>
+                                </WrapPanel>
+                                <!-- file trascinati sullo schermo: un'unica scritta a tutta barra che copre il resto SENZA cambiare le dimensioni della barra (prima allargava la barra e spostava i pulsanti) -->
+                                <Border x:Name="FtDragBanner" Grid.ColumnSpan="2" Margin="-16 0 -10 0" Background="#262626" IsHitTestVisible="False" Visibility="{Binding FileTransfer.HasBarMessage, Converter={StaticResource ConverterBool2Visible}, FallbackValue=Collapsed}">
+                                    <TextBlock Text="{Binding FileTransfer.BarMessage}" FontSize="{fpx:FontPx 14}" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Margin="16 0">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+                                                <Setter Property="Foreground" Value="{DynamicResource IslandSecondaryTextBrush}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding FileTransfer.BarKind}" Value="Accent"><Setter Property="Foreground" Value="{DynamicResource AccentMidBrush}" /><Setter Property="FontWeight" Value="SemiBold" /></DataTrigger>
+                                                    <DataTrigger Binding="{Binding FileTransfer.BarKind}" Value="Error"><Setter Property="Foreground" Value="#FF9B94" /></DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- area della sessione -->
+                        <Border x:Name="SessionArea" Grid.Row="1" Margin="0" BorderThickness="0" CornerRadius="0" Style="{StaticResource IslandBorder}">
+                            <Grid>
+                                <Grid x:Name="SessionGrid" />
+                                <!-- sessione in una finestra separata: la scheda resta, qui si puo' riattaccarla -->
+                                <Grid x:Name="DetachedPlaceholder" Visibility="Collapsed" Background="{DynamicResource BackgroundBrush}">
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" DataContext="{Binding SessionBar}">
+                                        <TextBlock Text="{DynamicResource session_detached_title}" FontSize="{fpx:FontPx 18}" FontWeight="SemiBold" HorizontalAlignment="Center" Style="{StaticResource TextBlockBase}" />
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 18 0 0">
+                                            <Button Style="{StaticResource BtnPrimary}" Command="{Binding CmdReattach}" Content="{DynamicResource session_reattach}" />
+                                            <Button Style="{StaticResource BtnSecondary}" Margin="10 0 0 0" Height="34" Command="{Binding CmdShowWindow}" Content="{DynamicResource session_show_window}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                                <!-- navigatore dei file a pagina intera (VNC): prende il posto dello schermo; la sua visibilita' e quella dello schermo si cambiano insieme dal codice -->
+                                <ft:FileNavigatorView x:Name="FtNavigator" Visibility="Collapsed" DataContext="{Binding SessionBar.FileTransfer}" />
+                            </Grid>
+                        </Border>
+
+                        <!-- barre sotto lo schermo (fuori dal controllo nativo): "Incolla file" e "Copia dal remoto" -->
+                        <StackPanel x:Name="FtBars" Grid.Row="2" DataContext="{Binding SessionBar.FileTransfer}">
+                            <Border MinHeight="46" Padding="16 6 10 6" Background="#262626" Margin="0 6 0 0"
+                                    Visibility="{Binding IsPasteBarOpen, Converter={StaticResource ConverterBool2Visible}, FallbackValue=Collapsed}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding PasteText}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Style="{StaticResource TextBlockBase}" />
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                        <Button Style="{StaticResource BtnPrimary}" Height="32" Padding="14 0" Content="{DynamicResource ft_paste_upload}" Command="{Binding CmdPasteConfirm}" />
+                                        <Button Style="{StaticResource BtnSecondary}" Height="32" Margin="8 0 0 0" Padding="12 0" Content="{DynamicResource ft_paste_change}" Command="{Binding CmdPasteChangeFolder}" />
+                                        <Button Style="{StaticResource BtnSecondary}" Height="32" Margin="8 0 0 0" Padding="12 0" Content="{DynamicResource ft_cancel}" Command="{Binding CmdPasteCancel}" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+
+                    </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid Background="Transparent">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Visible"></Setter>
+                    <Setter Property="Background" Value="Transparent"></Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=TopLevelViewModel, Mode=OneWay}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <ContentControl PreviewMouseDown="ProcessingRing_OnPreviewMouseDown"
+                            PreviewMouseMove="WinTitleBar_OnPreviewMouseMove"
+                            s:View.Model="{Binding TopLevelViewModel}"></ContentControl>
+        </Grid>
+
+        <!-- notifiche brevi: in basso al centro, filo colorato a sinistra (verde riuscito, giallo avviso, rosso errore) -->
+        <ItemsControl ItemsSource="{x:Static service:ToastService.Items}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 44" Panel.ZIndex="500">
+            <ItemsControl.Style>
+                <Style TargetType="ItemsControl">
+                    <Style.Triggers>
+                        <!-- senza notifiche l'elemento sparisce del tutto (niente ingombro per il disegno e per UI Automation) -->
+                        <DataTrigger Binding="{Binding Source={x:Static service:ToastService.Items}, Path=Count}" Value="0">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ItemsControl.Style>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0 4" MinWidth="360" MaxWidth="560">
+<Border IsHitTestVisible="False" CornerRadius="4" Background="{DynamicResource PrimaryMidBrush}">
+<Border.Effect>
+                            <DropShadowEffect BlurRadius="20" ShadowDepth="6" Direction="270" Opacity="0.5" />
+                        </Border.Effect>
+</Border>
+<Border x:Name="Card" CornerRadius="4" BorderThickness="3 1 1 1" Padding="14 10"
+                            Background="{DynamicResource PrimaryMidBrush}" BorderBrush="#6CCB5F">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid Width="18" Height="18" Margin="0 0 12 0" Visibility="{Binding IsBusy, Converter={StaticResource ConverterBool2Visible}}">
+                                    <Ellipse StrokeThickness="2.5" Stroke="#3A3A3A" />
+                                    <Path StrokeThickness="2.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Stretch="None" RenderTransformOrigin="0.5,0.5"
+                                          Stroke="{DynamicResource AccentMidBrush}" Data="M 9,1.25 A 7.75,7.75 0 0 1 16.75,9">
+                                        <Path.RenderTransform>
+                                            <RotateTransform x:Name="ToastSpin" Angle="0" />
+                                        </Path.RenderTransform>
+                                        <Path.Triggers>
+                                            <EventTrigger RoutedEvent="Loaded">
+                                                <BeginStoryboard>
+                                                    <Storyboard RepeatBehavior="Forever">
+                                                        <DoubleAnimation Storyboard.TargetName="ToastSpin" Storyboard.TargetProperty="Angle" From="0" To="360" Duration="0:0:0.9" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Path.Triggers>
+                                    </Path>
+                                </Grid>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Style="{StaticResource TextBlockBase}" TextWrapping="Wrap" FontSize="{fpx:FontPx 13.5}" Text="{Binding Text}" />
+                                    <TextBlock Style="{StaticResource TextBlockBase}" TextWrapping="Wrap" FontSize="{fpx:FontPx 12}" Margin="0 3 0 0"
+                                               Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{Binding Body}"
+                                               Visibility="{Binding HasBody, Converter={StaticResource ConverterBool2Visible}}" />
+                                </StackPanel>
+                            </Grid>
+                            <Button Grid.Column="1" Style="{StaticResource BtnSecondary}" Margin="14 0 0 0" Padding="12 0" Height="28" Content="{DynamicResource Cancel}" Command="{Binding CmdUndo}"
+                                    Visibility="{Binding HasUndo, Converter={StaticResource ConverterBool2Visible}}" />
+                            <Button Grid.Column="2" VerticalAlignment="Top" Margin="8 0 0 0" Width="26" Height="26" Style="{StaticResource BtnSecondary}" Padding="0" BorderThickness="0" Content="&#x2715;" Command="{Binding CmdClose}" />
+                            <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0 10 0 0"
+                                        Visibility="{Binding HasActions, Converter={StaticResource ConverterBool2Visible}}">
+                                <Button Style="{StaticResource BtnPrimary}" Height="28" Padding="14 0" Content="{Binding PrimaryText}" Command="{Binding CmdPrimary}"
+                                        AutomationProperties.AutomationId="ToastPrimary" />
+                                <Button Style="{StaticResource BtnSecondary}" Margin="8 0 0 0" Height="28" Padding="14 0" Content="{Binding SecondaryText}" Command="{Binding CmdSecondary}"
+                                        AutomationProperties.AutomationId="ToastSecondary" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+</Grid>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Kind}" Value="Warning">
+                            <Setter TargetName="Card" Property="BorderBrush" Value="#FDD663" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Kind}" Value="Error">
+                            <Setter TargetName="Card" Property="BorderBrush" Value="#FF9B94" />
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+    </Grid>
+</styles:WindowChromeBase>

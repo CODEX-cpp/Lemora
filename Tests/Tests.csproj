@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <!-- xunit v3: i test sono un programma eseguibile -->
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
+    <PackageReference Include="xunit.v3" Version="4.0.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="4.0.1" />
+    <PackageReference Include="coverlet.collector" Version="10.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ui\Ui.csproj" />
+    <!-- il server si compila prima dei test (non e' una libreria da usare): i test di abbinamento lo avviano come programma -->
+    <ProjectReference Include="..\Server\Server.csproj" ReferenceOutputAssembly="false" />
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>ServerExe</_Parameter1>
+      <_Parameter2>$(MSBuildThisFileDirectory)..\Server\bin\$(Configuration)\net10.0\Lemora.Server.exe</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- TODO: questi test (MSTest) puntano al vecchio livello dati (Lemora.Model.DAO / DataService non statico)
+         e non compilano piu' dalla versione 1.0. Esclusi cosi' il progetto compila su .NET 10;
+         da riscrivere sulle API attuali (con xunit) invece di cancellarli alla cieca. -->
+    <Compile Remove="Service\DataServiceTests.cs" />
+    <Compile Remove="ViewModel\Configuration\ConfigurationViewModelTests.cs" />
+    <Compile Remove="Utils\VersionHelperTests.cs" />
+    <Compile Remove="TestInit.cs" />
+  </ItemGroup>
+
+</Project>

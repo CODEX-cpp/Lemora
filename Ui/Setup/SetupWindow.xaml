@@ -1,0 +1,373 @@
+<styles:WindowBase x:Class="Lemora.Setup.SetupWindow" x:ClassModifier="internal"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:styles="clr-namespace:Shawn.Utils.WpfResources.Theme.Styles;assembly=Shawn.Utils.WpfResources"
+                   WindowStartupLocation="CenterScreen"
+                   ResizeMode="NoResize"
+                   WindowStyle="None"
+                   AllowsTransparency="True"
+                   Background="Transparent"
+                   Title="Lemora" Height="640" Width="940">
+    <styles:WindowBase.Style>
+        <Style TargetType="styles:WindowBase">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="styles:WindowBase">
+                        <Border Padding="40" Background="Transparent">
+                            <Grid>
+                                <Border IsHitTestVisible="False" CornerRadius="4" Background="{DynamicResource BackgroundBrush}">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="28" ShadowDepth="8" Direction="270" Opacity="0.55" />
+                                    </Border.Effect>
+                                </Border>
+                                <Border CornerRadius="4" Background="{DynamicResource BackgroundBrush}" BorderThickness="1" BorderBrush="{DynamicResource IslandWindowBorderBrush}">
+                                    <ContentPresenter ClipToBounds="True" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </styles:WindowBase.Style>
+
+    <styles:WindowBase.Resources>
+        <!-- sfumature dal colore del testo dello sfondo: leggibili sia con i temi scuri sia con quelli chiari (come nel primo avvio) -->
+        <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource BackgroundTextColor}" Opacity="0.7" />
+        <SolidColorBrush x:Key="LineBrush" Color="{DynamicResource BackgroundTextColor}" Opacity="0.18" />
+        <SolidColorBrush x:Key="CardBrush" Color="{DynamicResource BackgroundTextColor}" Opacity="0.04" />
+        <SolidColorBrush x:Key="HoverBrush" Color="{DynamicResource BackgroundTextColor}" Opacity="0.08" />
+        <SolidColorBrush x:Key="FooterBrush" Color="{DynamicResource BackgroundTextColor}" Opacity="0.05" />
+        <FontFamily x:Key="IconFont">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
+
+        <Style x:Key="TitleText" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="FontSize" Value="26" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{DynamicResource BackgroundTextBrush}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style x:Key="SubText" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Foreground" Value="{StaticResource SecondaryBrush}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style x:Key="BodyText" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Foreground" Value="{DynamicResource BackgroundTextBrush}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <!-- scheda grande selezionabile (una sola scelta) -->
+        <Style x:Key="ModeCard" TargetType="RadioButton">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Margin" Value="7 0" />
+            <Setter Property="Padding" Value="22 20" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="Bd" Padding="{TemplateBinding Padding}" CornerRadius="4" BorderThickness="1" BorderBrush="{StaticResource LineBrush}" Background="{StaticResource CardBrush}">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource HoverBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource AccentMidBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource AccentMidBrush}" />
+                                <Setter TargetName="Bd" Property="BorderThickness" Value="2" />
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource IslandSelectedBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- cerchio della scheda: pieno quando la scheda e' scelta -->
+        <Style x:Key="CardRadio" TargetType="Ellipse">
+            <Setter Property="Width" Value="22" />
+            <Setter Property="Height" Value="22" />
+            <Setter Property="StrokeThickness" Value="2" />
+            <Setter Property="Stroke" Value="{StaticResource SecondaryBrush}" />
+            <Setter Property="Fill" Value="Transparent" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=RadioButton}}" Value="True">
+                    <Setter Property="Stroke" Value="{DynamicResource AccentMidBrush}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="CardRadioDot" TargetType="Ellipse">
+            <Setter Property="Width" Value="10" />
+            <Setter Property="Height" Value="10" />
+            <Setter Property="Fill" Value="{DynamicResource AccentMidBrush}" />
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=RadioButton}}" Value="True">
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="CardIconBox" TargetType="Border">
+            <Setter Property="Width" Value="44" />
+            <Setter Property="Height" Value="44" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Background" Value="{StaticResource HoverBrush}" />
+        </Style>
+        <Style x:Key="CardIconText" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="{DynamicResource AccentMidBrush}" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </styles:WindowBase.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- barra del titolo: logo, titolo, solo la X -->
+        <Grid Name="TitleBar" Height="40" Background="Transparent" MouseLeftButtonDown="TitleBar_OnMouseLeftButtonDown">
+            <StackPanel Orientation="Horizontal" Margin="20 0 0 0" VerticalAlignment="Center">
+                <Image Source="/Resources/Image/Logo/tile-dark.png" Width="22" Height="22" RenderOptions.BitmapScalingMode="HighQuality" />
+                <TextBlock Name="TxtTitle" Margin="12 0 0 0" VerticalAlignment="Center" FontSize="13" Foreground="{DynamicResource BackgroundTextBrush}" />
+            </StackPanel>
+            <Button Name="BtnX" HorizontalAlignment="Right" Width="46" Height="40" Click="BtnX_OnClick" Cursor="Hand" Background="Transparent" BorderThickness="0" Foreground="{DynamicResource BackgroundTextBrush}" FontFamily="{StaticResource IconFont}" Content="&#xE8BB;" FontSize="11" />
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <!-- 1. scelta della modalita' -->
+            <Grid Name="PageMode" Margin="40 28 40 16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Name="TxtModeTitle" Style="{StaticResource TitleText}" />
+                <TextBlock Name="TxtModeSub" Grid.Row="1" Margin="0 6 0 0" Style="{StaticResource SubText}" />
+                <UniformGrid Grid.Row="2" Rows="1" Margin="-7 26 -7 0">
+                    <RadioButton Name="RbPortable" GroupName="Mode" Style="{StaticResource ModeCard}" Checked="Mode_OnChecked">
+                        <Grid>
+                            <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
+                            <Grid><Border Style="{StaticResource CardIconBox}" HorizontalAlignment="Left"><TextBlock Text="&#xE7F4;" FontFamily="{StaticResource IconFont}" FontSize="20" Foreground="{DynamicResource AccentMidBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
+                                <Grid HorizontalAlignment="Right" VerticalAlignment="Top"><Ellipse Style="{StaticResource CardRadio}" /><Ellipse Style="{StaticResource CardRadioDot}" /></Grid></Grid>
+                            <TextBlock Name="TxtPortable" Grid.Row="1" Margin="0 18 0 0" Style="{StaticResource BodyText}" FontSize="20" FontWeight="SemiBold" />
+                            <TextBlock Name="TxtPortableDesc" Grid.Row="2" Margin="0 10 0 0" Style="{StaticResource SubText}" />
+                            <Border Grid.Row="4" Margin="0 16 0 0" Padding="0 14 0 0" BorderThickness="0 1 0 0" BorderBrush="{StaticResource LineBrush}">
+                                <TextBlock Name="TxtPortablePerm" Style="{StaticResource SubText}" FontSize="13" />
+                            </Border>
+                        </Grid>
+                    </RadioButton>
+                    <RadioButton Name="RbLocal" GroupName="Mode" Style="{StaticResource ModeCard}" IsChecked="True" Checked="Mode_OnChecked">
+                        <Grid>
+                            <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
+                            <Grid><Border Style="{StaticResource CardIconBox}" HorizontalAlignment="Left"><TextBlock Text="PC" Style="{StaticResource CardIconText}" /></Border>
+                                <Grid HorizontalAlignment="Right" VerticalAlignment="Top"><Ellipse Style="{StaticResource CardRadio}" /><Ellipse Style="{StaticResource CardRadioDot}" /></Grid></Grid>
+                            <TextBlock Name="TxtLocal" Grid.Row="1" Margin="0 18 0 0" Style="{StaticResource BodyText}" FontSize="20" FontWeight="SemiBold" />
+                            <TextBlock Name="TxtLocalDesc" Grid.Row="2" Margin="0 10 0 0" Style="{StaticResource SubText}" />
+                            <Border Grid.Row="4" Margin="0 16 0 0" Padding="0 14 0 0" BorderThickness="0 1 0 0" BorderBrush="{StaticResource LineBrush}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xEA18;" FontFamily="{StaticResource IconFont}" Foreground="{DynamicResource WarnBrush}" VerticalAlignment="Top" Margin="0 2 8 0" />
+                                    <TextBlock Name="TxtLocalPerm" Style="{StaticResource SubText}" FontSize="13" Foreground="{DynamicResource WarnBrush}" MaxWidth="190" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </RadioButton>
+                    <RadioButton Name="RbTeams" GroupName="Mode" Style="{StaticResource ModeCard}" Checked="Mode_OnChecked">
+                        <Grid>
+                            <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
+                            <Grid><Border Style="{StaticResource CardIconBox}" HorizontalAlignment="Left"><TextBlock Text="TM" Style="{StaticResource CardIconText}" /></Border>
+                                <Grid HorizontalAlignment="Right" VerticalAlignment="Top"><Ellipse Style="{StaticResource CardRadio}" /><Ellipse Style="{StaticResource CardRadioDot}" /></Grid></Grid>
+                            <TextBlock Name="TxtTeams" Grid.Row="1" Margin="0 18 0 0" Style="{StaticResource BodyText}" FontSize="20" FontWeight="SemiBold" />
+                            <TextBlock Name="TxtTeamsDesc" Grid.Row="2" Margin="0 10 0 0" Style="{StaticResource SubText}" />
+                            <Border Grid.Row="4" Margin="0 16 0 0" Padding="0 14 0 0" BorderThickness="0 1 0 0" BorderBrush="{StaticResource LineBrush}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xEA18;" FontFamily="{StaticResource IconFont}" Foreground="{DynamicResource WarnBrush}" VerticalAlignment="Top" Margin="0 2 8 0" />
+                                    <TextBlock Name="TxtTeamsPerm" Style="{StaticResource SubText}" FontSize="13" Foreground="{DynamicResource WarnBrush}" MaxWidth="190" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </RadioButton>
+                </UniformGrid>
+            </Grid>
+
+            <!-- 2. opzioni (solo Locale e Teams) -->
+            <StackPanel Name="PageOptions" Margin="40 28 40 16" Visibility="Collapsed">
+                <TextBlock Name="TxtOptTitle" Style="{StaticResource TitleText}" />
+                <TextBlock Name="TxtOptSub" Margin="0 6 0 28" Style="{StaticResource SubText}" />
+                <Grid Margin="0 0 0 22">
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="110" /><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+                    <TextBlock Name="TxtFolder" Style="{StaticResource SubText}" VerticalAlignment="Center" />
+                    <TextBox Name="TxtDir" Grid.Column="1" Height="38" FontFamily="Consolas" FontSize="15" VerticalContentAlignment="Center" Padding="8 0" />
+                    <Button Name="BtnBrowse" Grid.Column="2" Margin="12 0 0 0" Height="38" MinWidth="96" Style="{StaticResource BtnSecondary}" Foreground="{DynamicResource BackgroundTextBrush}" Click="BtnBrowse_OnClick" />
+                </Grid>
+                <CheckBox Name="CbDesktop" IsChecked="True" Margin="0 0 0 14" FontSize="14" Foreground="{DynamicResource BackgroundTextBrush}" />
+                <CheckBox Name="CbStart" IsChecked="True" Margin="0 0 0 14" FontSize="14" Foreground="{DynamicResource BackgroundTextBrush}" />
+                <CheckBox Name="CbAuto" IsChecked="False" Margin="0 0 0 2" FontSize="14" Foreground="{DynamicResource BackgroundTextBrush}" />
+                <TextBlock Name="TxtAutoHint" Margin="28 0 0 20" Style="{StaticResource SubText}" FontSize="13" />
+                <Border Padding="16 14" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource AccentMidBrush}" Background="{DynamicResource IslandSelectedBrush}">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="22" Height="22" CornerRadius="11" Background="{DynamicResource AccentMidBrush}" VerticalAlignment="Top">
+                            <TextBlock Text="i" FontWeight="Bold" Foreground="{DynamicResource AccentTextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <TextBlock Name="TxtOptNote" Margin="12 0 0 0" Style="{StaticResource BodyText}" MaxWidth="700" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- exe lanciato mentre l'app e' gia' installata: disinstalla, ripara o avvia la versione portatile -->
+            <StackPanel Name="PageMaintain" Margin="40 28 40 16" Visibility="Collapsed">
+                <TextBlock Name="TxtMtTitle" Style="{StaticResource TitleText}" />
+                <TextBlock Name="TxtMtSub" Margin="0 6 0 22" Style="{StaticResource SubText}" />
+                <RadioButton Name="RbMtUninstall" GroupName="Maintain" IsChecked="True" Style="{StaticResource ModeCard}" Padding="18 14" Margin="0 0 0 12" Width="760" HorizontalAlignment="Left" Checked="Maintain_OnChecked">
+                    <StackPanel Orientation="Horizontal">
+                        <Grid VerticalAlignment="Top" Margin="0 2 14 0"><Ellipse Style="{StaticResource CardRadio}" /><Ellipse Style="{StaticResource CardRadioDot}" /></Grid>
+                        <StackPanel><TextBlock Name="TxtMtUninstall" Style="{StaticResource BodyText}" FontSize="16" FontWeight="SemiBold" /><TextBlock Name="TxtMtUninstallDesc" Margin="0 4 0 0" Style="{StaticResource SubText}" /></StackPanel>
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton Name="RbMtRepair" GroupName="Maintain" Style="{StaticResource ModeCard}" Padding="18 14" Margin="0 0 0 12" Width="760" HorizontalAlignment="Left" Checked="Maintain_OnChecked">
+                    <StackPanel Orientation="Horizontal">
+                        <Grid VerticalAlignment="Top" Margin="0 2 14 0"><Ellipse Style="{StaticResource CardRadio}" /><Ellipse Style="{StaticResource CardRadioDot}" /></Grid>
+                        <StackPanel><TextBlock Name="TxtMtRepair" Style="{StaticResource BodyText}" FontSize="16" FontWeight="SemiBold" /><TextBlock Name="TxtMtRepairDesc" Margin="0 4 0 0" Style="{StaticResource SubText}" /></StackPanel>
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton Name="RbMtPortable" GroupName="Maintain" Style="{StaticResource ModeCard}" Padding="18 14" Margin="0 0 0 12" Width="760" HorizontalAlignment="Left" Checked="Maintain_OnChecked">
+                    <StackPanel Orientation="Horizontal">
+                        <Grid VerticalAlignment="Top" Margin="0 2 14 0"><Ellipse Style="{StaticResource CardRadio}" /><Ellipse Style="{StaticResource CardRadioDot}" /></Grid>
+                        <StackPanel><TextBlock Name="TxtMtPortable" Style="{StaticResource BodyText}" FontSize="16" FontWeight="SemiBold" /><TextBlock Name="TxtMtPortableDesc" Margin="0 4 0 0" Style="{StaticResource SubText}" /></StackPanel>
+                    </StackPanel>
+                </RadioButton>
+            </StackPanel>
+
+            <!-- disinstallazione: conferma (solo Locale e Teams) -->
+            <StackPanel Name="PageConfirm" Margin="40 28 40 16" Visibility="Collapsed">
+                <TextBlock Name="TxtUnTitle" Style="{StaticResource TitleText}" />
+                <TextBlock Name="TxtUnSub" Margin="0 6 0 20" Style="{StaticResource SubText}" />
+                <RadioButton Name="RbKeep" GroupName="Data" IsChecked="True" Style="{StaticResource ModeCard}" Padding="18 12" Margin="0 0 0 12" Width="760" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <Grid VerticalAlignment="Top" Margin="0 2 14 0"><Ellipse Style="{StaticResource CardRadio}" /><Ellipse Style="{StaticResource CardRadioDot}" /></Grid>
+                        <StackPanel><TextBlock Name="TxtKeep" Style="{StaticResource BodyText}" FontSize="16" FontWeight="SemiBold" /><TextBlock Name="TxtKeepDesc" Margin="0 4 0 0" Style="{StaticResource SubText}" /></StackPanel>
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton Name="RbPurge" GroupName="Data" Style="{StaticResource ModeCard}" Padding="18 12" Margin="0 0 0 14" Width="760" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <Grid VerticalAlignment="Top" Margin="0 2 14 0"><Ellipse Style="{StaticResource CardRadio}" /><Ellipse Style="{StaticResource CardRadioDot}" /></Grid>
+                        <StackPanel><TextBlock Name="TxtPurge" Style="{StaticResource BodyText}" FontSize="16" FontWeight="SemiBold" /><TextBlock Name="TxtPurgeDesc" Margin="0 4 0 0" Style="{StaticResource SubText}" /></StackPanel>
+                    </StackPanel>
+                </RadioButton>
+                <Border Name="NotePurge" Visibility="Collapsed" Padding="16 10" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource ErrBrush}" Margin="0 0 0 12" Width="760" HorizontalAlignment="Left">
+                    <TextBlock Name="TxtNotePurge" Style="{StaticResource BodyText}" Foreground="{DynamicResource ErrBrush}" />
+                </Border>
+                <Border Name="NoteTeams" Visibility="Collapsed" Padding="16 10" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource WarnBrush}" Width="760" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="22" Height="22" CornerRadius="11" Background="{DynamicResource WarnBrush}" VerticalAlignment="Top">
+                            <TextBlock Text="!" FontWeight="Bold" Foreground="#101010" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <TextBlock Name="TxtNoteTeams" Margin="12 0 0 0" Style="{StaticResource BodyText}" MaxWidth="660" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- Teams: collega al server (dopo l'installazione) -->
+            <!-- margini ridotti: il riquadro giallo (consenso all'invio delle connessioni salvate, ERRORI 110) deve stare tutto nella finestra -->
+            <StackPanel Name="PageTmConnect" Margin="40 20 40 12" Visibility="Collapsed">
+                <TextBlock Name="TxtTmTitle" Style="{StaticResource TitleText}" />
+                <TextBlock Name="TxtTmSub" Margin="0 6 0 16" Style="{StaticResource SubText}" />
+                <Grid Margin="0 0 0 16">
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="200" /><ColumnDefinition Width="320" /></Grid.ColumnDefinitions>
+                    <TextBlock Name="TxtTmAddr" Style="{StaticResource SubText}" VerticalAlignment="Center" />
+                    <TextBox Name="TxtServer" Grid.Column="1" Height="38" FontFamily="Consolas" FontSize="15" VerticalContentAlignment="Center" Padding="8 0" />
+                </Grid>
+                <Grid Margin="0 0 0 14">
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="200" /><ColumnDefinition Width="200" /></Grid.ColumnDefinitions>
+                    <TextBlock Name="TxtTmCode" Style="{StaticResource SubText}" VerticalAlignment="Center" />
+                    <TextBox Name="TxtCode" Grid.Column="1" Height="38" FontFamily="Consolas" FontSize="15" VerticalContentAlignment="Center" Padding="8 0" BorderBrush="{DynamicResource AccentMidBrush}" />
+                </Grid>
+                <Border Padding="16 12" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource AccentMidBrush}" Background="{DynamicResource IslandSelectedBrush}" Margin="0 0 0 14" Width="760" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="22" Height="22" CornerRadius="11" Background="{DynamicResource AccentMidBrush}" VerticalAlignment="Top">
+                            <TextBlock Text="i" FontWeight="Bold" Foreground="{DynamicResource AccentTextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <TextBlock Name="TxtTmInfo" Margin="12 0 0 0" Style="{StaticResource BodyText}" MaxWidth="690" />
+                    </StackPanel>
+                </Border>
+                <Border Padding="16 12" CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource WarnBrush}" Width="760" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="22" Height="22" CornerRadius="11" Background="{DynamicResource WarnBrush}" VerticalAlignment="Top">
+                            <TextBlock Text="!" FontWeight="Bold" Foreground="#101010" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <TextBlock Name="TxtTmWarn" Margin="12 0 0 0" Style="{StaticResource BodyText}" MaxWidth="690" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- Teams: stato della richiesta (in attesa, approvato, rifiutato) -->
+            <StackPanel Name="PageTmState" Margin="80 0" VerticalAlignment="Center" Visibility="Collapsed">
+                <Border Name="TmIcon" Width="64" Height="64" CornerRadius="32" HorizontalAlignment="Left">
+                    <TextBlock Name="TmGlyph" FontSize="30" FontWeight="Bold" Foreground="#101010" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+                <TextBlock Name="TxtTmStTitle" Margin="0 22 0 0" Style="{StaticResource TitleText}" />
+                <TextBlock Name="TxtTmStText" Margin="0 10 0 20" Style="{StaticResource SubText}" FontSize="15" />
+                <Border BorderThickness="1" BorderBrush="{StaticResource LineBrush}" CornerRadius="4" Background="{StaticResource CardBrush}">
+                    <StackPanel Name="TmRows" />
+                </Border>
+            </StackPanel>
+
+            <!-- 3. installazione in corso -->
+            <StackPanel Name="PageProgress" Margin="80 0" VerticalAlignment="Center" Visibility="Collapsed">
+                <TextBlock Name="TxtProgTitle" Style="{StaticResource TitleText}" Margin="0 0 0 22" />
+                <ProgressBar Name="Bar" Height="8" Minimum="0" Maximum="100" Foreground="{DynamicResource AccentMidBrush}" Background="{StaticResource LineBrush}" BorderThickness="0" />
+                <Grid Margin="0 10 0 22">
+                    <TextBlock Name="TxtProgNow" Style="{StaticResource SubText}" FontSize="13.5" />
+                    <TextBlock Name="TxtProgPct" Style="{StaticResource SubText}" FontSize="13.5" HorizontalAlignment="Right" />
+                </Grid>
+                <Border BorderThickness="1" BorderBrush="{StaticResource LineBrush}" CornerRadius="4" Background="{StaticResource CardBrush}">
+                    <StackPanel>
+                        <Grid Name="Row0" Height="48"><TextBlock Name="Ic0" Margin="22 0 0 0" FontSize="16" VerticalAlignment="Center" /><TextBlock Name="St0" Margin="56 0 0 0" Style="{StaticResource BodyText}" /></Grid>
+                        <StackPanel Name="Row1"><Border Height="1" Background="{StaticResource LineBrush}" />
+                        <Grid Height="48"><TextBlock Name="Ic1" Margin="22 0 0 0" FontSize="16" VerticalAlignment="Center" /><TextBlock Name="St1" Margin="56 0 0 0" Style="{StaticResource BodyText}" /></Grid></StackPanel>
+                        <StackPanel Name="Row2"><Border Height="1" Background="{StaticResource LineBrush}" />
+                        <Grid Height="48"><TextBlock Name="Ic2" Margin="22 0 0 0" FontSize="16" VerticalAlignment="Center" /><TextBlock Name="St2" Margin="56 0 0 0" Style="{StaticResource BodyText}" /></Grid></StackPanel>
+                        <StackPanel Name="Row3"><Border Height="1" Background="{StaticResource LineBrush}" />
+                        <Grid Height="48"><TextBlock Name="Ic3" Margin="22 0 0 0" FontSize="16" VerticalAlignment="Center" /><TextBlock Name="St3" Margin="56 0 0 0" Style="{StaticResource BodyText}" /></Grid></StackPanel>
+                        <StackPanel Name="Row4" Visibility="Collapsed"><Border Height="1" Background="{StaticResource LineBrush}" />
+                        <Grid Height="48"><TextBlock Name="Ic4" Margin="22 0 0 0" FontSize="16" VerticalAlignment="Center" /><TextBlock Name="St4" Margin="56 0 0 0" Style="{StaticResource BodyText}" /></Grid></StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- 4. fine (o errore) -->
+            <StackPanel Name="PageDone" Margin="80 0" VerticalAlignment="Center" Visibility="Collapsed">
+                <Border Name="DoneIcon" Width="64" Height="64" CornerRadius="32" HorizontalAlignment="Left" Background="{DynamicResource OkBrush}">
+                    <TextBlock Name="DoneGlyph" Text="&#x2713;" FontSize="30" FontWeight="Bold" Foreground="#101010" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+                <TextBlock Name="TxtDoneTitle" Margin="0 24 0 0" Style="{StaticResource TitleText}" />
+                <TextBlock Name="TxtDonePath" Margin="0 12 0 18" Style="{StaticResource SubText}" FontSize="15" />
+                <CheckBox Name="CbLaunch" IsChecked="True" FontSize="14" Foreground="{DynamicResource BackgroundTextBrush}" />
+            </StackPanel>
+        </Grid>
+
+        <!-- piè di pagina: avviso scudo a sinistra, pulsanti a destra -->
+        <Border Grid.Row="2" Height="60" Background="{StaticResource FooterBrush}" BorderThickness="0 1 0 0" BorderBrush="{StaticResource LineBrush}">
+            <Grid Margin="24 0">
+                <StackPanel Name="FooterNote" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="&#xEA18;" FontFamily="{StaticResource IconFont}" FontSize="15" Foreground="{DynamicResource WarnBrush}" VerticalAlignment="Center" Margin="0 0 10 0" />
+                    <TextBlock Name="TxtFooterNote" Style="{StaticResource BodyText}" Foreground="{DynamicResource WarnBrush}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Button Name="BtnBack" Height="36" MinWidth="96" Padding="18 0" Margin="0 0 12 0" Style="{StaticResource BtnSecondary}" Foreground="{DynamicResource BackgroundTextBrush}" Click="BtnBack_OnClick" />
+                    <Button Name="BtnCancel" Height="36" MinWidth="96" Padding="18 0" Margin="0 0 12 0" Style="{StaticResource BtnSecondary}" Foreground="{DynamicResource BackgroundTextBrush}" Click="BtnX_OnClick" />
+                    <Button Name="BtnNext" Height="36" MinWidth="110" Padding="18 0" Style="{StaticResource BtnPrimary}" FontWeight="SemiBold" Click="BtnNext_OnClick" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</styles:WindowBase>

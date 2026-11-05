@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="Lemora.View.Editor.Forms.Utils.HostView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:fpx="clr-namespace:Lemora.Utils"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:utils="clr-namespace:Lemora.View.Editor.Forms.Utils"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance utils:HostViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel>
+
+        <Grid Style="{StaticResource EditorRowGrid}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Style="{StaticResource EditorRowGridTitle}" Text="{DynamicResource Hostname}" VerticalAlignment="Top" Margin="0 7 16 0"></TextBlock>
+                <StackPanel>
+                    <Grid Width="340" HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="64" />
+                        </Grid.ColumnDefinitions>
+                        <!-- prefisso IP della cartella: chip a sinistra, si scrive solo il valore finale -->
+                        <Border Height="36" Padding="10 0 4 0" Background="{DynamicResource PrimaryDarkBrush}" BorderThickness="1 1 0 1" BorderBrush="{DynamicResource IslandButtonBorderBrush}"
+                                CornerRadius="4 0 0 4" Visibility="{Binding HasIpPrefix, Converter={StaticResource ConverterBool2Visible}}">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock FontFamily="Cascadia Mono, Consolas" Foreground="{DynamicResource AccentMidBrush}" VerticalAlignment="Center" Text="{Binding IpPrefix}" />
+                                <Button Margin="6 0 0 0" Width="22" Height="22" Padding="0" Style="{x:Null}" Cursor="Hand" Focusable="False" Background="Transparent" BorderThickness="0"
+                                        Command="{Binding CmdRemovePrefix}" ToolTip="{DynamicResource host_prefix_remove}">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="Bd" Background="Transparent" CornerRadius="3">
+                                                <TextBlock Text="✕" FontSize="{fpx:FontPx 11}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource IslandSecondaryTextBrush}" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Bd" Property="Background" Value="{DynamicResource IslandHoverBrush}" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </StackPanel>
+                        </Border>
+                        <TextBox Grid.Column="1" Text="{Binding AddressInput, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True, ValidatesOnExceptions=True}"
+                                 Tag="e.g. 192.168.0.101"></TextBox>
+                        <TextBlock Grid.Column="2" Style="{StaticResource TextBlockBase}" Margin="12 0 8 0" VerticalAlignment="Center" Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{DynamicResource Port}"></TextBlock>
+                        <TextBox Grid.Column="3" Text="{Binding New.Port, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True, ValidatesOnExceptions=True, ValidatesOnNotifyDataErrors=True}"
+                                 InputMethod.IsInputMethodEnabled="False"
+                                 InputScope="Number"></TextBox>
+                    </Grid>
+                    <TextBlock Margin="0 6 0 0" FontSize="{fpx:FontPx 12}" Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{Binding PrefixHint}"
+                               Visibility="{Binding HasIpPrefix, Converter={StaticResource ConverterBool2Visible}}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}" />
+                        </TextBlock.Style>
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+    </StackPanel>
+</UserControl>

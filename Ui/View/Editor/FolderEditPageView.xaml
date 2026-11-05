@@ -1,0 +1,513 @@
+<UserControl x:Class="Lemora.View.Editor.FolderEditPageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:fpx="clr-namespace:Lemora.Utils"
+             xmlns:editor="clr-namespace:Lemora.View.Editor"
+             xmlns:controls="clr-namespace:Lemora.Controls"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance editor:FolderEditPageViewModel}">
+    <UserControl.Resources>
+        <!-- riquadro delle righe: un po' piu' scuro della scheda, come nel mock -->
+        <SolidColorBrush x:Key="ListBoxBrush" Color="Black" Opacity="0.2" />
+        <SolidColorBrush x:Key="PageCardBrush" Color="{DynamicResource PrimaryTextColor}" Opacity="0.05" />
+        <Style x:Key="SectionTitle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="FontSize" Value="{fpx:FontPx 12}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{DynamicResource AccentMidBrush}" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="FieldLabel" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="FontSize" Value="{fpx:FontPx 12}" />
+            <Setter Property="Foreground" Value="{DynamicResource IslandSecondaryTextBrush}" />
+            <Setter Property="Margin" Value="0 0 0 4" />
+        </Style>
+        <Style x:Key="Hint" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="FontSize" Value="{fpx:FontPx 12}" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="Foreground" Value="{DynamicResource IslandSecondaryTextBrush}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="{DynamicResource PageCardBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource IslandDividerBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="{StaticResource IslandRadius}" />
+            <Setter Property="Padding" Value="16" />
+            <Setter Property="Margin" Value="0 0 0 16" />
+        </Style>
+        <Style x:Key="MiniBtn" TargetType="Button" BasedOn="{StaticResource BtnSecondary}">
+            <Setter Property="Height" Value="28" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="Padding" Value="12 0" />
+        </Style>
+
+        <!-- schede: filo accent di 3 px sotto quella attiva -->
+        <Style TargetType="TabItem">
+            <Setter Property="Foreground" Value="{DynamicResource IslandSecondaryTextBrush}" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="Bd" Margin="0 0 6 0" Padding="18 11" BorderThickness="0 0 0 3" BorderBrush="Transparent" Background="Transparent">
+                            <ContentPresenter ContentSource="Header" TextElement.Foreground="{TemplateBinding Foreground}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource IslandHoverBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource AccentMidBrush}" />
+                                <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
+                                <Setter Property="FontWeight" Value="SemiBold" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Border Style="{StaticResource IslandBorder}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- intestazione: iniziale, nome grande, Annulla / Salva -->
+            <Grid Margin="22 20 22 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Border Width="44" Height="44" CornerRadius="4" Background="{DynamicResource IslandSubCardBrush}" VerticalAlignment="Top">
+                    <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 18}" FontWeight="SemiBold" Foreground="{DynamicResource AccentMidBrush}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Initial}" />
+                </Border>
+                <StackPanel Grid.Column="1" Margin="14 0 0 0" VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 24}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Text="{Binding HeaderName}" />
+                    <TextBlock Style="{StaticResource Hint}" Text="{Binding Tx[fe_title]}" />
+                </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Top">
+                    <Button Style="{StaticResource BtnDanger}" Height="36" Padding="16 0" Margin="0 0 10 0" Command="{Binding CmdDelete}" Content="{Binding Tx[fe_delete_folder]}" />
+                    <Button Style="{StaticResource BtnSecondary}" Height="36" MinWidth="90" Margin="0 0 10 0" Command="{Binding CmdCancel}" Content="{DynamicResource Cancel}" />
+                    <Button Style="{StaticResource BtnPrimary}" Height="36" MinWidth="90" Command="{Binding CmdSave}" Content="{DynamicResource Save}" />
+                </StackPanel>
+            </Grid>
+
+            <TabControl Grid.Row="1" Margin="0 12 0 0" BorderThickness="0" Padding="0" Background="Transparent" SelectedIndex="{Binding SelectedTab, Mode=TwoWay}">
+                <TabControl.Template>
+                    <ControlTemplate TargetType="TabControl">
+                        <DockPanel>
+                            <Border DockPanel.Dock="Top" BorderThickness="0 0 0 1" BorderBrush="{DynamicResource IslandDividerBrush}" Padding="22 0 22 0">
+                                <TabPanel IsItemsHost="True" />
+                            </Border>
+                            <ContentPresenter ContentSource="SelectedContent" />
+                        </DockPanel>
+                    </ControlTemplate>
+                </TabControl.Template>
+
+                <!-- 0. Dettagli -->
+                <TabItem Header="{Binding Tx[fe_tab_details]}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel Margin="22 20 22 22">
+                            <TextBlock Style="{StaticResource Hint}" Foreground="#FF9B94" Margin="0 0 0 12" Text="{Binding Error}"
+                                       Visibility="{Binding Error, Converter={StaticResource ConverterEqual2Collapsed}, ConverterParameter=''}" />
+
+                            <Border Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource SectionTitle}" Margin="0 0 0 12" Text="{Binding Tx[fe_name_pos]}" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="12" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel>
+                                            <TextBlock Style="{StaticResource FieldLabel}" Text="{Binding Tx[fe_name]}" />
+                                            <TextBox x:Name="NameBox" Height="36" VerticalContentAlignment="Center" Padding="8 0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock Style="{StaticResource FieldLabel}" Text="{Binding Tx[fe_inside]}" />
+                                            <ComboBox Height="36" ItemsSource="{Binding ParentChoices}" DisplayMemberPath="Display" SelectedValuePath="Path" SelectedValue="{Binding Parent}" />
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource SectionTitle}" Margin="0 0 0 12" Text="{Binding Tx[fe_domain_net]}" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="12" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel>
+                                            <TextBlock Style="{StaticResource FieldLabel}" Text="{Binding Tx[fe_domain]}" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBox Height="36" VerticalContentAlignment="Center" Padding="8 0" Tag="{Binding SuggestedDomain}" Text="{Binding Domain, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Button Grid.Column="1" Margin="8 0 0 0" Height="36" Style="{StaticResource BtnSecondary}" Padding="12 0" Command="{Binding CmdUseSuggestedDomain}"
+                                                        Content="{Binding Tx[fe_use_suggested]}" ToolTip="{Binding SuggestedDomain}" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock Style="{StaticResource FieldLabel}" Text="{Binding Tx[fe_network]}" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBox Height="36" VerticalContentAlignment="Center" Padding="8 0" FontFamily="Cascadia Mono, Consolas" Tag="{Binding SuggestedIpPrefix}"
+                                                         Text="{Binding IpPrefix, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Button Grid.Column="1" Margin="8 0 0 0" Height="36" Style="{StaticResource BtnSecondary}" Padding="12 0" Command="{Binding CmdUseSuggestedIpPrefix}"
+                                                        Content="{Binding Tx[fe_use_suggested]}" ToolTip="{Binding SuggestedIpPrefix}" />
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+                                    <CheckBox Margin="0 14 0 0" Content="{Binding ApplyDomainText}" IsChecked="{Binding ApplyDomainToServers}" />
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <Grid Margin="0 0 0 12">
+                                        <TextBlock Style="{StaticResource SectionTitle}" Text="{Binding SubfoldersTitle}" />
+                                        <Button HorizontalAlignment="Right" Style="{StaticResource MiniBtn}" Command="{Binding CmdNewSubfolder}" Content="{Binding Tx[fe_new_subfolder]}" />
+                                    </Grid>
+                                    <TextBlock Style="{StaticResource Hint}" Text="{Binding Tx[fe_no_subfolders]}"
+                                               Visibility="{Binding HasNoSubfolders, Converter={StaticResource ConverterBool2Visible}}" />
+                                    <ItemsControl ItemsSource="{Binding Subfolders}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0 0 0 8">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="140" />
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Style="{StaticResource TextBlockBase}" FontWeight="SemiBold" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Text="{Binding Name}" />
+                                                    <TextBox Grid.Column="1" Margin="0 0 8 0" Height="34" VerticalContentAlignment="Center" Padding="8 0" Text="{Binding Domain, UpdateSourceTrigger=PropertyChanged}" />
+                                                    <TextBox Grid.Column="2" Margin="0 0 8 0" Height="34" VerticalContentAlignment="Center" Padding="8 0" FontFamily="Cascadia Mono, Consolas" Text="{Binding IpPrefix, UpdateSourceTrigger=PropertyChanged}" />
+                                                    <Button Grid.Column="3" Height="34" Padding="12 0" Style="{StaticResource BtnSecondary}" Content="{Binding DataContext.Tx[fe_use_parent], RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                            Command="{Binding DataContext.CmdUseParent, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" />
+                                                    <Button Grid.Column="4" Margin="8 0 0 0" Height="34" Padding="12 0" Style="{StaticResource BtnDanger}" Content="{Binding DataContext.Tx[fe_delete_srv], RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                            Command="{Binding DataContext.CmdDeleteSubfolder, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+
+                <!-- 1. Server -->
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Tx[fe_tab_servers]}" />
+                            <TextBlock Margin="6 0 0 0" Opacity="0.6" Text="{Binding ServersTabCount}" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel Margin="22 20 22 22">
+                            <Border Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <Grid Margin="0 0 0 12">
+                                        <TextBlock Style="{StaticResource SectionTitle}" Text="{Binding ServersTitle}" />
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <Button Style="{StaticResource MiniBtn}" Command="{Binding CmdAddServerHere}" Content="{Binding Tx[fs_add_server]}" />
+                                            <Button Style="{StaticResource MiniBtn}" Margin="8 0 0 0" Command="{Binding CmdNewSubfolder}" Content="{Binding Tx[fe_sub_btn]}" />
+                                        </StackPanel>
+                                    </Grid>
+                                    <TextBlock Style="{StaticResource Hint}" Text="{Binding Tx[fe_no_servers]}" Visibility="{Binding HasNoServers, Converter={StaticResource ConverterBool2Visible}}" />
+                                    <Border Background="{DynamicResource ListBoxBrush}" BorderBrush="{DynamicResource IslandBorderBrush}" BorderThickness="1" CornerRadius="{StaticResource IslandRadius}">
+                                    <ItemsControl ItemsSource="{Binding Servers}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderThickness="0 0 0 1" BorderBrush="{DynamicResource IslandDividerBrush}" Padding="14 0">
+                                                <Grid MinHeight="52">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="64" />
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock FontSize="{fpx:FontPx 12}" FontWeight="Bold" VerticalAlignment="Center" Text="{Binding Protocol}">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+                                                                <Setter Property="Foreground" Value="{DynamicResource ProtocolOtherBrush}" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Protocol}" Value="RDP"><Setter Property="Foreground" Value="{DynamicResource ProtocolRdpBrush}" /></DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Protocol}" Value="SSH"><Setter Property="Foreground" Value="{DynamicResource ProtocolSshBrush}" /></DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Protocol}" Value="VNC"><Setter Property="Foreground" Value="{DynamicResource ProtocolVncBrush}" /></DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Protocol}" Value="SFTP"><Setter Property="Foreground" Value="{DynamicResource ProtocolSftpBrush}" /></DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                        <TextBlock Style="{StaticResource TextBlockBase}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Text="{Binding Name}" />
+                                                        <TextBlock Style="{StaticResource Hint}" FontSize="{fpx:FontPx 11}" FontFamily="Cascadia Mono, Consolas" TextTrimming="CharacterEllipsis" Text="{Binding Address}" />
+                                                    </StackPanel>
+                                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                                        <Button Style="{StaticResource MiniBtn}" Content="{Binding DataContext.Tx[fe_edit], RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                                Command="{Binding DataContext.CmdEditServer, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" />
+                                                        <!-- senza permesso (Teams in sola lettura) i due pulsanti si vedono spenti e dicono il perche' -->
+                                                        <Button Style="{StaticResource MiniBtn}" Margin="6 0 0 0" IsEnabled="{Binding CanChange}" Content="{Binding DataContext.Tx[fe_move], RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                                Command="{Binding DataContext.CmdMoveServer, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" />
+                                                        <Button Style="{StaticResource MiniBtn}" Margin="6 0 0 0" IsEnabled="{Binding CanChange}" Foreground="#FF9B94" Content="{Binding DataContext.Tx[fe_delete_srv], RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                                Command="{Binding DataContext.CmdDeleteServer, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" />
+                                                    </StackPanel>
+                                                </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+
+                <!-- 2. Credenziali di dominio -->
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Tx[fe_tab_domain]}" />
+                            <TextBlock Margin="6 0 0 0" Opacity="0.6" Text="{Binding CredentialsTabCount}" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel Margin="22 20 22 22">
+                            <Border Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <Grid Margin="0 0 0 8">
+                                        <TextBlock Style="{StaticResource SectionTitle}" Text="{Binding CredentialsTitle}" />
+                                        <Button HorizontalAlignment="Right" Style="{StaticResource MiniBtn}" Command="{Binding CmdShowAddCredential}" Content="{Binding Tx[fe_new]}" />
+                                    </Grid>
+                                    <TextBlock Style="{StaticResource Hint}" Margin="0 0 0 12" Text="{Binding Tx[fe_creds_desc]}" />
+                                    <TextBlock Style="{StaticResource Hint}" Margin="0 0 0 8" Text="{Binding Tx[fe_creds_none]}" Visibility="{Binding HasNoCredentials, Converter={StaticResource ConverterBool2Visible}}" />
+                                    <Border Background="{DynamicResource ListBoxBrush}" BorderBrush="{DynamicResource IslandBorderBrush}" BorderThickness="1" CornerRadius="{StaticResource IslandRadius}">
+                                    <ItemsControl ItemsSource="{Binding Credentials}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Padding="14 6" BorderThickness="0 0 0 1" BorderBrush="{DynamicResource IslandDividerBrush}">
+                                                    <StackPanel>
+                                                        <Grid MinHeight="34">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Style="{StaticResource TextBlockBase}" FontWeight="SemiBold" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" ToolTip="{Binding UserName}" Text="{Binding ShortName}" />
+                                                            <TextBlock Grid.Column="1" Margin="12 0 14 0" VerticalAlignment="Center" Style="{StaticResource Hint}" TextWrapping="NoWrap" Text="{Binding UsedText}" ToolTip="{DynamicResource folder_credential_used_by}" />
+                                                            <Button Grid.Column="2" Width="30" Height="30" Padding="0" Margin="0 0 6 0" Style="{StaticResource BtnSecondary}" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Content="&#xE8C8;"
+                                                                    ToolTip="{DynamicResource Password}"
+                                                                    Command="{Binding DataContext.CmdCopyCredential, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" />
+                                                            <Button Grid.Column="3" Width="30" Height="30" Padding="0" Style="{StaticResource BtnSecondary}" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Content="&#xE70F;"
+                                                                    ToolTip="{DynamicResource Edit}"
+                                                                    Command="{Binding DataContext.CmdEditCredential, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" />
+                                                        </Grid>
+                                                        <!-- matita: password, Salva ed Elimina (toglie la credenziale dai server che la usavano) -->
+                                                        <Grid Margin="0 6 0 4" Visibility="{Binding IsEditing, Converter={StaticResource ConverterBool2Visible}}">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <controls:PasswordInput Height="34" Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                                            <Button Grid.Column="1" Margin="8 0 0 0" Padding="14 0" Style="{StaticResource BtnPrimary}" Content="{DynamicResource Save}"
+                                                                    Visibility="{Binding IsDirty, Converter={StaticResource ConverterBool2Visible}}"
+                                                                    Command="{Binding DataContext.CmdSaveCredential, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" />
+                                                            <Button Grid.Column="2" Margin="8 0 0 0" Padding="14 0" Style="{StaticResource BtnDanger}" Content="{Binding DataContext.Tx[fe_delete_srv], RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                                    Command="{Binding DataContext.CmdDeleteCredential, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" />
+                                                        </Grid>
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    </Border>
+
+                                    <Border Margin="0 10 0 0" Padding="16" CornerRadius="{StaticResource IslandRadius}" BorderThickness="1" BorderBrush="{DynamicResource AccentMidBrush}"
+                                            Background="{DynamicResource PrimaryDarkBrush}" Visibility="{Binding IsAddingCredential, Converter={StaticResource ConverterBool2Visible}}">
+                                        <StackPanel>
+                                            <TextBlock Style="{StaticResource SectionTitle}" Margin="0 0 0 12" Text="{Binding Tx[fe_new_cred_title]}" />
+                                            <TextBlock Style="{StaticResource FieldLabel}" Text="{DynamicResource User}" />
+                                            <TextBox Height="36" Margin="0 0 0 10" VerticalContentAlignment="Center" Padding="8 0" Text="{Binding NewUserName, UpdateSourceTrigger=PropertyChanged}" />
+                                            <TextBlock Style="{StaticResource FieldLabel}" Text="{DynamicResource Password}" />
+                                            <controls:PasswordInput Height="36" Margin="0 0 0 12" Password="{Binding NewPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                            <Button HorizontalAlignment="Right" Style="{StaticResource BtnPrimary}" Padding="18 0" Command="{Binding CmdAddCredential}" Content="{Binding Tx[fe_add]}" />
+                                            <TextBlock Style="{StaticResource Hint}" Margin="0 10 0 0" Foreground="#FF9B94" Text="{Binding Error}"
+                                                       Visibility="{Binding Error, Converter={StaticResource ConverterEqual2Collapsed}, ConverterParameter=''}" />
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+
+                <!-- 3. Password condivise (gestore password) -->
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Tx[fe_tab_passwords]}" />
+                            <TextBlock Margin="6 0 0 0" Opacity="0.6" Text="{Binding DevicesTabCount}" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel Margin="22 20 22 22">
+                            <Border Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <Grid Margin="0 0 0 8">
+                                        <TextBlock Style="{StaticResource SectionTitle}" Text="{Binding DevicesTitle}" />
+                                        <Button HorizontalAlignment="Right" Style="{StaticResource MiniBtn}" Command="{Binding CmdNewDevice}" Content="{Binding Tx[dp_new]}"
+                                                Visibility="{Binding CanEditDevices, Converter={StaticResource ConverterBool2Visible}}" />
+                                    </Grid>
+                                    <TextBlock Style="{StaticResource Hint}" Margin="0 0 0 12" Text="{Binding Tx[fe_devices_desc]}" />
+                                    <TextBlock Style="{StaticResource Hint}" Margin="0 0 0 8" Text="{Binding Tx[fe_devices_none]}" Visibility="{Binding HasNoDevices, Converter={StaticResource ConverterBool2Visible}}" />
+
+                                    <Border Background="{DynamicResource ListBoxBrush}" BorderBrush="{DynamicResource IslandBorderBrush}" BorderThickness="1" CornerRadius="{StaticResource IslandRadius}">
+                                    <ItemsControl ItemsSource="{Binding Devices}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderThickness="0 0 0 1" BorderBrush="{DynamicResource IslandDividerBrush}" Padding="14 10">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="190" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <StackPanel>
+                                                            <TextBlock Style="{StaticResource TextBlockBase}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Text="{Binding Name}" />
+                                                            <TextBlock Style="{StaticResource Hint}" FontSize="{fpx:FontPx 11}" FontFamily="Cascadia Mono, Consolas" Text="{Binding Ip}" />
+                                                        </StackPanel>
+                                                        <ItemsControl Grid.Column="1" ItemsSource="{Binding Users}">
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <Grid Margin="0 2">
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="*" />
+                                                                            <ColumnDefinition Width="Auto" />
+                                                                            <ColumnDefinition Width="Auto" />
+                                                                            <ColumnDefinition Width="Auto" />
+                                                                        </Grid.ColumnDefinitions>
+                                                                        <TextBlock Style="{StaticResource TextBlockBase}" FontWeight="Normal" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Text="{Binding User}" />
+                                                                        <TextBlock Grid.Column="1" Margin="8 0" VerticalAlignment="Center" Style="{StaticResource Hint}" Text="&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;" />
+                                                                        <Button Grid.Column="2" Style="{StaticResource MiniBtn}" Margin="0 0 6 0" Content="{Binding DataContext.Tx[dp_user], RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                                Command="{Binding DataContext.CmdCopyUser, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
+                                                                        <Button Grid.Column="3" Style="{StaticResource BtnPrimary}" Height="28" MinHeight="0" Padding="12 0" Content="{Binding DataContext.Tx[dp_pass], RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                                Command="{Binding DataContext.CmdCopyPassword, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
+                                                                    </Grid>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                        <Button Grid.Column="2" Margin="10 0 0 0" Width="30" Height="28" Padding="0" VerticalAlignment="Top" Style="{StaticResource BtnSecondary}" Content="&#x270E;"
+                                                                Visibility="{Binding DataContext.CanEditDevices, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource ConverterBool2Visible}}"
+                                                                Command="{Binding DataContext.CmdEditDevice, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- modulo: nuova voce o modifica -->
+                            <Border Padding="16" CornerRadius="{StaticResource IslandRadius}" BorderThickness="1" BorderBrush="{DynamicResource AccentMidBrush}" Background="{DynamicResource PageCardBrush}"
+                                    Visibility="{Binding IsEditingDevice, Converter={StaticResource ConverterBool2Visible}}">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource SectionTitle}" Margin="0 0 0 12" Text="{Binding DeviceFormTitle}" />
+                                    <TextBlock Style="{StaticResource FieldLabel}" Text="{Binding Tx[dp_display_name]}" />
+                                    <TextBox Height="36" Margin="0 0 0 10" VerticalContentAlignment="Center" Padding="8 0" Text="{Binding DeviceName, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Style="{StaticResource FieldLabel}" Text="{Binding Tx[dp_ip]}" />
+                                    <TextBox Height="36" Margin="0 0 0 10" VerticalContentAlignment="Center" Padding="8 0" FontFamily="Cascadia Mono, Consolas" Text="{Binding DeviceIp, UpdateSourceTrigger=PropertyChanged}" />
+
+                                    <ItemsControl ItemsSource="{Binding DeviceUsers}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="0 8 0 0">
+                                                    <Grid>
+                                                        <TextBlock Style="{StaticResource FieldLabel}" Text="{Binding Label}" />
+                                                        <Button HorizontalAlignment="Right" Width="26" Height="24" Padding="0" Style="{StaticResource BtnSecondary}" Content="&#x2715;"
+                                                                Visibility="{Binding CanRemove, Converter={StaticResource ConverterBool2Visible}}"
+                                                                Command="{Binding DataContext.CmdRemoveDeviceUser, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
+                                                    </Grid>
+                                                    <TextBox Height="36" Margin="0 0 0 8" VerticalContentAlignment="Center" Padding="8 0" Text="{Binding User, UpdateSourceTrigger=PropertyChanged}" />
+                                                    <controls:PasswordInput Height="36" Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                    <Button Margin="0 12 0 0" Height="32" HorizontalAlignment="Stretch" Style="{StaticResource BtnSecondary}" Command="{Binding CmdAddDeviceUser}" Content="{Binding Tx[dp_add_user]}" />
+                                    <TextBlock Style="{StaticResource Hint}" Margin="0 10 0 0" Foreground="#FF9B94" Text="{Binding Error}"
+                                               Visibility="{Binding Error, Converter={StaticResource ConverterEqual2Collapsed}, ConverterParameter=''}" />
+                                    <Grid Margin="0 14 0 0">
+                                        <Button HorizontalAlignment="Left" Style="{StaticResource BtnDanger}" Height="32" Padding="14 0" Content="{Binding Tx[dp_delete]}" Command="{Binding CmdDeleteDevice}"
+                                                Visibility="{Binding CanDeleteExistingDevice, Converter={StaticResource ConverterBool2Visible}}" />
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <Button Style="{StaticResource BtnSecondary}" Height="32" MinWidth="90" Margin="0 0 8 0" Command="{Binding CmdCancelDevice}" Content="{DynamicResource Cancel}" />
+                                            <Button Style="{StaticResource BtnPrimary}" Height="32" MinWidth="90" Command="{Binding CmdSaveDevice}" Content="{DynamicResource Save}" />
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>
+
+            <!-- Sposta server / Elimina server (con password): finestra al centro della pagina, sfondo scurito -->
+            <Grid Grid.RowSpan="2" Panel.ZIndex="10" Background="#99000000"
+                  Visibility="{Binding IsDialogOpen, Converter={StaticResource ConverterBool2Visible}}">
+                <Border Width="520" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="22" Style="{StaticResource Card}"
+                        Background="{DynamicResource PrimaryDarkBrush}" BorderBrush="{DynamicResource IslandBorderBrush}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 18}" FontWeight="SemiBold" TextWrapping="Wrap" Text="{Binding DialogTitle}" />
+
+                        <!-- sposta -->
+                        <StackPanel Margin="0 16 0 0" Visibility="{Binding IsMoving, Converter={StaticResource ConverterBool2Visible}}">
+                            <TextBlock Style="{StaticResource FieldLabel}" Text="{Binding Tx[fe_move_to]}" />
+                            <ComboBox Height="36" ItemsSource="{Binding MoveChoices}" DisplayMemberPath="Display" SelectedValuePath="Path" SelectedValue="{Binding MoveTarget}" />
+                            <TextBlock Style="{StaticResource Hint}" Margin="0 8 0 0" Text="{Binding MoveNote}" />
+                        </StackPanel>
+
+                        <!-- elimina -->
+                        <StackPanel Margin="0 16 0 0" Visibility="{Binding IsDeletingServer, Converter={StaticResource ConverterBool2Visible}}">
+                            <TextBlock Style="{StaticResource Hint}" Margin="0 0 0 12" Text="{Binding DeleteText}" />
+                            <controls:PasswordInput Height="36" Password="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        </StackPanel>
+
+                        <TextBlock Style="{StaticResource Hint}" Margin="0 10 0 0" Foreground="#FF9B94" Text="{Binding DialogError}"
+                                   Visibility="{Binding DialogError, Converter={StaticResource ConverterEqual2Collapsed}, ConverterParameter=''}" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 18 0 0">
+                            <Button Style="{StaticResource BtnSecondary}" Height="34" MinWidth="90" Margin="0 0 8 0" Command="{Binding CmdCloseDialog}" Content="{DynamicResource Cancel}" />
+                            <Button Style="{StaticResource BtnPrimary}" Height="34" MinWidth="90" Command="{Binding CmdConfirmMove}" Content="{Binding Tx[fe_move_btn]}"
+                                    Visibility="{Binding IsMoving, Converter={StaticResource ConverterBool2Visible}}" />
+                            <Button Style="{StaticResource BtnDanger}" Height="34" MinWidth="90" Command="{Binding CmdConfirmDeleteServer}" Content="{Binding Tx[fe_delete_srv]}"
+                                    Visibility="{Binding IsDeletingServer, Converter={StaticResource ConverterBool2Visible}}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

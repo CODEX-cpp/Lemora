@@ -1,0 +1,49 @@
+﻿<protocolHosts1:HostBase x:Class="Lemora.View.Host.ProtocolHosts.VncHost"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:fpx="clr-namespace:Lemora.Utils"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:vncSharpCore="clr-namespace:VncSharpCore;assembly=VncSharpCore"
+                   xmlns:protocolHosts1="clr-namespace:Lemora.View.Host.ProtocolHosts"
+                   mc:Ignorable="d"
+                   d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid x:Name="ViewArea" SizeChanged="ViewArea_OnSizeChanged">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="VncFormsHost">
+                <vncSharpCore:RemoteDesktop x:Name="Vnc"/>
+            </WindowsFormsHost>
+            <ScrollBar x:Name="BarV" Grid.Column="1" Orientation="Vertical" Visibility="Collapsed" Style="{StaticResource IslandScrollBar}" ValueChanged="Bar_OnValueChanged" />
+            <ScrollBar x:Name="BarH" Grid.Row="1" Orientation="Horizontal" Visibility="Collapsed" Style="{StaticResource IslandScrollBar}" ValueChanged="Bar_OnValueChanged" />
+        </Grid>
+        <Control Name="GridLoading" Style="{StaticResource BusyAnimationStyle}" Background="{DynamicResource BackgroundBrush}"/>
+        <!-- il controllo VNC scrive da solo "Connecting to VNC host, please wait..." (in inglese, piccolo, senza il font scelto): finche' non arriva il primo
+             fotogramma resta nascosto e qui si mostra la scritta nostra, sotto la rotellina -->
+        <TextBlock x:Name="TbConnecting" Style="{StaticResource TextBlockBase}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 96 0 0"
+                   FontSize="{DynamicResource GlobalFontSizeBody}" Foreground="{DynamicResource IslandSecondaryTextBrush}"
+                   Text="{DynamicResource vnc_connecting}" IsHitTestVisible="False"
+                   Visibility="{Binding Visibility, ElementName=GridLoading}" />
+        <Grid Name="GridMessageBox" Background="{DynamicResource BackgroundBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.1*" MaxWidth="100" MinWidth="20"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="0.1*" MaxWidth="100" MinWidth="20"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Name="TbMessageTitle" FontSize="{fpx:FontPx 18}" FontWeight="SemiBold" HorizontalAlignment="Center" Text="Title" Foreground="{DynamicResource PrimaryTextBrush}" Margin="10"></TextBlock>
+                <TextBlock Name="TbMessage" FontSize="{fpx:FontPx 13.5}" HorizontalAlignment="Center" TextAlignment="Center" Text="" Foreground="{DynamicResource IslandSecondaryTextBrush}" Margin="5" TextWrapping="WrapWithOverflow" MaxWidth="560"></TextBlock>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 20 0 0">
+                    <Button x:Name="BtnReconn" Click="BtnReconn_OnClick" Style="{StaticResource BtnPrimary}" MinWidth="96" Margin="5" Content="{DynamicResource Reconnect}"></Button>
+                    <Button x:Name="BtnCancel" Click="BtnCancel_OnClick" Style="{StaticResource BtnSecondary}" Height="34" MinWidth="96" Margin="5" Content="{DynamicResource Dismiss}"></Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</protocolHosts1:HostBase>

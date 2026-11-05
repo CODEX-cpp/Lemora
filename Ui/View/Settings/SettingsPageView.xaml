@@ -1,0 +1,173 @@
+﻿<UserControl x:Class="Lemora.View.Settings.SettingsPageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:fpx="clr-namespace:Lemora.Utils"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:settings="clr-namespace:Lemora.View.Settings"
+             xmlns:s="https://github.com/canton7/Stylet"
+             xmlns:view="clr-namespace:Lemora.View"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance settings:SettingsPageViewModel}"
+             d:DesignHeight="800" d:DesignWidth="1100">
+
+    <UserControl.Resources>
+        <!-- voce di categoria: titolo + descrizione; la pagina aperta e' evidenziata (Tag="True") -->
+        <Style x:Key="SettingsNavCard" TargetType="Button" BasedOn="{StaticResource BtnNav}">
+            <Setter Property="Height" Value="Auto" />
+            <Setter Property="MinHeight" Value="58" />
+            <Setter Property="Margin" Value="0 0 0 6" />
+            <Setter Property="Background" Value="{DynamicResource IslandSubCardBrush}" />
+        </Style>
+        <Style x:Key="NavGeneral" TargetType="Button" BasedOn="{StaticResource SettingsNavCard}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding CurrentPage}" Value="{x:Static view:EnumMainWindowPage.SettingsGeneral}">
+                    <Setter Property="Tag" Value="True" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="NavLauncher" TargetType="Button" BasedOn="{StaticResource SettingsNavCard}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding CurrentPage}" Value="{x:Static view:EnumMainWindowPage.SettingsLauncher}">
+                    <Setter Property="Tag" Value="True" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="NavData" TargetType="Button" BasedOn="{StaticResource SettingsNavCard}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding CurrentPage}" Value="{x:Static view:EnumMainWindowPage.SettingsData}">
+                    <Setter Property="Tag" Value="True" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="NavTheme" TargetType="Button" BasedOn="{StaticResource SettingsNavCard}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding CurrentPage}" Value="{x:Static view:EnumMainWindowPage.SettingsTheme}">
+                    <Setter Property="Tag" Value="True" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="NavRunners" TargetType="Button" BasedOn="{StaticResource SettingsNavCard}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding CurrentPage}" Value="{x:Static view:EnumMainWindowPage.SettingsRunners}">
+                    <Setter Property="Tag" Value="True" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="NavVault" TargetType="Button" BasedOn="{StaticResource SettingsNavCard}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding CurrentPage}" Value="{x:Static view:EnumMainWindowPage.SettingsCredentialVault}">
+                    <Setter Property="Tag" Value="True" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="{DynamicResource PrimaryDarkBrush}" ClipToBounds="True" Grid.IsSharedSizeScope="True">
+    <Grid Margin="6 0 6 6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- barra strumenti: titolo e Fatto -->
+        <Border Grid.Row="0" Margin="0 0 0 6" Padding="16 0" Height="64"
+                Background="{DynamicResource PrimaryMidBrush}"
+                BorderBrush="{DynamicResource IslandBorderBrush}" BorderThickness="1"
+                CornerRadius="{StaticResource IslandRadius}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Style="{StaticResource TextBlockBase}" VerticalAlignment="Center" FontSize="{fpx:FontPx 16}" FontWeight="SemiBold"
+                           Text="{DynamicResource settings_title}" />
+                <!-- ricerca: filtra le impostazioni di Generale e Avvio rapido -->
+                <TextBox x:Name="TbSearch" Grid.Column="1" Width="380" Height="36" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="28 0 0 0"
+                         Tag="{DynamicResource settings_search_placeholder}" TextChanged="TbSearch_OnTextChanged" PreviewKeyDown="TbSearch_OnPreviewKeyDown" />
+                <Button Grid.Column="2" Style="{StaticResource BtnPrimary}" MinWidth="100" VerticalAlignment="Center"
+                        Command="{Binding CmdSaveAndGoBack}" Content="{DynamicResource settings_done}" />
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="260" />
+                <ColumnDefinition Width="6" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- isola categorie -->
+            <Border Grid.Column="0" Style="{StaticResource IslandBorder}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Margin="10 12 10 0">
+                        <Button Style="{StaticResource NavGeneral}" Command="{Binding CmdShowPage}" CommandParameter="{x:Static view:EnumMainWindowPage.SettingsGeneral}">
+                            <StackPanel Margin="0 8">
+                                <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 15}" FontWeight="SemiBold" Text="{DynamicResource system_options_general_title}" />
+                                <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 12.5}" Margin="0 2 0 0" Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{DynamicResource settings_nav_general_desc}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource NavLauncher}" Command="{Binding CmdShowPage}" CommandParameter="{x:Static view:EnumMainWindowPage.SettingsLauncher}">
+                            <StackPanel Margin="0 8">
+                                <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 15}" FontWeight="SemiBold" Text="{DynamicResource settings_nav_launcher}" />
+                                <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 12.5}" Margin="0 2 0 0" Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{DynamicResource settings_nav_launcher_desc}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource NavData}" Command="{Binding CmdShowPage}" CommandParameter="{x:Static view:EnumMainWindowPage.SettingsData}">
+                            <StackPanel Margin="0 8">
+                                <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 15}" FontWeight="SemiBold" Text="{DynamicResource system_options_data_security_database}" />
+                                <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 12.5}" Margin="0 2 0 0" Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{DynamicResource settings_nav_database_desc}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource NavTheme}" Command="{Binding CmdShowPage}" CommandParameter="{x:Static view:EnumMainWindowPage.SettingsTheme}">
+                            <StackPanel Margin="0 8">
+                                <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 15}" FontWeight="SemiBold" Text="{DynamicResource settings_nav_theme}" />
+                                <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 12.5}" Margin="0 2 0 0" Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{DynamicResource settings_nav_theme_desc}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource NavRunners}" Command="{Binding CmdShowPage}" CommandParameter="{x:Static view:EnumMainWindowPage.SettingsRunners}">
+                            <StackPanel Margin="0 8">
+                                <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 15}" FontWeight="SemiBold" Text="{DynamicResource settings_nav_protocol}" />
+                                <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 12.5}" Margin="0 2 0 0" Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{DynamicResource settings_nav_protocol_desc}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource NavVault}" Command="{Binding CmdShowPage}" CommandParameter="{x:Static view:EnumMainWindowPage.SettingsCredentialVault}">
+                            <StackPanel Margin="0 8">
+                                <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 15}" FontWeight="SemiBold" Text="{DynamicResource Credentials Vault}" />
+                                <TextBlock Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 12.5}" Margin="0 2 0 0" Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{DynamicResource settings_nav_vault_desc}" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <TextBlock Grid.Row="1" Margin="16 0 16 14" TextWrapping="Wrap" FontSize="{fpx:FontPx 12.5}" Style="{StaticResource TextBlockBase}"
+                               Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{DynamicResource settings_footer}" />
+                </Grid>
+            </Border>
+
+            <GridSplitter Grid.Column="1" Width="6" HorizontalAlignment="Stretch" Background="Transparent" ShowsPreview="False" IsEnabled="False" />
+
+            <!-- isola contenuto -->
+            <Border Grid.Column="2" Style="{StaticResource IslandBorder}">
+                <Grid>
+                    <ContentControl x:Name="NormalHost" s:View.Model="{Binding SelectedViewModel}" />
+
+                    <!-- risultati: le righe vere di Generale e Avvio rapido, filtrate e raggruppate -->
+                    <ScrollViewer x:Name="SearchHost" Visibility="Collapsed" VerticalScrollBarVisibility="Auto" Background="{DynamicResource BackgroundBrush}">
+                        <StackPanel MaxWidth="840" HorizontalAlignment="Stretch" Margin="32 24 32 32">
+                            <TextBlock x:Name="LabelGeneral" Style="{StaticResource SettingSection}" Margin="0 0 0 0" Text="{DynamicResource settings_group_general}" />
+                            <ContentControl x:Name="SearchGeneral" s:View.Model="{Binding GeneralSettingViewModel}" />
+                            <TextBlock x:Name="LabelLauncher" Style="{StaticResource SettingSection}" Margin="0 24 0 0" Text="{DynamicResource settings_group_launcher}" />
+                            <ContentControl x:Name="SearchLauncher" s:View.Model="{Binding LauncherSettingViewModel}" />
+                            <TextBlock x:Name="NoResults" Visibility="Collapsed" Margin="0 24 0 0" TextWrapping="Wrap" Style="{StaticResource TextBlockBase}"
+                                       Foreground="{DynamicResource IslandSecondaryTextBrush}" />
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+    </Grid>
+</UserControl>

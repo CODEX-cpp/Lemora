@@ -1,0 +1,166 @@
+﻿<UserControl x:Class="Lemora.View.Editor.Forms.Utils.UsersEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:fpx="clr-namespace:Lemora.Utils"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Lemora.Controls"
+             xmlns:utils="clr-namespace:Lemora.View.Editor.Forms.Utils"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance utils:UsersEditorViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <!-- credenziale condivisa: spenta = bordo grigio, attiva = fondo azzurro con segno di spunta -->
+        <Style x:Key="SharedCredButton" TargetType="ToggleButton">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="Bd" Height="38" Padding="18 0" Background="Transparent" BorderThickness="1" BorderBrush="#5A5A5A" CornerRadius="{StaticResource IslandRadius}">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock x:Name="Tick" Text="✓ " Visibility="Collapsed" Foreground="{DynamicResource AccentTextBrush}" FontWeight="SemiBold" />
+                                <ContentPresenter x:Name="Cp" TextElement.Foreground="#E0E0E0" />
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource IslandHoverBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentMidBrush}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource AccentMidBrush}" />
+                                <Setter TargetName="Cp" Property="TextElement.Foreground" Value="{DynamicResource AccentTextBrush}" />
+                                <Setter TargetName="Tick" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- interruttore 36x20: acceso = azzurro con pomello scuro -->
+        <Style x:Key="ToggleSwitch" TargetType="CheckBox">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <StackPanel Orientation="Horizontal" Background="Transparent">
+                            <Border x:Name="Track" Width="36" Height="20" CornerRadius="4" Background="#4A4A4A">
+                                <Border x:Name="Knob" Width="14" Height="14" CornerRadius="3" Background="#B8B8B8" HorizontalAlignment="Left" Margin="3 0 0 0" />
+                            </Border>
+                            <ContentPresenter Margin="8 0 0 0" VerticalAlignment="Center" TextElement.Foreground="{DynamicResource PrimaryTextBrush}" />
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Track" Property="Background" Value="{DynamicResource AccentMidBrush}" />
+                                <Setter TargetName="Knob" Property="Background" Value="#00283B" />
+                                <Setter TargetName="Knob" Property="HorizontalAlignment" Value="Right" />
+                                <Setter TargetName="Knob" Property="Margin" Value="0 0 3 0" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="LinkButton" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <TextBlock Text="{TemplateBinding Content}" Foreground="{DynamicResource AccentMidBrush}" Background="Transparent" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <Border Style="{StaticResource EditorSectionLine}" />
+        <TextBlock Style="{StaticResource EditorGroupTextBlockTitle}" Text="{DynamicResource editor_section_users}" />
+
+        <!-- credenziali condivise della cartella -->
+        <StackPanel Visibility="{Binding HasSharedCredentials, Converter={StaticResource ConverterBool2Visible}}" Margin="0 0 0 6">
+            <TextBlock Style="{StaticResource TextBlockBase}" Margin="0 0 0 10" TextWrapping="Wrap" Text="{Binding SharedHeader}" />
+            <ItemsControl ItemsSource="{Binding SharedCredentials}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ToggleButton Style="{StaticResource SharedCredButton}" Margin="0 0 8 8" Content="{Binding UserName}" IsChecked="{Binding IsActive, Mode=TwoWay}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <StackPanel Orientation="Horizontal" Margin="0 2 0 8">
+                <TextBlock Style="{StaticResource TextBlockBase}" Foreground="{DynamicResource IslandSecondaryTextBrush}" FontSize="{fpx:FontPx 12}" Text="{Binding SharedNote}" />
+                <Button Style="{StaticResource LinkButton}" Margin="6 0 0 0" Command="{Binding CmdManageFolder}" Content="{DynamicResource users_manage_in_folder}" />
+            </StackPanel>
+            <TextBlock Style="{StaticResource TextBlockBase}" Margin="0 8 0 10" FontWeight="SemiBold" Text="{DynamicResource users_other_title}" />
+        </StackPanel>
+
+        <!-- cartella senza credenziali condivise -->
+        <StackPanel Orientation="Horizontal" Margin="0 0 0 12" Visibility="{Binding ShowNoSharedHint, Converter={StaticResource ConverterBool2Visible}}">
+            <TextBlock Style="{StaticResource TextBlockBase}" Foreground="{DynamicResource IslandSecondaryTextBrush}" FontSize="{fpx:FontPx 12}" TextWrapping="Wrap" Text="{Binding NoSharedText}" />
+            <Button Style="{StaticResource LinkButton}" Margin="6 0 0 0" Command="{Binding CmdManageFolder}" Content="{DynamicResource users_manage_in_folder}" />
+        </StackPanel>
+
+        <!-- utenti locali -->
+        <ItemsControl ItemsSource="{Binding Rows}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0 0 0 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox Height="36" Margin="0 0 10 0" Tag="{DynamicResource User}" Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" />
+                        <CheckBox Grid.Column="1" Margin="0 0 10 0" VerticalAlignment="Center" Content="{DynamicResource users_use_key}" IsChecked="{Binding UsePrivateKey}"
+                                  Visibility="{Binding DataContext.CanUsePrivateKey, RelativeSource={RelativeSource AncestorType=ItemsControl}, Converter={StaticResource ConverterBool2Visible}}" />
+                        <Grid Grid.Column="2" Margin="0 0 10 0">
+                            <controls:PasswordInput Height="36" Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                    Visibility="{Binding UsePrivateKey, Converter={StaticResource ConverterBool2VisibleInv}}" />
+                            <Grid Visibility="{Binding UsePrivateKey, Converter={StaticResource ConverterBool2Visible}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Height="36" Text="{Binding PrivateKey}" />
+                                <Button Grid.Column="1" Margin="6 0 0 0" Padding="12 0" Style="{StaticResource BtnSecondary}" Content="{DynamicResource Select}"
+                                        Command="{Binding DataContext.CmdSelectKey, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" />
+                            </Grid>
+                        </Grid>
+                        <CheckBox Grid.Column="3" Style="{StaticResource ToggleSwitch}" Margin="0 0 10 0" VerticalAlignment="Center" Content="{DynamicResource users_share}" IsChecked="{Binding Share}"
+                                  IsEnabled="{Binding CanShare}"
+                                  Visibility="{Binding DataContext.HasFolder, RelativeSource={RelativeSource AncestorType=ItemsControl}, Converter={StaticResource ConverterBool2Visible}}" />
+                        <Button Grid.Column="4" Width="36" Height="36" Padding="0" Style="{StaticResource BtnSecondary}" Content="✕"
+                                Command="{Binding DataContext.CmdRemoveUser, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" />
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Button Style="{StaticResource BtnSecondary}" HorizontalAlignment="Left" Padding="16 0" Height="36" Margin="0 4 0 14"
+                Foreground="{DynamicResource AccentMidBrush}" Command="{Binding CmdAddUser}" Content="{DynamicResource users_add}" />
+
+        <CheckBox Margin="0 0 0 12" Content="{DynamicResource users_ask}" IsChecked="{Binding AskWhichUser}" />
+
+        <Grid Margin="0 0 0 6" Visibility="{Binding ShowDefault, Converter={StaticResource ConverterBool2Visible}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Style="{StaticResource TextBlockBase}" VerticalAlignment="Center" Margin="0 0 16 0" Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{DynamicResource users_default}" />
+            <ComboBox Grid.Column="1" Width="260" Height="36" ItemsSource="{Binding DefaultChoices}" DisplayMemberPath="Display" SelectedValuePath="Key" SelectedValue="{Binding DefaultUserKey, Mode=TwoWay}" />
+            <TextBlock Grid.Column="2" Style="{StaticResource TextBlockBase}" VerticalAlignment="Center" Margin="12 0 0 0" FontSize="{fpx:FontPx 12}" Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{DynamicResource users_default_hint}" />
+        </Grid>
+    </StackPanel>
+</UserControl>

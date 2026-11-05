@@ -1,0 +1,49 @@
+<styles:WindowChromeBase x:Class="Lemora.View.Utils.VaultWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:fpx="clr-namespace:Lemora.Utils"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:ctl="clr-namespace:Lemora.Controls"
+                  xmlns:styles="clr-namespace:Shawn.Utils.WpfResources.Theme.Styles;assembly=Shawn.Utils.WpfResources"
+                  WindowStartupLocation="CenterScreen"
+                  ResizeMode="NoResize"
+                  WindowStyle="None"
+                  Background="Transparent"
+                  SizeToContent="Height"
+                  Topmost="True"
+                  Title="Lemora" Width="560">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="-1" />
+    </WindowChrome.WindowChrome>
+
+    <!-- password principale: crea (primo avvio), sblocca (password o Windows Hello non riuscito), cambia (Impostazioni) -->
+    <ctl:DialogFrame Margin="40" Title="Lemora" CanDragWindow="True">
+        <StackPanel Margin="24 20 24 22">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ctl:DialogIcon Kind="Info" Width="40" Height="40" Margin="0 0 16 0" VerticalAlignment="Top" />
+                <StackPanel Grid.Column="1">
+                    <TextBlock x:Name="TbTitle" Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 20}" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryTextBrush}" TextWrapping="Wrap" />
+                    <TextBlock x:Name="TbInfo" Style="{StaticResource TextBlockBase}" Margin="0 8 0 0" TextWrapping="Wrap" Foreground="{DynamicResource IslandSecondaryTextBrush}" />
+                </StackPanel>
+            </Grid>
+
+            <TextBlock x:Name="TbLabel1" Style="{StaticResource TextBlockBase}" Margin="0 18 0 6" />
+            <PasswordBox x:Name="Pwd1" Height="36" VerticalContentAlignment="Center" AutomationProperties.AutomationId="VaultPassword" />
+            <StackPanel x:Name="PanelConfirm">
+                <TextBlock x:Name="TbLabel2" Style="{StaticResource TextBlockBase}" Margin="0 12 0 6" />
+                <PasswordBox x:Name="Pwd2" Height="36" VerticalContentAlignment="Center" AutomationProperties.AutomationId="VaultPasswordConfirm" />
+            </StackPanel>
+            <CheckBox x:Name="CbHello" Margin="0 14 0 0" IsChecked="True" AutomationProperties.AutomationId="VaultHello">
+                <TextBlock x:Name="TbHello" TextWrapping="Wrap" />
+            </CheckBox>
+            <TextBlock x:Name="TbError" Style="{StaticResource TextBlockBase}" Margin="0 12 0 0" TextWrapping="Wrap" Foreground="#E5534B" Visibility="Collapsed" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
+                <Button x:Name="BtnCancel" Style="{StaticResource BtnSecondary}" Padding="18 0" Height="36" IsCancel="True" Click="BtnCancel_OnClick" />
+                <Button x:Name="BtnOk" Style="{StaticResource BtnPrimary}" Margin="10 0 0 0" Padding="18 0" Height="36" IsDefault="True" Click="BtnOk_OnClick" AutomationProperties.AutomationId="VaultOk" />
+            </StackPanel>
+        </StackPanel>
+    </ctl:DialogFrame>
+</styles:WindowChromeBase>

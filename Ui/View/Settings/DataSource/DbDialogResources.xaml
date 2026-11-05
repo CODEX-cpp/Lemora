@@ -1,0 +1,47 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:fpx="clr-namespace:Lemora.Utils"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- finestre di modifica delle origini dati (MySQL, PostgreSQL, SQLite): stile Fluent Islands -->
+
+    <!-- errore sul campo: bordo rosso tenue + messaggio a destra, dentro il campo -->
+    <ControlTemplate x:Key="DbInlineError">
+        <Grid>
+            <AdornedElementPlaceholder x:Name="Ph" />
+            <Border IsHitTestVisible="False" BorderThickness="1" BorderBrush="#F28B82" CornerRadius="{StaticResource IslandRadius}" />
+            <TextBlock IsHitTestVisible="False" FontSize="{fpx:FontPx 12}" Foreground="#F28B82" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"
+                       Text="{Binding ElementName=Ph, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />
+        </Grid>
+    </ControlTemplate>
+
+    <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="Height" Value="36" />
+        <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DbInlineError}" />
+    </Style>
+
+    <Style x:Key="DbLabel" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{DynamicResource IslandSecondaryTextBrush}" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <!-- tasto ✕ in alto a destra -->
+    <Style x:Key="DbCloseButton" TargetType="Button">
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bd" Background="Transparent" CornerRadius="{StaticResource IslandRadius}">
+                        <TextBlock Text="✕" FontSize="{fpx:FontPx 12}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource IslandSecondaryTextBrush}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource IslandHoverBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

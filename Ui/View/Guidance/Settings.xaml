@@ -1,0 +1,127 @@
+﻿<UserControl x:Class="Lemora.View.Guidance.Settings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:fpx="clr-namespace:Lemora.Utils"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Lemora.View.Guidance"
+             xmlns:attachProperty="clr-namespace:Shawn.Utils.WpfResources.Theme.AttachProperty;assembly=Shawn.Utils.WpfResources"
+             Background="{DynamicResource BackgroundBrush}"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance local:GuidanceWindow}"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <!-- vedi Intro.xaml: sfumature e testi dal colore del testo dello sfondo, leggibili anche con i temi chiari -->
+        <SolidColorBrush x:Key="IslandSecondaryTextBrush" Color="{DynamicResource BackgroundTextColor}" Opacity="0.7" />
+        <SolidColorBrush x:Key="IslandButtonBorderBrush" Color="{DynamicResource BackgroundTextColor}" Opacity="0.35" />
+        <SolidColorBrush x:Key="IslandSubCardBrush" Color="{DynamicResource BackgroundTextColor}" Opacity="0.04" />
+        <SolidColorBrush x:Key="IslandHoverBrush" Color="{DynamicResource BackgroundTextColor}" Opacity="0.08" />
+        <Style x:Key="SecondaryText" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="Foreground" Value="{DynamicResource IslandSecondaryTextBrush}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style x:Key="PrimaryText" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="Foreground" Value="{DynamicResource BackgroundTextBrush}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <!-- scheda selezionabile (profilo): bordo accent e fondo tenue quando scelta -->
+        <Style x:Key="ProfileCard" TargetType="RadioButton">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="Bd" Padding="18 16" CornerRadius="{StaticResource IslandRadius}" BorderThickness="1" BorderBrush="{DynamicResource IslandButtonBorderBrush}"
+                                Background="{DynamicResource IslandSubCardBrush}">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource IslandHoverBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource AccentMidBrush}" />
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource IslandSelectedBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <!-- primo avvio, passo 2 (blueprint §12): tema, due interruttori e scelta del profilo come due schede -->
+    <StackPanel Margin="40 40 40 0">
+        <!-- margine a destra: il selettore della lingua sta in alto a destra e non deve coprire il titolo -->
+        <TextBlock Margin="0 0 270 0" FontSize="{fpx:FontPx 22}" FontWeight="SemiBold" Style="{StaticResource PrimaryText}" Text="{DynamicResource guidance_feature_start_setting1}" TextWrapping="Wrap" />
+        <TextBlock Margin="0 6 0 22" FontSize="{fpx:FontPx 14}" Style="{StaticResource SecondaryText}" Text="{DynamicResource guidance_feature_start_setting2}" />
+
+        <Grid Margin="0 0 0 16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="280" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Style="{StaticResource PrimaryText}" Text="{DynamicResource Theme}" />
+            <ComboBox Grid.Column="1" Width="260" Height="34"
+                      ItemsSource="{Binding SettingsPageViewModel.ThemeList}"
+                      SelectedItem="{Binding SettingsPageViewModel.ThemeName}" />
+        </Grid>
+
+        <Grid Margin="0 0 0 16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="280" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Style="{StaticResource PrimaryText}" Text="{DynamicResource 'Run automatically at OS startup'}" />
+            <ToggleButton Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding SettingsPageViewModel.AppStartAutomatically, Mode=TwoWay}" />
+        </Grid>
+
+        <Grid Margin="0 0 0 22">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="280" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Style="{StaticResource PrimaryText}" Text="{DynamicResource 'Create desktop shortcut'}" />
+            <ToggleButton Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding SettingsPageViewModel.CreateDesktopShortcut, Mode=TwoWay}" />
+        </Grid>
+
+        <!-- scelta del profilo solo se e' possibile: con l'installer il profilo e' sempre nella cartella AppData dell'utente (il programma sta in Programmi, non scrivibile), quindi si mostra solo dove finiscono i dati -->
+        <TextBlock Margin="0 0 0 10" FontSize="{fpx:FontPx 12}" FontWeight="SemiBold" Foreground="{DynamicResource AccentMidBrush}" Style="{StaticResource TextBlockBase}" Text="{DynamicResource 'User profile'}" />
+        <TextBlock Visibility="{Binding SettingsPageViewModel.ProfileModeIsEnabled, Converter={StaticResource ConverterBool2VisibleInv}, FallbackValue=Collapsed}">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource SecondaryText}">
+                    <Setter Property="Text" Value="{DynamicResource 'Profile is saved in your Windows AppData folder'}" />
+                    <Style.Triggers>
+                        <!-- scelta fissata dall'installer: portatile = i dati stanno accanto al programma -->
+                        <DataTrigger Binding="{Binding SettingsPageViewModel.ProfileModeIsPortable}" Value="True">
+                            <Setter Property="Text" Value="{DynamicResource 'Profile is saved where executable is located'}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <UniformGrid Rows="1" Margin="-6 0" Visibility="{Binding SettingsPageViewModel.ProfileModeIsEnabled, Converter={StaticResource ConverterBool2Visible}, FallbackValue=Visible}">
+            <RadioButton Style="{StaticResource ProfileCard}" GroupName="ProfileMode" Margin="6 0"
+                         IsChecked="{Binding SettingsPageViewModel.ProfileModeIsPortable, Mode=TwoWay}"
+                         IsEnabled="{Binding SettingsPageViewModel.ProfileModeIsEnabled, Mode=OneTime}">
+                <StackPanel>
+                    <TextBlock FontSize="{fpx:FontPx 15}" FontWeight="SemiBold" Style="{StaticResource PrimaryText}" Text="{DynamicResource 'Portable mode'}" />
+                    <TextBlock Margin="0 6 0 0" Style="{StaticResource SecondaryText}" Text="{DynamicResource 'Profile is saved where executable is located'}" />
+                </StackPanel>
+            </RadioButton>
+            <RadioButton Style="{StaticResource ProfileCard}" GroupName="ProfileMode" Margin="6 0"
+                         IsChecked="{Binding SettingsPageViewModel.ProfileModeIsPortable, Converter={StaticResource ConverterBoolInverse}, Mode=TwoWay}"
+                         IsEnabled="{Binding SettingsPageViewModel.ProfileModeIsEnabled, Mode=OneTime}">
+                <StackPanel>
+                    <TextBlock FontSize="{fpx:FontPx 15}" FontWeight="SemiBold" Style="{StaticResource PrimaryText}" Text="{DynamicResource 'Install for current windows account'}" />
+                    <TextBlock Margin="0 6 0 0" Style="{StaticResource SecondaryText}" Text="{DynamicResource 'Profile is saved in your Windows AppData folder'}" />
+                </StackPanel>
+            </RadioButton>
+        </UniformGrid>
+    </StackPanel>
+</UserControl>

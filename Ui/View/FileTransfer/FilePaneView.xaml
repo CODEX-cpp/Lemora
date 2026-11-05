@@ -1,0 +1,188 @@
+<UserControl x:Class="Lemora.View.FileTransfer.FilePaneView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:fpx="clr-namespace:Lemora.Utils"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Lemora.View.FileTransfer">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="FileTransferResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="FtNavGlyph" TargetType="Button" BasedOn="{StaticResource FtTextButton}">
+                <Setter Property="FontFamily" Value="Segoe Fluent Icons, Segoe MDL2 Assets" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Width" Value="34" />
+                <Setter Property="Height" Value="34" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="0 0 2 0" />
+            </Style>
+            <Style x:Key="FtHeaderButton" TargetType="Button" BasedOn="{StaticResource FtTextButton}">
+                <Setter Property="Foreground" Value="#A8A8A8" />
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                <Setter Property="Padding" Value="0 4" />
+                <Setter Property="Margin" Value="0" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <!-- una colonna del navigatore (questo PC o PC remoto): intestazione, navigazione, elenco a colonne, stati, piede -->
+    <Border Background="{DynamicResource PrimaryDarkBrush}" BorderBrush="{DynamicResource IslandBorderBrush}" BorderThickness="1" CornerRadius="4" ClipToBounds="True">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Margin="18 14 18 10">
+                <TextBlock Text="{Binding Label}" FontSize="{fpx:FontPx 11.5}" FontWeight="SemiBold" Foreground="{DynamicResource AccentMidBrush}" VerticalAlignment="Center" Style="{StaticResource TextBlockBase}" />
+                <TextBlock Text="{Binding Sub}" Margin="12 0 0 0" MaxWidth="260" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Style="{StaticResource TextBlockBase}" />
+            </StackPanel>
+            <!-- navigazione + percorso a briciole -->
+            <Grid Grid.Row="1" Margin="10 0 10 8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <Button Style="{StaticResource FtNavGlyph}" Content="&#xE72B;" Command="{Binding CmdBack}" IsEnabled="{Binding CanBack}" ToolTip="{DynamicResource ft_back}" />
+                    <Button Style="{StaticResource FtNavGlyph}" Content="&#xE72A;" Command="{Binding CmdForward}" IsEnabled="{Binding CanForward}" ToolTip="{DynamicResource ft_forward}" />
+                    <Button Style="{StaticResource FtNavGlyph}" Content="&#xE74A;" Command="{Binding CmdUp}" IsEnabled="{Binding CanUp}" ToolTip="{DynamicResource ft_up}" />
+                    <Button Style="{StaticResource FtNavGlyph}" Content="&#xE72C;" Command="{Binding CmdRefresh}" ToolTip="{DynamicResource ft_refresh}" />
+                    <Button Style="{StaticResource FtNavGlyph}" Content="&#xE8F4;" Command="{Binding CmdNewFolder}" ToolTip="{DynamicResource ft_new_folder}" />
+                </StackPanel>
+                <Border Grid.Column="1" Margin="6 0 0 0" Height="34" Padding="10 0" BorderThickness="1" CornerRadius="4" BorderBrush="{DynamicResource IslandBorderBrush}" Background="#171717">
+                    <ItemsControl ItemsSource="{Binding Crumbs}" VerticalAlignment="Center">
+                        <ItemsControl.ItemsPanel><ItemsPanelTemplate><StackPanel Orientation="Horizontal" /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#x203A;" Margin="4 0" Foreground="#7D7D7D" VerticalAlignment="Center" Style="{StaticResource TextBlockBase}" x:Name="Sep" />
+                                    <Button Style="{StaticResource FtTextButton}" Padding="4 2" Margin="0" Content="{Binding Text}" Command="{Binding DataContext.CmdGo, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding Path}" />
+                                </StackPanel>
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding Text}" Value=""><Setter TargetName="Sep" Property="Visibility" Value="Collapsed" /></DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <ListView x:Name="List" ItemsSource="{Binding Items}" SelectionMode="Extended" BorderThickness="0" Background="Transparent" AllowDrop="True"
+                          SelectionChanged="List_OnSelectionChanged" MouseDoubleClick="List_OnMouseDoubleClick" PreviewKeyDown="List_OnPreviewKeyDown"
+                          PreviewMouseLeftButtonDown="List_OnPreviewMouseLeftButtonDown" PreviewMouseMove="List_OnPreviewMouseMove" GotKeyboardFocus="List_OnGotFocus"
+                          DragEnter="List_OnDragOver" DragOver="List_OnDragOver" DragLeave="List_OnDragLeave" Drop="List_OnDrop"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingPanel.IsVirtualizing="True">
+                    <ListView.Resources>
+                        <!-- intestazioni delle colonne in tema scuro (quelle di sistema sono bianche) -->
+                        <Style TargetType="GridViewColumnHeader">
+                            <Setter Property="Foreground" Value="#A8A8A8" />
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="FontSize" Value="{fpx:FontPx 12.5}" />
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="GridViewColumnHeader">
+                                        <Grid>
+                                            <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="#303030" BorderThickness="0 0 0 1" Padding="8 7">
+                                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center" />
+                                            </Border>
+                                            <Thumb x:Name="PART_HeaderGripper" HorizontalAlignment="Right" Width="6" Opacity="0" Cursor="SizeWE" />
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Bd" Property="Background" Value="#2A2A2A" /></Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.Resources>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Foreground" Value="{DynamicResource BackgroundTextBrush}" />
+                            <Setter Property="Height" Value="34" />
+                            <Setter Property="Padding" Value="8 0" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <Border x:Name="Bd" Background="Transparent" Padding="{TemplateBinding Padding}" BorderThickness="1" BorderBrush="Transparent" CornerRadius="3">
+                                            <GridViewRowPresenter VerticalAlignment="Center" Columns="{TemplateBinding GridView.ColumnCollection}" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Bd" Property="Background" Value="#2A2A2A" /></Trigger>
+                                            <Trigger Property="IsSelected" Value="True"><Setter TargetName="Bd" Property="Background" Value="{StaticResource FtRowHoverBrush}" /></Trigger>
+                                            <Trigger Property="Tag" Value="DropTarget"><Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource AccentMidBrush}" /></Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="False">
+                            <GridViewColumn Width="270">
+                                <GridViewColumnHeader Content="{DynamicResource ft_col_name}" Tag="Name" Click="Header_OnClick" />
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Path Width="16" Height="16" Stretch="Uniform" StrokeThickness="1.5" Margin="0 0 10 0" VerticalAlignment="Center" StrokeLineJoin="Round">
+                                                <Path.Style>
+                                                    <Style TargetType="Path">
+                                                        <Setter Property="Data" Value="M 6,2 L 14,2 L 18,6 L 18,22 L 6,22 Z M 14,2 L 14,6 L 18,6" />
+                                                        <Setter Property="Stroke" Value="#C8C8C8" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsDirectory}" Value="True">
+                                                                <Setter Property="Data" Value="M 2,6 L 9,6 L 11,8 L 22,8 L 22,19 L 2,19 Z" />
+                                                                <Setter Property="Stroke" Value="{DynamicResource AccentMidBrush}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Path.Style>
+                                            </Path>
+                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" MaxWidth="230" Style="{StaticResource TextBlockBase}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="130" DisplayMemberBinding="{Binding DateText}">
+                                <GridViewColumnHeader Content="{DynamicResource ft_col_date}" Tag="Date" Click="Header_OnClick" />
+                            </GridViewColumn>
+                            <GridViewColumn Width="110" DisplayMemberBinding="{Binding TypeText}">
+                                <GridViewColumnHeader Content="{DynamicResource ft_col_type}" Tag="Type" Click="Header_OnClick" />
+                            </GridViewColumn>
+                            <GridViewColumn Width="90">
+                                <GridViewColumnHeader Content="{DynamicResource ft_col_size}" Tag="Size" Click="Header_OnClick" />
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate><TextBlock Text="{Binding SizeText}" TextAlignment="Right" Style="{StaticResource TextBlockBase}" /></DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <!-- stati -->
+                <TextBlock Text="{DynamicResource ft_loading}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#A8A8A8" Style="{StaticResource TextBlockBase}"
+                           Visibility="{Binding Loading, Converter={StaticResource ConverterBool2Visible}}" />
+                <TextBlock Text="{DynamicResource ft_pane_empty}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#A8A8A8" Style="{StaticResource TextBlockBase}"
+                           Visibility="{Binding ShowEmpty, Converter={StaticResource ConverterBool2Visible}}" />
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="360" Visibility="{Binding HasError, Converter={StaticResource ConverterBool2Visible}}">
+                    <TextBlock Text="{Binding ErrorTitle}" FontWeight="SemiBold" FontSize="{fpx:FontPx 15}" Foreground="#FF9B94" TextAlignment="Center" TextWrapping="Wrap" Style="{StaticResource TextBlockBase}" />
+                    <TextBlock Text="{Binding ErrorText}" Foreground="#C8C8C8" TextAlignment="Center" TextWrapping="Wrap" Margin="0 8 0 0" Style="{StaticResource TextBlockBase}" />
+                    <Button Style="{StaticResource BtnSecondary}" Content="{DynamicResource ft_retry}" Command="{Binding CmdRefresh}" HorizontalAlignment="Center" Margin="0 12 0 0" Height="32" Padding="14 0" />
+                </StackPanel>
+                <!-- trasferimento file non disponibile (solo colonna remota): i motivi e l'azione vengono dal modello della sessione -->
+                <Border x:Name="UnavailableOverlay" Background="{DynamicResource PrimaryDarkBrush}" Visibility="Collapsed">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="380">
+                        <TextBlock x:Name="UnavTitle" FontWeight="SemiBold" FontSize="{fpx:FontPx 15}" Foreground="#FF9B94" TextAlignment="Center" TextWrapping="Wrap" Style="{StaticResource TextBlockBase}" />
+                        <TextBlock x:Name="UnavText" Foreground="#C8C8C8" TextAlignment="Center" TextWrapping="Wrap" Margin="0 8 0 0" Style="{StaticResource TextBlockBase}" />
+                        <Button x:Name="UnavButton" Style="{StaticResource BtnSecondary}" HorizontalAlignment="Center" Margin="0 12 0 0" Height="32" Padding="14 0" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+            <Border Grid.Row="3" BorderThickness="0 1 0 0" BorderBrush="#303030" Padding="18 8">
+                <TextBlock Text="{Binding FooterText}" FontSize="{fpx:FontPx 12.5}" Foreground="#A8A8A8" TextTrimming="CharacterEllipsis" Style="{StaticResource TextBlockBase}" />
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>

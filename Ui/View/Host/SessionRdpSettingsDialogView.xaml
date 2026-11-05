@@ -1,0 +1,89 @@
+﻿<styles:WindowChromeBase x:Class="Lemora.View.Host.SessionRdpSettingsDialogView"
+                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:fpx="clr-namespace:Lemora.Utils"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                         xmlns:styles="clr-namespace:Shawn.Utils.WpfResources.Theme.Styles;assembly=Shawn.Utils.WpfResources"
+                         xmlns:attachProperty="clr-namespace:Shawn.Utils.WpfResources.Theme.AttachProperty;assembly=Shawn.Utils.WpfResources"
+                         xmlns:host="clr-namespace:Lemora.View.Host"
+                         xmlns:forms="clr-namespace:Lemora.View.Editor.Forms"
+                         ShowInTaskbar="False"
+                         ResizeMode="NoResize"
+                         WindowStyle="None"
+                         SizeToContent="Height"
+                         MaxHeight="780"
+                         WindowStartupLocation="CenterOwner"
+                         Background="Transparent"
+                         mc:Ignorable="d"
+                         d:DataContext="{d:DesignInstance host:SessionRdpSettingsDialogViewModel}"
+                         Title="SessionRdpSettingsDialogView" Width="1000" MaxWidth="1000">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="-1" />
+    </WindowChrome.WindowChrome>
+    <styles:WindowChromeBase.Resources>
+        <!-- la sezione del modulo RDP, qui, e' il contenuto del pannello: niente cornice scura e niente intestazione che apre e chiude -->
+        <Style x:Key="FlatSection" TargetType="Expander">
+            <Setter Property="Margin" Value="0 16 0 0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Expander">
+                        <ContentPresenter />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </styles:WindowChromeBase.Resources>
+    <Border Margin="40" Padding="0" Background="Transparent">
+        <Grid>
+<Border IsHitTestVisible="False" CornerRadius="8" Background="{DynamicResource BackgroundBrush}">
+<Border.Effect>
+                <DropShadowEffect BlurRadius="12" Opacity="0.6" />
+            </Border.Effect>
+</Border>
+<Border CornerRadius="8" Background="{DynamicResource BackgroundBrush}" BorderThickness="1" BorderBrush="{DynamicResource IslandWindowBorderBrush}">
+            <StackPanel>
+                <!-- titolo: trascinando si sposta il pannello -->
+                <Grid Height="52" Background="Transparent" MouseLeftButtonDown="Header_OnMouseLeftButtonDown">
+                    <TextBlock Style="{StaticResource TextBlockBase}" Margin="24 0 60 0" VerticalAlignment="Center" FontSize="{fpx:FontPx 16}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"
+                               Text="{Binding Title}" />
+                    <Button Width="35" Height="35" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 8 0"
+                            Command="{Binding CmdQuit}"
+                            Style="{StaticResource ButtonBarPrimaryStyle}"
+                            attachProperty:VisionElement.BorderCornerRadius="10"
+                            attachProperty:VisionElement.ForegroundAccent="White"
+                            attachProperty:VisionElement.BackgroundAccent="Red"
+                            attachProperty:VisionElement.ForegroundOnMouseDown="White"
+                            attachProperty:VisionElement.BackgroundOnMouseDown="Red">
+                        <TextBlock Text="✕" FontSize="{fpx:FontPx 13}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" />
+                    </Button>
+                </Grid>
+                <Border Height="1" Background="{DynamicResource IslandBorderBrush}" />
+
+                <ScrollViewer x:Name="Scroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="560" SizeChanged="Scroll_OnSizeChanged">
+                    <Grid Margin="24 0 24 16">
+                        <forms:RdpFormView x:Name="RdpForm" DataContext="{Binding Form}" />
+                    </Grid>
+                </ScrollViewer>
+
+                <!-- avviso: alcune modifiche si leggono solo all'avvio della sessione -->
+                <Border Padding="24 12" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource IslandBorderBrush}" Background="{DynamicResource PrimaryDarkBrush}"
+                        CornerRadius="0 0 8 8">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding NeedsReconnect}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock Style="{StaticResource TextBlockBase}" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="{DynamicResource IslandSecondaryTextBrush}"
+                               Text="{DynamicResource session_reconnect_auto}" />
+                </Border>
+            </StackPanel>
+        </Border>
+</Grid>
+    </Border>
+</styles:WindowChromeBase>

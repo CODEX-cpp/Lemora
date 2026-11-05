@@ -1,0 +1,499 @@
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using System.Windows;
+using Lemora.Model;
+using Lemora.Model.Protocol.Base;
+using Lemora.Utils;
+using Lemora.View;
+using Lemora.View.Host;
+using Lemora.View.Host.ProtocolHosts;
+using Shawn.Utils;
+using Stylet;
+using ProtocolHostStatus = Lemora.View.Host.ProtocolHosts.ProtocolHostStatus;
+using Lemora.Service.DataSource;
+using Lemora.Service.Locality;
+using Lemora.Service.DataSource.DAO.Dapper;
+
+namespace Lemora.Service
+{
+    public partial class SessionControlService
+    {
+        private readonly DataSourceService _sourceService;
+        private readonly ConfigurationService _configurationService;
+        private readonly GlobalData _appData;
+
+        public SessionControlService(DataSourceService sourceService, ConfigurationService configurationService, GlobalData appData)
+        {
+            _sourceService = sourceService;
+            _configurationService = configurationService;
+            _appData = appData;
+            GlobalEventHelper.OnRequestServerConnect += this.OnRequestOpenConnection;
+            GlobalEventHelper.OnRequestQuickConnect += this.OnRequestOpenConnection;
+            GlobalEventHelper.OnRequestServersConnect += this.OnRequestOpenConnection;
+        }
+
+        public void Release()
+        {
+            // Unsubscribe from static events to prevent memory leaks
+            GlobalEventHelper.OnRequestServerConnect -= this.OnRequestOpenConnection;
+            GlobalEventHelper.OnRequestQuickConnect -= this.OnRequestOpenConnection;
+            GlobalEventHelper.OnRequestServersConnect -= this.OnRequestOpenConnection;
+
+            DisconnectAllVncNow();
+            lock (_dictLock)
+            {
+                foreach (var tabWindow in _token2TabWindows.ToArray())
+                {
+                    Execute.OnUIThreadSync(() => tabWindow.Value.Hide());
+                }
+                foreach (var kv in _connectionId2FullScreenWindows.ToArray())
+                {
+                    Execute.OnUIThreadSync(() => kv.Value.Hide());
+                }
+            }
+            this.CloseProtocolHostAsync(_connectionId2Hosts.Keys.ToArray());
+        }
+
+        /// <summary>
+        /// Chiude subito (senza passare dal task in background) ogni connessione VNC aperta: da usare all'uscita dal programma, quando il processo
+        /// potrebbe finire prima che la chiusura asincrona abbia girato e il server resterebbe con la sessione "viva" (schermo nero sul PC del cliente).
+        /// </summary>
+        public void CloseAllSessions()
+        {
+            DisconnectAllVncNow();
+            CloseProtocolHostAsync(_connectionId2Hosts.Keys.ToArray());
+        }
+
+        public void DisconnectAllVncNow()
+        {
+            foreach (var host in _connectionId2Hosts.Values.OfType<VncHost>().ToArray())
+            {
+                try { Execute.OnUIThreadSync(host.DisconnectNow); }
+                catch (Exception e) { SimpleLogHelper.Warning($"DisconnectAllVncNow: {e.Message}"); }
+            }
+        }
+
+        private string _lastTabToken = "";
+
+        private readonly object _dictLock = new object();
+        private readonly ConcurrentDictionary<string, TabWindowView> _token2TabWindows = new ConcurrentDictionary<string, TabWindowView>();
+        private readonly ConcurrentDictionary<string, HostBase> _connectionId2Hosts = new ConcurrentDictionary<string, HostBase>();
+        private readonly ConcurrentDictionary<string, FullScreenWindowView> _connectionId2FullScreenWindows = new ConcurrentDictionary<string, FullScreenWindowView>();
+        /// <summary>sessioni ospitate come scheda nella finestra principale (non in una TabWindowView)</summary>
+        private readonly HashSet<string> _mainWindowSessions = new HashSet<string>();
+        private readonly ConcurrentQueue<HostBase> _hostToBeDispose = new ConcurrentQueue<HostBase>();
+        private readonly ConcurrentQueue<Window> _windowToBeDispose = new ConcurrentQueue<Window>();
+
+        public int TabWindowCount
+        {
+            get
+            {
+                lock (_dictLock)
+                {
+                    return _token2TabWindows.Count;
+                }
+            }
+        }
+
+        public ConcurrentDictionary<string, HostBase> ConnectionId2Hosts => _connectionId2Hosts;
+
+
+        private void OnRequestOpenConnection(in ProtocolBase serverOrg, in string fromView, in string assignTabToken = "", in string assignRunnerName = "", in string assignCredentialName = "")
+        {
+            CleanupProtocolsAndWindows();
+
+            var org = serverOrg;
+            var view = fromView;
+            var tabToken = assignTabToken;
+            var runnerName = assignRunnerName;
+            var credentialName = assignCredentialName;
+            Task.Factory.StartNew(async () =>
+            {
+                await Connect(org, view, tabToken, runnerName, credentialName);
+            })
+            .Unwrap() // observe the inner task: exceptions thrown by the async lambda land on it, not on the outer Task<Task>, so the ContinueWith below would never see them without this
+            .ContinueWith(t =>
+            {
+                SimpleLogHelper.Fatal(t.Exception!);
+                Execute.OnUIThread(() =>
+                    MessageBoxHelper.ErrorAlert($"Connect failed: {t.Exception!.GetBaseException().Message}"));
+            }, TaskContinuationOptions.OnlyOnFaulted);
+        }
+
+        private void OnRequestOpenConnection(IEnumerable<ProtocolBase> protocolBases, in string fromView, in string assignTabToken = "", in string assignRunnerName = "", in string assignCredentialName = "")
+        {
+            CleanupProtocolsAndWindows();
+            var view = fromView;
+            var tabToken = assignTabToken;
+            var runnerName = assignRunnerName;
+            var credentialName = assignCredentialName;
+            Task.Factory.StartNew(async () =>
+            {
+                foreach (var org in protocolBases)
+                {
+                    tabToken = await Connect(org, view, tabToken, runnerName, credentialName);
+                }
+            })
+            .Unwrap() // observe the inner task: exceptions thrown by the async lambda land on it, not on the outer Task<Task>, so the ContinueWith below would never see them without this
+            .ContinueWith(t =>
+            {
+                SimpleLogHelper.Fatal(t.Exception!);
+                Execute.OnUIThread(() =>
+                    MessageBoxHelper.ErrorAlert($"Connect failed: {t.Exception!.GetBaseException().Message}"));
+            }, TaskContinuationOptions.OnlyOnFaulted);
+        }
+
+
+        private void OnRequestCloseConnection(string connectionId)
+        {
+            Lemora.Setup.TeamsSessionLog.NoteClose(connectionId); // durata dei collegamenti: segna la fine della sessione Teams (se lo era)
+            this.CloseProtocolHostAsync(connectionId);
+        }
+
+
+        private bool ActivateOrReConnIfServerSessionIsOpened(in ProtocolBase server)
+        {
+            if (!server.IsOnlyOneInstance()) return false;
+            var connectionId = server.BuildConnectionId();
+            // if is `OnlyOneInstance Protocol`, and it is connected, activate it and return.
+            if (!_connectionId2Hosts.ContainsKey(connectionId))
+                return false;
+
+            SimpleLogHelper.Debug($"_connectionId2Hosts ContainsKey {connectionId}");
+            // Find activate
+            if (_connectionId2Hosts[connectionId].ParentWindow is { } win)
+            {
+                if (win is MainWindowView)
+                {
+                    var existing = _connectionId2Hosts[connectionId];
+                    Execute.OnUIThreadSync(() => IoC.Get<MainWindowViewModel>().ActivateSession(existing));
+                }
+                if (win is TabWindowView tab)
+                {
+                    var serverId = server.Id;
+                    var s = tab.GetViewModel().Items.FirstOrDefault(x => x.Content?.ProtocolServer?.BuildConnectionId() == connectionId);
+                    if (s != null)
+                        tab.GetViewModel().SelectedItem = s;
+                }
+
+                if (win.IsClosed)
+                {
+                    MarkProtocolHostToClose(new string[] { connectionId });
+                    CleanupProtocolsAndWindows();
+                    return false;
+                }
+
+                try
+                {
+                    Execute.OnUIThreadSync(() =>
+                    {
+                        if (win.IsClosing != false) return;
+                        win.WindowState = win.WindowState == WindowState.Minimized ? WindowState.Normal : win.WindowState;
+                        win.Show();
+                        win.ShowInTaskbar = true;
+                        win.Activate();
+                    });
+
+                    var vmServer = _appData.GetItemById(server.DataSource?.DataSourceName ?? "", server.Id);
+                    vmServer?.ConnectTimeAddOrUpdate();
+                }
+                catch (Exception e)
+                {
+                    SimpleLogHelper.Error(e);
+                    MarkProtocolHostToClose(new string[] { connectionId });
+                    CleanupProtocolsAndWindows();
+                }
+            }
+
+            // Reconnect
+            if (_connectionId2Hosts[connectionId].ParentWindow != null)
+            {
+                if (_connectionId2Hosts[connectionId].Status != ProtocolHostStatus.Connected)
+                    _connectionId2Hosts[connectionId].ReConn();
+            }
+            return true;
+        }
+
+
+
+
+        #region CloseProtocol
+
+        public void CloseProtocolHostAsync(string connectionId)
+        {
+            CloseProtocolHostAsync(new[] { connectionId });
+        }
+        public void CloseProtocolHostAsync(string[] connectionIds)
+        {
+            Task.Factory.StartNew(() =>
+            {
+                try
+                {
+                    MarkProtocolHostToClose(connectionIds);
+                    CleanupProtocolsAndWindows();
+                }
+                catch (Exception e)
+                {
+                    // a failure here used to vanish silently (no UI feedback, no log), leaving half-closed sessions behind
+                    SimpleLogHelper.Fatal(e);
+                }
+            });
+        }
+        private void MarkProtocolHostToClose(string[] connectionIds)
+        {
+            var tabsToHide = new List<(string key, TabWindowView tab)>();
+            // Collect tabs whose UI item removal must be deferred: calling TryRemoveItem dispatches
+            // to the UI thread and blocks (OnUIThreadSync). Doing that while holding _dictLock
+            // deadlocks whenever the UI thread is itself waiting on _dictLock (e.g. a concurrent
+            // connect calling CleanupProtocolsAndWindows). Same reason as the tabsToHide fix below.
+            var tabsToRemoveItem = new List<(string key, TabWindowView tab, string connectionId)>();
+            // Full-screen windows to ShowOrHide after the lock (ShowOrHide must run on the UI thread,
+            // and dispatching while holding _dictLock has the same deadlock risk).
+            var fullScreensToShowOrHide = new List<FullScreenWindowView>();
+            var mainSessionsToRemove = new List<string>();
+
+            lock (_dictLock)
+            {
+                foreach (var connectionId in connectionIds)
+                {
+                    if (!_connectionId2Hosts.TryRemove(connectionId, out var host)) continue;
+
+                    SimpleLogHelper.Debug($@"MarkProtocolHostToClose: marking to close: {host.GetType().Name}(id = {connectionId}, hash = {host.GetHashCode()})");
+
+                    host.OnClosed -= OnRequestCloseConnection;
+                    host.OnFullScreen2Window -= this.MoveSessionToTabWindow;
+                    // Registro attivita': se la sessione era ancora aperta la chiude l'utente (le cadute dal server sono gia' scritte dal host col loro motivo)
+                    host.LogActivityEnd(host.ActivityReason ?? (host.HasConnected ? "chiusa dall'utente" : "scheda chiusa durante il collegamento"));
+                    _hostToBeDispose.Enqueue(host);
+                    host.ProtocolServer.RunScriptAfterDisconnected();
+                    QuickSessionFollowUp.OnSessionClosed(host.ProtocolServer, host.HasConnected);
+                    if (_mainWindowSessions.Remove(connectionId)) mainSessionsToRemove.Add(connectionId);
+                    PrintCacheCount();
+
+#if NETFRAMEWORK
+                    foreach (var kv in _token2TabWindows.ToArray())
+                    {
+                        var key = kv.Key;
+                        var tab = kv.Value;
+#else
+                    foreach (var (key, tab) in _token2TabWindows.ToArray())
+                    {
+#endif
+                        // detect only, defer the UI round-trip to after the lock
+                        if (tab.GetViewModel().Items.Any(x => x.Content.ConnectionId == connectionId))
+                        {
+                            tabsToRemoveItem.Add((key, tab, connectionId));
+                        }
+                    }
+
+                    // hide full
+#if NETFRAMEWORK
+                    foreach (var kv in _connectionId2FullScreenWindows.Where(x => x.Key == connectionId).ToArray())
+                    {
+                        var key = kv.Key;
+                        var full = kv.Value;
+#else
+                    foreach (var (key, full) in _connectionId2FullScreenWindows.Where(x => x.Key == connectionId).ToArray())
+                    {
+#endif
+                        if (full.Host == null || _connectionId2Hosts.ContainsKey(full.Host.ConnectionId) == false)
+                        {
+                            _connectionId2FullScreenWindows.TryRemove(key, out _);
+                            _windowToBeDispose.Enqueue(full);
+                            // defer ShowOrHide to after the lock
+                            fullScreensToShowOrHide.Add(full);
+                        }
+                    }
+                }
+
+                // Mark Unhandled Protocol To Close
+                foreach (var id2Host in _connectionId2Hosts.ToArray())
+                {
+                    var id = id2Host.Key;
+                    bool unhandledFlag = true;
+                    // if host in the tab
+                    foreach (var kv in _token2TabWindows)
+                    {
+                        var tab = kv.Value;
+                        var items = tab.GetViewModel().Items.ToList();
+                        if (items.Any(x => x.Content.ConnectionId == id))
+                        {
+                            unhandledFlag = false;
+                            break;
+                        }
+                    }
+
+                    // if host in the full-screen
+                    if (unhandledFlag && _connectionId2FullScreenWindows.ContainsKey(id))
+                    {
+                        unhandledFlag = false;
+                    }
+
+                    // if host is a tab of the main window
+                    if (unhandledFlag && _mainWindowSessions.Contains(id))
+                    {
+                        unhandledFlag = false;
+                    }
+
+                    // host not in either tab or full-screen
+                    if (unhandledFlag && _connectionId2Hosts.TryRemove(id, out var host))
+                    {
+                        SimpleLogHelper.Warning($@"MarkUnhandledProtocolToClose: marking to close: {host.GetType().Name}(id = {id}, hash = {host.GetHashCode()})");
+                        host.OnClosed -= OnRequestCloseConnection;
+                        host.OnFullScreen2Window -= this.MoveSessionToTabWindow;
+                        _hostToBeDispose.Enqueue(host);
+                        host.ProtocolServer.RunScriptAfterDisconnected();
+                        QuickSessionFollowUp.OnSessionClosed(host.ProtocolServer, host.HasConnected);
+                        PrintCacheCount();
+                    }
+                }
+            }
+
+            // le schede della finestra principale si tolgono prima che l'host venga eliminato
+            foreach (var id in mainSessionsToRemove)
+            {
+                var removeId = id;
+                Execute.OnUIThreadSync(() => IoC.Get<MainWindowViewModel>().RemoveSessionTab(removeId));
+            }
+
+            // perform UI operations outside the lock
+            foreach (var (key, tab, connectionId) in tabsToRemoveItem)
+            {
+                if (tab.GetViewModel().TryRemoveItem(connectionId))
+                {
+                    var items = tab.GetViewModel().Items.ToList();
+                    if (items.Count == 0)
+                    {
+                        // retire the window from the routing dict under a short re-lock
+                        // (dictionary operations only, no UI dispatch inside)
+                        lock (_dictLock)
+                        {
+                            if (_token2TabWindows.TryGetValue(key, out var t) && ReferenceEquals(t, tab))
+                            {
+                                // move tab from dict to queue
+                                _token2TabWindows.TryRemove(key, out _);
+                                _windowToBeDispose.Enqueue(tab);
+                                tabsToHide.Add((key, tab));
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (var full in fullScreensToShowOrHide)
+            {
+                // execute ShowOrHide in UI thread
+                Execute.OnUIThreadSync(() => full.ShowOrHide(null));
+            }
+
+            foreach (var (key, tab) in tabsToHide)
+            {
+                // execute Hide in UI thread
+                Execute.OnUIThreadSync(() => tab.Hide());
+            }
+        }
+
+        #endregion
+
+        #region Clean up CloseProtocol
+        private void CloseMarkedProtocolHost()
+        {
+            while (_hostToBeDispose.TryDequeue(out var host))
+            {
+                PrintCacheCount();
+                host.OnClosed -= OnRequestCloseConnection;
+                host.OnFullScreen2Window -= this.MoveSessionToTabWindow;
+                // Dispose
+                try
+                {
+                    if (host is IDisposable d)
+                    {
+                        d.Dispose();
+                    }
+                    else
+                    {
+                        host.Close();
+                    }
+                }
+                catch (Exception e)
+                {
+                    SimpleLogHelper.Error(e);
+                }
+            }
+        }
+
+        private void CloseEmptyWindows()
+        {
+            int closeCount = 0;
+            foreach (var kv in _token2TabWindows.ToArray())
+            {
+                var key = kv.Key;
+                var tab = kv.Value;
+                var items = tab.GetViewModel().Items.ToList();
+                items = items.Where(x => x != null).ToList();
+                if (items.Count == 0 || items.All(x => _connectionId2Hosts.ContainsKey(x?.Content?.ConnectionId ?? "****") == false))
+                {
+                    SimpleLogHelper.Debug($@"CloseEmptyWindows: closing tab({tab.GetHashCode()})");
+                    ++closeCount;
+                    _token2TabWindows.TryRemove(key, out _);
+                    _windowToBeDispose.Enqueue(tab);
+                }
+            }
+
+            foreach (var kv in _connectionId2FullScreenWindows.ToArray())
+            {
+                var key = kv.Key;
+                var full = kv.Value;
+                // Fix #1119: a cached FullScreenWindowView with Host == null is NOT garbage — it is the
+                // reuse-cache state for a session currently sitting in a tab (MoveSessionToTabWindow
+                // detaches the host on purpose so the window can be reused). Disposing it destroys
+                // mstscax's connection bar with the window, and the control never recreates the bar,
+                // so every later fullscreen of that session shows no connection bar (Ctrl+Alt+Home
+                // can't bring it back either). Only dispose when the connection itself is gone.
+                if (_connectionId2Hosts.ContainsKey(key) == false)
+                {
+                    SimpleLogHelper.Debug($@"CloseEmptyWindows: closing full(hash = {full.GetHashCode()})");
+                    ++closeCount;
+                    _connectionId2FullScreenWindows.TryRemove(key, out _);
+                    _windowToBeDispose.Enqueue(full);
+                }
+            }
+
+            PrintCacheCount();
+            // 在正常的逻辑中，在关闭session时就应该把空窗体移除，不应该有空窗体的存在
+            if (closeCount > 0)
+                SimpleLogHelper.DebugWarning($@"CloseEmptyWindows: {closeCount} Empty Host closed");
+
+            if (_windowToBeDispose.IsEmpty == false)
+            {
+                SimpleLogHelper.Debug($@"Closing: {_windowToBeDispose.Count} Empty Host.");
+                Execute.OnUIThread(() =>
+                {
+                    while (_windowToBeDispose.TryDequeue(out var window))
+                    {
+                        window.Close();
+                    }
+                });
+            }
+        }
+
+        public void CleanupProtocolsAndWindows()
+        {
+            lock (_dictLock)
+            {
+                this.CloseEmptyWindows();
+            }
+            this.CloseMarkedProtocolHost();
+        }
+        #endregion
+
+        private void PrintCacheCount([CallerMemberName] string callMember = "")
+        {
+            SimpleLogHelper.Debug($@"{callMember}: Current: Host = {_connectionId2Hosts.Count}, Full = {_connectionId2FullScreenWindows.Count}, Tab = {_token2TabWindows.Count}, HostToBeDispose = {_hostToBeDispose.Count}, WindowToBeDispose = {_windowToBeDispose.Count}");
+        }
+    }
+}

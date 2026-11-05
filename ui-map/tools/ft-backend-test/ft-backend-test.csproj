@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Prova del backend di trasferimento file (Ui\Service\FileTransfer) contro un server TightVNC 2.x REALE.
+    Uso:   impostare la variabile LABVNC con la password VNC, poi
+           dotnet run -c Release (progetto ui-map\tools\ft-backend-test) con argomenti: ip, 5900 e (facoltativo) un numero da 1 a 6
+    Lavora solo in /C:/provalemora del PC remoto e in una cartella temporanea locale; cancella quello che crea.
+    Compila i sorgenti del backend senza la parte WPF (FileTransferShell non c'e').
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\Ui\Service\FileTransfer\FileTransferTypes.cs" />
+    <Compile Include="..\..\..\Ui\Service\FileTransfer\TightFtConnection.cs" />
+    <Compile Include="..\..\..\Ui\Service\FileTransfer\FileTransferManager.cs" />
+  </ItemGroup>
+</Project>

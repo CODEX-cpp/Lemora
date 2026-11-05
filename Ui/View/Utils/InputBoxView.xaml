@@ -1,0 +1,58 @@
+﻿<styles:WindowChromeBase x:Class="Lemora.View.Utils.InputBoxView"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:fpx="clr-namespace:Lemora.Utils"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:utils="clr-namespace:Lemora.View.Utils"
+                  xmlns:ctl="clr-namespace:Lemora.Controls"
+                  xmlns:styles="clr-namespace:Shawn.Utils.WpfResources.Theme.Styles;assembly=Shawn.Utils.WpfResources"
+                  xmlns:s="https://github.com/canton7/Stylet"
+                  mc:Ignorable="d"
+                  d:DataContext="{d:DesignInstance utils:InputBoxViewModel}"
+                  ResizeMode="NoResize"
+                  SizeToContent="WidthAndHeight"
+                  WindowStyle="None"
+                  Background="Transparent"
+                  AllowsTransparency="True"
+                  ShowInTaskbar="False"
+                  MinWidth="160" MaxWidth="560">
+    <Window.Resources>
+        <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxAccentStyle}">
+            <Setter Property="Margin" Value="0"></Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- campo di testo in una finestra di servizio (blueprint §12, D2): errore = bordo e messaggio rossi sotto il campo -->
+    <ctl:DialogFrame Margin="40" Width="440" Title="{Binding DisplayName}" CanDragWindow="True" ShowClose="False">
+        <ctl:DialogFrame.Footer>
+            <StackPanel Orientation="Horizontal">
+                <Button MinWidth="90" Style="{StaticResource BtnSecondary}" Content="{DynamicResource Cancel}"
+                        Command="{s:Action ButtonClicked}" CommandParameter="{x:Static MessageBoxResult.Cancel}"/>
+                <Button MinWidth="90" Margin="10 0 0 0" Style="{StaticResource BtnPrimary}" Content="{DynamicResource OK}"
+                        Command="{s:Action ButtonClicked}" CommandParameter="{x:Static MessageBoxResult.OK}"/>
+            </StackPanel>
+        </ctl:DialogFrame.Footer>
+        <StackPanel Margin="24 24 24 20">
+            <TextBox Name="InputBox"
+                     MinHeight="36" Padding="8 0"
+                     Text="{Binding Response, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalContentAlignment="Center"
+                     KeyUp="{s:Action OnKeyUp}">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{s:Action KeyDown}" CommandParameter="{x:Static Key.Enter}"></KeyBinding>
+                    <KeyBinding Key="Escape" Command="{s:Action KeyDown}" CommandParameter="{x:Static Key.Escape}"></KeyBinding>
+                </TextBox.InputBindings>
+            </TextBox>
+            <TextBlock Text="{Binding ValidateMessage}" Margin="0 8 0 0" FontSize="{fpx:FontPx 12}" Foreground="#FF9B94" TextWrapping="Wrap" HorizontalAlignment="Left">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ValidateMessage}" Value="">
+                                <Setter Property="Visibility" Value="Collapsed"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
+    </ctl:DialogFrame>
+</styles:WindowChromeBase>
