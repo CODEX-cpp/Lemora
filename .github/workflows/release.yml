@@ -1,0 +1,99 @@
+# Builds, signs and publishes a Lemora release from the "Run workflow" button (Actions > Release).
+# Server: version from server/Server.csproj, tag "server-<version>", one program per system (win-x64, linux-x64, linux-arm64):
+# the same file is used for a new installation and by installed servers to update.
+# Every program is signed with the update key (secret LEMORA_UPDATER_KEY) and the signature is checked against the
+# public key compiled into the programs before anything is published: installed copies accept only that.
+# The signatures are in the release text, in an HTML comment that the release page does not show.
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      notes:
+        description: Release notes (optional)
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  server:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Build
+        shell: pwsh
+        run: |
+          # one self-contained file per system, no .NET to install (linux-arm64 = Raspberry Pi with a 64-bit OS)
+          foreach ($rid in 'win-x64', 'linux-x64', 'linux-arm64') {
+            dotnet publish server/Server.csproj -c Release -r $rid --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:DebugType=None -o "out/$rid" --nologo
+            if ($LASTEXITCODE -ne 0) { throw "publish $rid failed" }
+          }
+          $ver = (& ./out/win-x64/Lemora.Server.exe --version).Trim()
+          if ($ver -notmatch '^\d+\.\d+\.\d+\.\d+$') { throw "Invalid server version: '$ver'" }
+          $ver = $ver -replace '\.0$', ''   # "1.1.0.0" -> "1.1.0", as in Server.csproj (installed servers accept both)
+          "VER=$ver" >> $env:GITHUB_ENV
+          "Server version $ver"
+
+      - name: Stop if this version is already released
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "server-$env:VER" 2>$null
+          if ($LASTEXITCODE -ne 0) { gh release view "server-$env:VER.0" 2>$null }
+          if ($LASTEXITCODE -eq 0) { throw "Release server-$env:VER already exists: raise <Version> in server/Server.csproj" }
+          exit 0
+
+      - name: Sign
+        shell: pwsh
+        env:
+          LEMORA_UPDATER_KEY: ${{ secrets.LEMORA_UPDATER_KEY }}
+        run: |
+          if (-not $env:LEMORA_UPDATER_KEY) { throw 'Secret LEMORA_UPDATER_KEY is missing' }
+          $key = [Security.Cryptography.CngKey]::Import([Convert]::FromBase64String($env:LEMORA_UPDATER_KEY), [Security.Cryptography.CngKeyBlobFormat]::EccPrivateBlob)
+          $signer = [Security.Cryptography.ECDsaCng]::new($key)
+          # public key of server/Updater.cs: a program that does not verify with it would be refused by every installed server
+          $m = [regex]::Match((Get-Content ./server/Updater.cs -Raw), 'PublicKeyB64 = "([^"]+)"')
+          if (-not $m.Success) { throw 'Public key not found in server/Updater.cs' }
+          $blob = [Convert]::FromBase64String($m.Groups[1].Value)
+          $p = [Security.Cryptography.ECParameters]::new()
+          $p.Curve = [Security.Cryptography.ECCurve+NamedCurves]::nistP256
+          $q = [Security.Cryptography.ECPoint]::new(); $q.X = [byte[]]$blob[8..39]; $q.Y = [byte[]]$blob[40..71]; $p.Q = $q
+          $verifier = [Security.Cryptography.ECDsa]::Create($p)
+          New-Item -ItemType Directory dist | Out-Null
+          # the signatures go in the release text, inside an HTML comment the release page does not show (Updater.SignatureFor reads it)
+          $lines = @('<!-- lemora-signatures')
+          foreach ($rid in 'win-x64', 'linux-x64', 'linux-arm64') {
+            $exe = if ($rid -eq 'win-x64') { 'Lemora.Server.exe' } else { 'Lemora.Server' }
+            $name = if ($rid -eq 'win-x64') { 'Lemora.Server.exe' } else { "Lemora.Server-$rid" }   # one file per system: new installation and update
+            Copy-Item "out/$rid/$exe" "dist/$name"
+            $data = [IO.File]::ReadAllBytes((Resolve-Path "dist/$name"))
+            $sig = $signer.SignData($data, [Security.Cryptography.HashAlgorithmName]::SHA256)
+            if (-not $verifier.VerifyData($data, $sig, [Security.Cryptography.HashAlgorithmName]::SHA256)) { throw 'The secret key does not match the public key in server/Updater.cs' }
+            $lines += "$name $([Convert]::ToBase64String($sig))"
+          }
+          $lines += '-->'
+          [IO.File]::WriteAllLines("$PWD/signatures.txt", $lines)
+          Get-ChildItem dist | ForEach-Object { '{0,8:N1} MB  {1}' -f ($_.Length / 1MB), $_.Name }
+
+      - name: Publish
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NOTES: ${{ inputs.notes }}
+        run: |
+          $notes = if ($env:NOTES) { $env:NOTES } else { "Lemora Server $env:VER" }
+          $notes += "`n`n" + (Get-Content signatures.txt -Raw)
+          # not "latest": the latest release stays the app's
+          gh release create "server-$env:VER" (Get-ChildItem dist).FullName --title "Lemora Server $env:VER" --notes $notes --latest=false
