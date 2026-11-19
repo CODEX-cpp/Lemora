@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Funzioni di Lemora: protocolli, cartelle, password dei dispositivi</title>
+<meta name="description" content="RDP con FreeRDP o client Microsoft, VNC con codifica Tight e trasferimento file, SSH, cartelle che passano credenziali e rete, linguetta Password, estensione Firefox, Claude via MCP.">
+<link rel="canonical" href="https://codex-cpp.github.io/Lemora/it/prodotto/">
+<link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/prodotto/">
+<link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/product/">
+<link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/product/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Lemora">
+<meta property="og:url" content="https://codex-cpp.github.io/Lemora/it/prodotto/">
+<meta property="og:title" content="Funzioni di Lemora">
+<meta property="og:description" content="Protocolli, cartelle per cliente, password dei dispositivi, estensione del browser, tastiera, Claude.">
+<meta property="og:image" content="https://codex-cpp.github.io/Lemora/assets/img/og-it.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="it_IT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f5f4f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121312" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../../assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="../../assets/img/icon-180.png">
+<link rel="manifest" href="../../site.webmanifest">
+<link rel="preload" href="../../assets/fonts/plex-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/newsreader-400.woff2" as="font" type="font/woff2" crossorigin>
+<script src="../../assets/js/tema.js?v=23"></script>
+<link rel="stylesheet" href="../../assets/css/tokens.css?v=23">
+<link rel="stylesheet" href="../../assets/css/base.css?v=23">
+<link rel="stylesheet" href="../../assets/css/main.css?v=23">
+<link rel="stylesheet" href="../../assets/css/componenti.css?v=23">
+<link rel="stylesheet" href="../../assets/css/pagine.css?v=23">
+<link rel="stylesheet" href="../../assets/css/demos.css?v=23">
+<script src="../../assets/js/main.js?v=23" defer></script>
+<script src="../../assets/js/demos.js?v=23" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Lemora","item":"https://codex-cpp.github.io/Lemora/it/"},{"@type":"ListItem","position":2,"name":"Prodotto","item":"https://codex-cpp.github.io/Lemora/it/prodotto/"}]}</script>
+</head>
+<body>
+<a class="salta" href="#contenuto">Vai al contenuto</a>
+
+<header class="testata">
+  <div class="testata__in">
+    <a class="marchio" href="../" aria-label="Lemora, pagina iniziale">
+      <img src="../../assets/img/icon.png" alt="" width="28" height="28"><span>Lemora</span>
+    </a>
+    <nav class="menu" aria-label="Pagine">
+      <ul role="list">
+        <li><a href="./" aria-current="page">Prodotto</a></li>
+        <li><a href="../aziende/">Per aziende</a></li>
+        <li><a href="../sicurezza/">Sicurezza</a></li>
+      </ul>
+    </nav>
+    <div class="testata__azioni">
+      <a class="lingua" href="../../en/product/" hreflang="en" lang="en" data-lang="en" aria-label="English version">EN</a>
+      <button class="tema" type="button" aria-label="Cambia tema chiaro o scuro" data-tema-btn>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg>
+      </button>
+      <a class="btn btn--gho btn--sm" href="../scarica/">Scarica</a>
+    </div>
+  </div>
+</header>
+
+<main id="contenuto">
+
+<header class="pagina-testa">
+  <ol class="percorso" role="list" aria-label="Percorso"><li><a href="../">Lemora</a></li><li>Prodotto</li></ol>
+  <h1>Il programma, per chi assiste molti clienti</h1>
+  <p class="pagina-testa__lead">Le funzioni del client per Windows, una per sezione, con lo stato di ognuna. Quello che serve solo ai team è nella pagina Per aziende.</p>
+  <dl class="dati"><div><dt>Versione</dt><dd>1.3.1.11119</dd></div><div><dt>Sistema</dt><dd>Windows 10 2004+ · 11 · 64 bit</dd></div><div><dt>Lingue</dt><dd>italiano · inglese</dd></div><div><dt>Licenza</dt><dd>GPL-3.0</dd></div></dl>
+</header>
+
+<div class="con-indice">
+  <nav class="indice" aria-labelledby="h-indice">
+    <p id="h-indice">In questa pagina</p>
+    <ol role="list">
+      <li><a href="#cartelle"><span>P.1</span>Cartelle e ricerca</a></li>
+      <li><a href="#protocolli"><span>P.2</span>Protocolli</a></li>
+      <li><a href="#password"><span>P.3</span>Password dei dispositivi</a></li>
+      <li><a href="#estensione"><span>P.4</span>Estensione del browser</a></li>
+      <li><a href="#tastiera"><span>P.5</span>Schede e tastiera</a></li>
+      <li><a href="#claude"><span>P.6</span>Claude nelle sessioni</a></li>
+      <li><a href="#importa"><span>P.7</span>Importazione</a></li>
+      <li><a href="#aspetto"><span>P.8</span>Temi e requisiti</a></li>
+      <li><a href="#teams"><span>P.9</span>Con un server Teams</a></li>
+    </ol>
+  </nav>
+
+  <div class="corpo">
+
+    <!-- P.1 cartelle e ricerca -->
+    <section class="blocco" id="cartelle" aria-labelledby="h-cartelle">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.1</span>
+        <h2 id="h-cartelle">Un cliente, una cartella</h2>
+        <p>La cartella tiene dominio, rete e credenziali. Le connessioni e le sottocartelle li ereditano: con la rete <code>192.168.10.</code> l'indirizzo di un server si scrive solo <code>5</code>.</p>
+      </header>
+      <figure class="fig" id="fig-dettagli">
+        <div class="fig__palco">
+          <img class="solo-scuro" src="../../assets/img/cartella-dettagli.webp" srcset="../../assets/img/cartella-dettagli-800.webp 800w, ../../assets/img/cartella-dettagli.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Modifica della cartella Studio Rossi, scheda Dettagli: nome e posizione, dominio STUDIOROSSI e rete 192.168.10. con Usa suggerito, la casella Applica il dominio ai 10 server già dentro, le sottocartelle Sede e Server con Usa della madre" loading="lazy" width="1400" height="880"><img class="solo-chiaro" src="../../assets/img/cartella-dettagli-chiaro.webp" srcset="../../assets/img/cartella-dettagli-chiaro-800.webp 800w, ../../assets/img/cartella-dettagli-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Modifica della cartella Studio Rossi, scheda Dettagli: nome e posizione, dominio STUDIOROSSI e rete 192.168.10. con Usa suggerito, la casella Applica il dominio ai 10 server già dentro, le sottocartelle Sede e Server con Usa della madre" loading="lazy" width="1400" height="880">
+          <ol class="richiami" role="list" aria-label="Dettagli della figura">
+            <li class="richiamo r1"><span>1</span>Dominio</li>
+            <li class="richiamo r2"><span>2</span>Rete</li>
+            <li class="richiamo r3"><span>3</span>Anche ai server già dentro</li>
+            <li class="richiamo r4"><span>4</span>Sottocartelle che ereditano</li>
+          </ol>
+        </div>
+        <figcaption><b>Fig. 1</b> Modifica della cartella, scheda Dettagli. "Usa suggerito" propone dominio e rete dai server che la cartella contiene già.</figcaption>
+      </figure>
+
+      <h3 class="blocco__sotto">Credenziali di dominio della cartella</h3>
+      <div class="colonne">
+        <div class="testo">
+          <p>Gli utenti del dominio del cliente (<code>BRENTA\admin</code>, <code>BRENTA\tecnico</code>) si salvano una volta nella cartella e valgono per tutti i suoi server: dal dettaglio di un server si attivano con un clic.</p>
+          <p>Il conteggio accanto a ogni utente dice su quanti server della cartella è attiva.</p>
+        </div>
+        <figure class="fig">
+          <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/cartella-credenziali.webp" srcset="../../assets/img/cartella-credenziali-800.webp 800w, ../../assets/img/cartella-credenziali.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Cartella Officine Brenta, scheda Credenziali di dominio: BRENTA\admin e BRENTA\tecnico, con il numero di server su cui sono attive e i pulsanti copia e modifica" loading="lazy" width="1400" height="520"><img class="solo-chiaro" src="../../assets/img/cartella-credenziali-chiaro.webp" srcset="../../assets/img/cartella-credenziali-chiaro-800.webp 800w, ../../assets/img/cartella-credenziali-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Cartella Officine Brenta, scheda Credenziali di dominio: BRENTA\admin e BRENTA\tecnico, con il numero di server su cui sono attive e i pulsanti copia e modifica" loading="lazy" width="1400" height="520"></div>
+          <figcaption><b>Fig. 2</b> Scheda Credenziali di dominio: due utenti per tutti i server di Officine Brenta.</figcaption>
+        </figure>
+      </div>
+
+      <!-- prova: si cambiano dominio, rete e utente della cartella e si vedono le connessioni dentro (demos.js, "eredita") -->
+      <h3 class="blocco__sotto">Prova: cosa ricevono le connessioni</h3>
+      <div class="colonne">
+        <div class="demo-riquadro eredita" data-demo="eredita">
+          <p class="demo-riquadro__tit">Cartella Officine Brenta › Server</p>
+          <div class="eredita__campi">
+            <label class="demo-campo">Dominio<input type="text" data-campo="dominio" value="BRENTA" spellcheck="false"></label>
+            <label class="demo-campo">Rete<input type="text" data-campo="prefisso" value="10.20.0." spellcheck="false"></label>
+            <label class="demo-campo">Credenziale<input type="text" data-campo="utente" value="admin" spellcheck="false"></label>
+          </div>
+          <table class="eredita__tab">
+            <thead><tr><th scope="col">Connessione</th><th scope="col">Scritto</th><th scope="col">Indirizzo</th><th scope="col">Accesso</th></tr></thead>
+            <tbody aria-live="polite">
+              <tr data-finale="12"><th scope="row">FS-01</th><td>12</td><td data-indirizzo>10.20.0.12</td><td data-accesso>BRENTA\admin</td></tr>
+              <tr data-finale="10"><th scope="row">DC01</th><td>10</td><td data-indirizzo>10.20.0.10</td><td data-accesso>BRENTA\admin</td></tr>
+              <tr data-finale="21"><th scope="row">SQL-01</th><td>21</td><td data-indirizzo>10.20.0.21</td><td data-accesso>BRENTA\admin</td></tr>
+              <tr data-fisso="172.16.4.9"><th scope="row">VPN-Filiale</th><td>172.16.4.9</td><td>172.16.4.9</td><td>utente suo</td></tr>
+            </tbody>
+          </table>
+          <p class="demo__nota">L'ultima riga ha un indirizzo completo e un utente proprio: la cartella non li tocca.</p>
+        </div>
+        <figure class="fig">
+          <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/editor-rdp.webp" srcset="../../assets/img/editor-rdp-800.webp 800w, ../../assets/img/editor-rdp.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Editor di una connessione RDP: il campo Nome host mostra il prefisso 10.20.1. della cartella Sede e accanto solo il valore finale 10" loading="lazy" width="1400" height="735"><img class="solo-chiaro" src="../../assets/img/editor-rdp-chiaro.webp" srcset="../../assets/img/editor-rdp-chiaro-800.webp 800w, ../../assets/img/editor-rdp-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Editor di una connessione RDP: il campo Nome host mostra il prefisso 10.20.1. della cartella Sede e accanto solo il valore finale 10" loading="lazy" width="1400" height="735"></div>
+          <figcaption><b>Fig. 3</b> Editor della connessione: il prefisso della cartella sta davanti al campo, si scrive solo il valore finale. A destra il riepilogo, a sinistra i tipi di connessione.</figcaption>
+        </figure>
+      </div>
+      <div class="colonne">
+        <div class="testo">
+          <h3>Ricerca rapida, Alt+M</h3>
+          <p>Si apre sopra qualsiasi programma e cerca tra le connessioni di tutti i clienti per nome, indirizzo e utente. Invio apre la sessione; Tab passa alla connessione rapida verso un indirizzo non salvato.</p>
+          <p>La home mostra cronologia, preferiti e connessioni usate di recente. I tag (<code>#stampanti</code>, <code>#vpn</code>) filtrano tra tutti i clienti.</p>
+        </div>
+        <figure class="fig" id="fig-ricerca">
+          <div class="fig__palco sovrapposta">
+            <img class="solo-scuro" src="../../assets/img/home.webp" srcset="../../assets/img/home-800.webp 800w, ../../assets/img/home.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="" loading="lazy" width="1400" height="880"><img class="solo-chiaro" src="../../assets/img/home-chiaro-brenta.webp" srcset="../../assets/img/home-chiaro-brenta-800.webp 800w, ../../assets/img/home-chiaro-brenta.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="" loading="lazy" width="1400" height="880">
+            <img class="sovrapposta__sopra solo-scuro" src="../../assets/img/launcher.webp" alt="Ricerca rapida: scrivendo fs compaiono i file server di due clienti, con indirizzo e utente" loading="lazy" width="662" height="284"><img class="sovrapposta__sopra solo-chiaro" src="../../assets/img/launcher-chiaro.webp" alt="Ricerca rapida: scrivendo fs compaiono i file server di due clienti, con indirizzo e utente" loading="lazy" width="662" height="284">
+          </div>
+          <figcaption><b>Fig. 4</b> Ricerca rapida sopra la finestra principale.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- P.2 protocolli: tabella con motore e stato -->
+    <section class="blocco" id="protocolli" aria-labelledby="h-protocolli">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.2</span>
+        <h2 id="h-protocolli">Protocolli</h2>
+        <p>Ogni sessione è una scheda. Se l'indirizzo principale non risponde, Lemora prova in ordine gli indirizzi alternativi della connessione.</p>
+      </header>
+      <div class="tab-scorre" tabindex="0" role="region" aria-label="Tabella dei protocolli, scorre in orizzontale">
+        <table class="tab">
+          <caption>Tab. 1 · Protocolli e motori, versione 1.3.1.</caption>
+          <thead><tr><th scope="col">Protocollo</th><th scope="col">Motore</th><th scope="col">Dettagli</th><th scope="col">Stato</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">RDP</th><td>FreeRDP 3 incluso nel file, oppure il client di Windows</td><td>RemoteApp, gateway, dischi, stampanti, smart card, audio, più monitor. Il certificato di ogni PC viene ricordato.</td><td><span class="stato">pronto</span></td></tr>
+            <tr><th scope="row">VNC</th><td>Visore proprio, nessun programma esterno</td><td>Codifiche ZRLE, Tight, Hextile, RRE, CopyRect. Qualità Auto, Bassa, Alta, cambiabile a sessione aperta. Appunti di testo.</td><td><span class="stato">pronto</span></td></tr>
+            <tr><th scope="row">File su VNC</th><td>Protocollo di TightVNC 2.x</td><td>Navigatore del disco remoto: scarica, carica, rinomina, cancella, con gestione dei conflitti.</td><td><span class="stato">pronto</span></td></tr>
+            <tr><th scope="row">SSH</th><td>KiTTY, PuTTY o Windows Terminal dentro la scheda</td><td>Terminale integrato a scelta: temi, ricerca nell'output, vista divisa.</td><td><span class="stato">pronto</span></td></tr>
+            <tr><th scope="row">Telnet, seriale</th><td>KiTTY o PuTTY dentro la scheda</td><td>Porta COM per switch e apparati di rete.</td><td><span class="stato">pronto</span></td></tr>
+            <tr><th scope="row">SFTP, FTP</th><td>Gestore a due pannelli</td><td>WinSCP esterno, se preferito.</td><td><span class="stato">pronto</span></td></tr>
+            <tr><th scope="row">Programmi esterni</th><td>Qualsiasi eseguibile</td><td>Indirizzo, utente e password passati come parametri.</td><td><span class="stato">pronto</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="colonne">
+        <div class="testo">
+          <h3>VNC su linee lente</h3>
+          <p>Con TightVNC la prima schermata passa da circa 14,7 MB a 1,4 MB grazie al decoder Tight scritto per Lemora. In qualità Auto si parte a 16 bit e la qualità sale o scende con la banda.</p>
+          <h3>File .mora</h3>
+          <p>Una connessione si esporta in un file <code>.mora</code>; il doppio clic la apre. Il file non contiene password.</p>
+        </div>
+        <figure class="fig">
+          <div class="fig__palco terminale" role="group" aria-label="Esempio di sessione SSH">
+            <div class="terminale__barra mono"><span>Firewall · 10.20.0.1</span><span class="dot"></span></div>
+<pre class="terminale__testo mono"><span class="pr">admin@fw-brenta:~$</span> show interface wan1
+wan1   up   82.91.14.6/29   1000full
+<span class="pr">admin@fw-brenta:~$</span> show vpn ipsec sa
+sede-filiale   established   rx 1.2 GB  tx 0.9 GB
+<span class="pr">admin@fw-brenta:~$</span> <span class="caret"></span></pre>
+          </div>
+          <figcaption><b>Fig. 5</b> Sessione SSH nel terminale integrato. Dati di esempio.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- P.3 linguetta password -->
+    <section class="blocco" id="password" aria-labelledby="h-password">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.3</span>
+        <h2 id="h-password">Password dei dispositivi, accanto alla sessione</h2>
+        <p>NAS, switch, stampanti, firewall, centralini: un elenco per cartella, separato dalle credenziali delle connessioni. Durante una sessione RDP o VNC si apre di lato con <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>P</kbd>.</p>
+      </header>
+      <figure class="fig" id="fig-password">
+        <div class="fig__palco">
+          <img class="solo-scuro" src="../../assets/img/password.webp" srcset="../../assets/img/password-800.webp 800w, ../../assets/img/password.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Password della cartella Officine Brenta: centralino, firewall, NAS, stampante e switch, con utente e pulsanti per copiare" loading="lazy" width="1400" height="880"><img class="solo-chiaro" src="../../assets/img/password-chiaro.webp" srcset="../../assets/img/password-chiaro-800.webp 800w, ../../assets/img/password-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Password della cartella Officine Brenta: centralino, firewall, NAS, stampante e switch, con utente e pulsanti per copiare" loading="lazy" width="1400" height="880">
+          <img class="riquadro-popup solo-scuro" src="../../assets/img/popup-password.webp" alt="Linguetta Password aperta durante una sessione VNC" loading="lazy" width="419" height="605"><img class="riquadro-popup solo-chiaro" src="../../assets/img/popup-password-chiaro.webp" alt="Linguetta Password aperta durante una sessione VNC" loading="lazy" width="419" height="605">
+          <ol class="richiami" role="list" aria-label="Dettagli della figura"><li class="richiamo r1"><span>1</span>Elenco della cartella</li><li class="richiamo r2"><span>2</span>Linguetta nella sessione</li></ol>
+        </div>
+        <figcaption><b>Fig. 6</b> Lo stesso elenco nella pagina della cartella e nella linguetta della sessione.</figcaption>
+      </figure>
+      <div>
+        <dl class="voci">
+          <div class="voce"><dt>Ereditarietà</dt><dd>La linguetta mostra i dispositivi della cartella della connessione e di tutte quelle sopra: la rete del cliente compare anche dentro "Sede" e "Server".</dd></div>
+          <div class="voce"><dt>Più accessi per dispositivo</dt><dd>Utente amministratore, utente di servizio, PIN del pannello: più coppie sulla stessa voce.</dd></div>
+          <div class="voce"><dt>Copia</dt><dd>Utente, password o indirizzo con un clic. Verifiche e appunti a tempo: <a href="../sicurezza/#sblocco">Sicurezza, S.3</a>.</dd></div>
+          <div class="voce"><dt>Connessioni rapide</dt><dd>La linguetta c'è anche verso un indirizzo non salvato, con le voci della cartella scelta.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- P.4 estensione: cosa fa (cosa vede e cosa non fa sta nella pagina Sicurezza) -->
+    <section class="blocco" id="estensione" aria-labelledby="h-estensione">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.4</span>
+        <h2 id="h-estensione">Estensione per i pannelli web</h2>
+        <p>Lemora WEB Manager, per Firefox. Sulla pagina di accesso di un router o di un NAS propone le voci di quel dispositivo e compila al clic. La installa Lemora: senza il programma sullo stesso PC non fa nulla.</p>
+      </header>
+      <div class="colonne colonne--inv">
+        <figure class="fig fig--browser" id="fig-browser">
+          <div class="fig__palco browser">
+            <div class="browser__barra mono" aria-hidden="true"><span class="browser__url">http://192.168.1.1/login</span><img class="browser__ext" src="../../assets/img/icon.png" alt="" width="18" height="18"></div>
+            <div class="browser__pagina">
+              <div class="finto-login" aria-hidden="true">
+                <p class="finto-login__titolo">Router · Accedi</p>
+                <span class="finto-login__campo">admin<img src="../../assets/img/icon.png" alt="" width="16" height="16"></span>
+                <span class="finto-login__campo">••••••••••</span>
+                <span class="finto-login__btn">Accedi</span>
+              </div>
+              <img class="browser__popup" src="../../assets/img/popup-scuro.webp" srcset="../../assets/img/popup-scuro-800.webp 800w, ../../assets/img/popup-scuro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Riquadro dell'estensione con gli accessi del router aperto nella pagina" loading="lazy" width="1400" height="1000">
+            </div>
+          </div>
+          <figcaption><b>Fig. 7</b> Riquadro dell'estensione sulla pagina di accesso di un router.</figcaption>
+        </figure>
+        <dl class="voci">
+          <div class="voce"><dt>Compila</dt><dd>Al clic sull'icona nel campo o nel riquadro. Mai da sola.</dd></div>
+          <div class="voce"><dt>Salva <span class="stato">da 1.0.3</span></dt><dd>Dopo un accesso nuovo propone di salvarlo, solo se nella barra c'è un indirizzo IP. Sui siti con un nome di dominio non propone nulla.</dd></div>
+          <div class="voce"><dt>Cartella</dt><dd>Ogni voce salvata finisce in una cartella scelta al momento.</dd></div>
+          <div class="voce"><dt>Browser</dt><dd>Firefox, firmata da Mozilla, versione 1.0.4. La installa Lemora dalle impostazioni.</dd></div>
+        </dl>
+      </div>
+      <!-- prova: compilare da Lemora, poi un accesso nuovo; la proposta di salvataggio compare solo con un IP nella barra (demos.js, "browser") -->
+      <div class="bdemo" data-demo="browser">
+        <div class="bdemo__indirizzi" role="group" aria-label="Indirizzo nella barra">
+          <button type="button" class="demo-btn" data-indirizzo="ip" data-url="http://192.168.1.1/login" aria-pressed="true">Router: 192.168.1.1</button>
+          <button type="button" class="demo-btn" data-indirizzo="dominio" data-url="https://portale.esempio.it/login" aria-pressed="false">Sito: portale.esempio.it</button>
+        </div>
+        <div class="fig__palco browser">
+          <div class="browser__barra mono"><span class="browser__url" data-url>http://192.168.1.1/login</span><img class="browser__ext" src="../../assets/img/icon.png" alt="" width="18" height="18"></div>
+          <div class="browser__pagina">
+            <form novalidate>
+              <p class="finto-login__titolo">Accedi</p>
+              <label class="bdemo__campo"><span class="vh">Utente</span><input type="text" data-utente placeholder="utente" autocomplete="off" spellcheck="false">
+                <button type="button" class="bdemo__icona" data-icona aria-label="Accessi di Lemora per questa pagina" aria-expanded="false"><img src="../../assets/img/icon.png" alt="" width="16" height="16"></button></label>
+              <label class="bdemo__campo"><span class="vh">Password</span><input type="password" data-pw placeholder="password" autocomplete="off"></label>
+              <button type="submit" class="bdemo__invia">Accedi</button>
+            </form>
+            <div class="bdemo__popup" data-popup hidden>
+              <p>Lemora · 192.168.1.1</p>
+              <button type="button" data-voce-pw data-u="admin">Router sede<code>admin · Officine Brenta</code></button>
+              <button type="button" data-voce-pw data-u="tecnico">Router, utente tecnico<code>tecnico · Officine Brenta</code></button>
+            </div>
+            <div class="bdemo__proposta" data-proposta hidden role="dialog" aria-label="Proposta di salvataggio">
+              <span>Salvare questo accesso in Lemora?</span>
+              <label><span class="vh">Cartella</span><select data-cartella><option>Officine Brenta</option><option>Studio Rossi</option><option>Hotel Lago Blu</option></select></label>
+              <button type="button" data-salva>Salva</button><button type="button" data-non-ora>Non ora</button>
+            </div>
+          </div>
+        </div>
+        <p class="demo__esito" data-esito aria-live="polite"></p>
+        <p class="demo__nota"><b>Prova</b> · icona di Lemora nel campo per compilare; oppure scrivi utente e password a mano e premi Accedi, con l'IP e con il dominio.</p>
+      </div>
+    </section>
+
+    <!-- P.5 schede, finestre, tastiera -->
+    <section class="blocco" id="tastiera" aria-labelledby="h-tastiera">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.5</span>
+        <h2 id="h-tastiera">Schede, finestre e tastiera</h2>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>Schede staccabili</dt><dd>Una scheda trascinata fuori diventa una finestra; trascinata dentro torna scheda. Due sessioni si affiancano nella vista divisa.</dd></div>
+        <div class="voce"><dt>Scorciatoie da browser</dt><dd><kbd>Ctrl</kbd>+<kbd>Tab</kbd>, <kbd>Ctrl</kbd>+<kbd>W</kbd>, <kbd>Ctrl</kbd>+<kbd>T</kbd>, <kbd>F11</kbd> funzionano anche con una sessione RDP o VNC in primo piano.</dd></div>
+        <div class="voce"><dt>Associazione tasti</dt><dd>Per RDP e VNC si sceglie quali combinazioni (<kbd>Win</kbd>, <kbd>Alt</kbd>+<kbd>Tab</kbd>…) vanno al PC remoto e quali restano locali, con eccezioni per singola connessione. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Canc</kbd> resta locale: lo impone Windows.</dd></div>
+        <div class="voce"><dt>Sessioni in background</dt><dd>Con "Riduci nel vassoio", chiudere la finestra lascia aperte le sessioni.</dd></div>
+      </dl>
+    </section>
+
+    <!-- P.6 Claude: cosa sa fare. I confini sono nella pagina Sicurezza -->
+    <section class="blocco" id="claude" aria-labelledby="h-claude">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.6</span>
+        <h2 id="h-claude">Claude dentro le sessioni RDP e VNC</h2>
+        <p>Lemora contiene un server MCP locale (il protocollo con cui Claude usa programmi esterni). Claude vede lo schermo della sessione, legge il testo, clicca, scrive e attende, come un tecnico davanti al PC.</p>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>Trovare</dt><dd>Cercare connessioni, cartelle e dettagli; verificare se un PC risponde.</dd></div>
+        <div class="voce"><dt>Vedere</dt><dd>Schermata con gli elementi numerati, elenco dei controlli, testo letto con l'OCR di Windows.</dd></div>
+        <div class="voce"><dt>Agire</dt><dd>Clic, scrittura, tasti, scorrimento, trascinamento, attesa che qualcosa cambi.</dd></div>
+        <div class="voce"><dt>Scambiare</dt><dd>Incollare testi lunghi, leggere gli appunti, mandare e prendere file con conferma.</dd></div>
+      </dl>
+      <!-- prova: la stessa richiesta passo per passo, con gli strumenti veri; Pausa e Ferma come il riquadro del programma (demos.js, "claude") -->
+      <div class="claude-demo" data-demo="claude">
+        <div class="claude-demo__chat">
+          <p class="demo-riquadro__tit">Prova · Claude con PC-Reception</p>
+          <ol class="claude-demo__log" data-log aria-live="polite" role="list"></ol>
+          <div class="claude-demo__comandi">
+            <button type="button" class="demo-btn demo-btn--pri" data-avvia>Avvia</button>
+            <button type="button" class="demo-btn" data-pausa disabled>Pausa</button>
+            <button type="button" class="demo-btn" data-ferma disabled>Ferma</button>
+          </div>
+        </div>
+        <div class="cschermo" data-schermo data-fase="inizio" aria-hidden="true">
+          <div class="cschermo__barra"><span>PC-Reception · 192.168.1.21 · VNC</span><span>Studio Rossi</span></div>
+          <div class="cschermo__fin">
+            <p>Stampanti e scanner › Stampante uffici › Coda</p>
+            <div class="cschermo__coda"><span>Fattura 1180.pdf <em>Errore</em></span><span>Preventivo Bianchi.docx <em>Errore</em></span><span>Agenda settimana.pdf <em>Errore</em></span></div>
+            <p class="cschermo__ok">Pagina di prova inviata · stampante pronta</p>
+          </div>
+          <span class="cschermo__mira"></span>
+          <span class="cschermo__claude">Claude sta lavorando · Pausa · Ferma</span>
+        </div>
+        <script type="application/json" data-passi>[["apri_sessione","PC-Reception, VNC, credenziali della cartella Studio Rossi","inizio"],["schermata","Desktop del PC, nessuna finestra aperta","inizio"],["clic","Start › Impostazioni › Stampanti e scanner","stampanti"],["leggi_schermo","Stampante uffici: 3 documenti in errore nella coda","stampanti"],["clic","Annulla tutti i documenti","annulla"],["attendi","Coda vuota","annulla"],["clic","Stampa pagina di prova","prova"],["schermata","Pagina di prova inviata. Sessione lasciata aperta per il controllo","prova"]]</script>
+      </div>
+      <dl class="voci">
+        <div class="voce"><dt>File</dt><dd><code>invia_file</code> e <code>prendi_file</code> passano dagli appunti RDP o dal protocollo TightVNC, fino a 500 MB per invio.</dd></div>
+      </dl>
+      <p class="rimando">Come Claude resta sotto il controllo dell'utente: <a href="../sicurezza/#claude">Sicurezza, S.6</a></p>
+    </section>
+
+    <!-- P.7 importazione -->
+    <section class="blocco" id="importa" aria-labelledby="h-importa">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.7</span>
+        <h2 id="h-importa">Importazione</h2>
+      </header>
+      <div class="tab-scorre" tabindex="0" role="region" aria-label="Formati importabili">
+        <table class="tab">
+          <caption>Tab. 2 · Formati da cui si importano cartelle e connessioni.</caption>
+          <thead><tr><th scope="col">Da</th><th scope="col">Formato</th><th scope="col">Note</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">mRemoteNG</th><td>CSV esportato</td><td>Cartelle e connessioni.</td></tr>
+            <tr><th scope="row">Desktop remoto di Windows</th><td>File <code>.rdp</code></td><td>Con le credenziali che Windows ha salvato per quel PC.</td></tr>
+            <tr><th scope="row">1Remote, Lemora</th><td>JSON o database <code>.db</code></td><td>Anche da un'altra installazione.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="rimando">Controlli sui file importati: <a href="../sicurezza/#connessioni">Sicurezza, S.4</a></p>
+    </section>
+
+    <!-- P.8 temi e requisiti -->
+    <section class="blocco" id="aspetto" aria-labelledby="h-aspetto">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.8</span>
+        <h2 id="h-aspetto">Temi e requisiti</h2>
+        <p>Dieci temi: Grafite, Notte e Asfalto scuri; Carta, Ghiaccio, Lavanda, Ardesia, Vino, Bosco e Terra chiari. L'estensione segue il tema del programma.</p>
+      </header>
+      <figure class="fig">
+        <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/impostazioni-temi.webp" srcset="../../assets/img/impostazioni-temi-800.webp 800w, ../../assets/img/impostazioni-temi.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Impostazioni, Aspetto: i dieci temi con l'anteprima dei colori, tipo e dimensione del carattere" loading="lazy" width="1400" height="650"><img class="solo-chiaro" src="../../assets/img/impostazioni-temi-chiaro.webp" srcset="../../assets/img/impostazioni-temi-chiaro-800.webp 800w, ../../assets/img/impostazioni-temi-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Impostazioni, Aspetto: i dieci temi con l'anteprima dei colori, tipo e dimensione del carattere" loading="lazy" width="1400" height="650"></div>
+        <figcaption><b>Fig. 8</b> Impostazioni › Aspetto: tema, carattere e dimensione del testo, da S a XXXL.</figcaption>
+      </figure>
+      <!-- prova: i dieci temi applicati a una finestra in miniatura, colori calcolati come nel programma (demos.js, "temi") -->
+      <div class="temi" data-demo="temi">
+        <div class="temi__scelte" data-temi role="group" aria-label="Tema del programma"></div>
+        <div class="temi__vista">
+          <div class="fin" aria-hidden="true">
+            <div class="fin__titolo"><img src="../../assets/img/icon.png" alt="" width="16" height="16"><span class="fin__scheda">Home</span><span class="fin__piu">+</span><span class="fin__ctrl"><i></i><i></i><i></i></span></div>
+            <div class="fin__barra"><span class="fin__cerca"><span class="temi__ph">Connetti/Cerca (Ctrl+F)</span><span class="fin__chip">VNC ▾</span></span><span class="fin__agg">+ Aggiungi</span><span class="fin__seg"><button type="button" tabindex="-1" aria-pressed="true">Tutto</button><button type="button" tabindex="-1">RDP</button><button type="button" tabindex="-1">VNC</button></span></div>
+            <div class="fin__corpo">
+              <div class="fin__albero"><button type="button" tabindex="-1">Home</button><button type="button" tabindex="-1"><b>C</b>Clinica Sole<span>1</span></button><button type="button" tabindex="-1"><b>F</b>Farmacia Centrale<span>2</span></button><button type="button" tabindex="-1" aria-current="true"><b>O</b>Officine Brenta<span>4</span></button><button type="button" tabindex="-1"><b>S</b>Studio Rossi<span>2</span></button></div>
+              <div class="fin__lista"><p class="fin__tlista">SERVER SALVATI</p><ul role="list">
+                <li><button type="button" tabindex="-1" class="fin__riga scelta"><span class="fin__stella fin__stella--on">★</span><b class="fin__p fin__p--rdp">RDP</b><span class="fin__n">DC01<small>10.20.0.10:3389</small></span><span class="fin__u">admin</span></button></li>
+                <li><button type="button" tabindex="-1" class="fin__riga"><span class="fin__stella">☆</span><b class="fin__p fin__p--rdp">RDP</b><span class="fin__n">FS-01<small>10.20.0.12:3389</small></span><span class="fin__u">admin</span></button></li>
+                <li><button type="button" tabindex="-1" class="fin__riga"><span class="fin__stella">☆</span><b class="fin__p fin__p--ssh">SSH</b><span class="fin__n">NAS-Backup<small>10.20.0.40:22</small></span><span class="fin__u">backup</span></button></li>
+                <li><button type="button" tabindex="-1" class="fin__riga"><span class="fin__stella">☆</span><b class="fin__p fin__p--vnc">VNC</b><span class="fin__n">Console iLO<small>10.20.0.205:5900</small></span><span class="fin__u">admin</span></button></li>
+              </ul></div>
+              <div class="fin__pannello"><div class="fin__ptesta"><span class="fin__lettera fin__lettera--rdp">RDP</span><div><p class="fin__pnome">DC01</p><p class="fin__pmeta">Officine Brenta / Server</p></div></div><dl class="fin__ptab"><div><dt>Destinazione</dt><dd><code>10.20.0.10:3389</code></dd></div><div><dt>Accesso</dt><dd>BRENTA\admin</dd></div></dl><p class="fin__pbott"><span class="fin__bp">Connetti</span></p></div>
+            </div>
+          </div>
+          <p class="demo__nota">Tema <b data-tema-nome>Grafite</b> · colori calcolati con le stesse regole del programma, su una finestra in miniatura.</p>
+        </div>
+      </div>
+      <dl class="specifiche">
+        <div><dt>Componenti</dt><dd>.NET e FreeRDP inclusi nel file; WebView2 per il terminale integrato (già presente in Windows 11)</dd></div>
+        <div><dt>Lingue</dt><dd>Italiano e inglese complete; le altre dodici ereditate da 1Remote non hanno le funzioni nuove</dd></div>
+        <div><dt>Avvio</dt><dd>Finestra subito visibile, dati caricati dopo; compilazione ReadyToRun</dd></div>
+      </dl>
+      <p class="rimando">File, impronta e modi di installazione: <a href="../scarica/">Scarica</a></p>
+    </section>
+
+    <!-- P.9 lato tecnico di Teams: cosa vede il PC secondo il permesso; la parte dell'amministratore e' in Per aziende -->
+    <section class="blocco" id="teams" aria-labelledby="h-teams">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.9</span>
+        <h2 id="h-teams">Con un server Teams</h2>
+        <p>Le voci del server compaiono nelle stesse cartelle delle connessioni del PC, con la nuvola accanto. Il permesso del PC decide cosa si può fare su quelle voci.</p>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>Sola lettura</dt><dd>Le voci si aprono e si copiano. Modifica, Duplica, Elimina e Rinomina non compaiono; creare una voce sul server viene rifiutato con un messaggio.</dd></div>
+        <div class="voce"><dt>Richieste</dt><dd>L'editor propone "Manda al server come richiesta". La voce resta com'è fino all'approvazione; quella nuova compare subito con l'orologio. Un rifiuto arriva con la nota dell'amministratore.</dd></div>
+        <div class="voce"><dt>Server irraggiungibile</dt><dd>La richiesta resta in coda sul PC, con l'orologio, e parte appena il server risponde.</dd></div>
+        <div class="voce"><dt>Ritirare o correggere</dt><dd>Una richiesta ancora in attesa si può aggiornare o ritirare; l'amministratore vede sempre l'ultima versione.</dd></div>
+      </dl>
+      <!-- prova: stesso PC, stesse voci, permesso diverso (demos.js, "teams") -->
+      <div class="demo-riquadro tc" data-demo="teams">
+        <p class="demo-riquadro__tit">Prova · PC-GIULIA collegato a Teams · cartella Officine Brenta</p>
+        <div class="tc__comandi">
+          <fieldset class="tc__perm">
+            <legend>Permesso del PC</legend>
+            <label><input type="radio" name="tc-permesso" value="read" class="vh" checked>Sola lettura</label>
+            <label><input type="radio" name="tc-permesso" value="requests" class="vh">Richieste</label>
+            <label><input type="radio" name="tc-permesso" value="write" class="vh">Scrittura</label>
+          </fieldset>
+          <label class="tc__online"><input type="checkbox" data-online checked> Server raggiungibile</label>
+        </div>
+        <div class="tc__app">
+          <ul class="tc__lista" role="list" data-lista>
+            <li class="tc__riga"><b class="tag tag--rdp">RDP</b><span>FS-01<code>10.20.0.12</code></span><span class="tc__stato"><span class="tc__nuvola" aria-label="condivisa">☁</span></span></li>
+            <li class="tc__riga tc__riga--scelta" data-voce-dc01><b class="tag tag--rdp">RDP</b><span>DC01<code>10.20.0.10</code></span><span class="tc__stato"><span class="tc__nuvola" aria-label="condivisa">☁</span><span class="tc__orologio" aria-label="in attesa di approvazione" hidden>◷</span></span></li>
+          </ul>
+          <div class="tc__barra">
+            <span class="tc__azioni" data-azioni><button type="button" class="demo-btn" data-modifica>Modifica DC01</button><button type="button" class="demo-btn" disabled>Duplica</button><button type="button" class="demo-btn" disabled>Elimina</button></span>
+            <button type="button" class="demo-btn" data-nuova>+ Nuova connessione nella cartella</button>
+          </div>
+          <div class="tc__editor" data-editor hidden>
+            <label class="demo-campo">Indirizzo di DC01<input type="text" value="10.20.0.11" spellcheck="false"></label>
+            <label class="tc__richiesta"><input type="checkbox" data-come-richiesta checked> Manda al server come richiesta</label>
+            <button type="button" class="demo-btn demo-btn--pri" data-salva>Salva</button>
+          </div>
+        </div>
+        <p class="demo__esito" data-msg aria-live="polite"></p>
+        <button type="button" class="demo-btn" data-rifiuta hidden>L'amministratore rifiuta</button>
+        <p class="demo__nota">I messaggi sono quelli del programma. La parte dell'amministratore: <a href="../aziende/#permessi">Per aziende, A.3</a>.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+</main>
+
+<footer class="piede">
+  <div class="piede__in">
+    <div class="piede__col">
+      <p class="piede__marchio"><img src="../../assets/img/icon.png" alt="" width="20" height="20"> Lemora</p>
+      <p>Versione modificata di <a href="https://github.com/1Remote/1Remote">1Remote</a> (© VShawn e collaboratori), licenza GPL-3.0. Non affiliato al progetto 1Remote.</p>
+    </div>
+    <nav class="piede__col" aria-labelledby="pf-sito">
+      <h2 id="pf-sito">Sito</h2>
+      <a href="./">Prodotto</a><a href="../aziende/">Per aziende</a><a href="../sicurezza/">Sicurezza</a><a href="../scarica/">Scarica</a>
+    </nav>
+    <nav class="piede__col" aria-labelledby="pf-doc">
+      <h2 id="pf-doc">Documenti</h2>
+      <a href="../privacy.html">Privacy dell'estensione</a><a href="../privacy-sito.html">Privacy e cookie del sito</a><a href="https://www.gnu.org/licenses/gpl-3.0.html">Licenza GPL-3.0</a>
+    </nav>
+    <div class="piede__col">
+      <h2>Versione</h2>
+      <p class="mono">1.3.1.11119<br>19 novembre 2026<br>Estensione 1.0.4</p>
+    </div>
+    <p class="piede__colophon"><span>Nessun cookie, nessuna statistica</span><span>Dati nelle figure: di esempio</span></p>
+  </div>
+</footer>
+</body>
+</html>

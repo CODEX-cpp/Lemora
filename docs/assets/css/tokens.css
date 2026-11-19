@@ -1,0 +1,181 @@
+/* =============================================================
+   Lemora, sito: tokens.css
+   Tutti i valori di stile del sito. Caricato per primo.
+   Nei CSS delle pagine solo var(--nome): un valore nuovo si
+   aggiunge prima qui, con il motivo.
+   ============================================================= */
+
+/* 0. Livelli: l'ultimo dichiarato vince, senza gare di specificita' */
+@layer reset, base, layout, componenti, pagine, utility;
+
+/* 1. Font: tutti in locale (OFL), niente servizi esterni.
+   Newsreader solo per i titoli di pagina e di sezione,
+   Plex Sans per testo e interfaccia, Plex Mono per dati tecnici
+   (indirizzi, versioni, tasti, didascalie, intestazioni di tabella). */
+@font-face { font-family: "Plex Sans"; src: url("../fonts/plex-sans-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Plex Sans"; src: url("../fonts/plex-sans-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Plex Sans"; src: url("../fonts/plex-sans-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Plex Mono"; src: url("../fonts/plex-mono-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Plex Mono"; src: url("../fonts/plex-mono-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Newsreader"; src: url("../fonts/newsreader-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Newsreader"; src: url("../fonts/newsreader-400i.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Newsreader"; src: url("../fonts/newsreader-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+
+:root {
+    --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+    --font-body:    "Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --font-mono:    "Plex Mono", Consolas, ui-monospace, monospace;
+
+    /* 2. Dimensioni testo (gradini almeno x1.25) */
+    --text-2xs: 0.75rem;
+    --text-xs:  0.8125rem;
+    --text-sm:  0.9375rem;
+    --text-md:  1.0625rem;
+    --text-lg:  1.3125rem;
+    --text-xl:  1.75rem;
+    --text-2xl: clamp(2rem, 2.2vw + 1.2rem, 2.875rem);
+    --text-display: clamp(2.5rem, 4vw + 1rem, 4.5rem);
+
+    /* 13-15. Peso, interlinea, spaziatura lettere */
+    --fw-regular: 400; --fw-medium: 500; --fw-semibold: 600;
+    --lh-tight: 1.06; --lh-snug: 1.25; --lh-body: 1.6;
+    --track-tight: -0.02em; --track-mono: 0.02em;
+
+    /* 16. Spaziatura: ritmo di 8 */
+    --sp-1: 0.25rem; --sp-2: 0.5rem; --sp-3: 0.75rem; --sp-4: 1rem; --sp-5: 1.5rem;
+    --sp-6: 2rem; --sp-7: 3rem; --sp-8: 4rem; --sp-9: 6rem; --sp-10: 9rem;
+
+    /* 17. Raggi: piccoli, come l'app */
+    --r-sm: 3px; --r-md: 6px; --r-lg: 10px; --r-pill: 999px;
+
+    /* 18. Movimento */
+    --dur-fast: 160ms; --dur-base: 280ms; --dur-slow: 520ms;
+    --ease-out: cubic-bezier(.2, .7, .2, 1);
+    --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+    --move-sm: 12px; --move-md: 28px;
+    --stagger: 140ms;
+
+    /* 19. Z-index */
+    --z-raised: 1; --z-callout: 5; --z-header: 50; --z-menu: 60;
+
+    /* 21. Misure ricorrenti */
+    --page-max: 78rem;     /* 1248px */
+    --read-max: 40rem;     /* colonna di lettura, circa 70 caratteri */
+    --toc-w: 13rem;        /* indice laterale delle pagine lunghe */
+    --gutter: 1.5rem;
+    --side: 1rem;          /* margine laterale su telefono */
+    --header-h: 3.75rem;
+    /* spazio lasciato sopra una sezione quando ci si salta: testata fissa + respiro.
+       Sotto i 48rem la testata ha due righe (marchio, poi menu alto 2.75rem): vedi l'override in fondo */
+    --scroll-off: calc(var(--header-h) + var(--sp-5));
+    --hair: 1px;
+    --rule: 2px;           /* linea spessa dei titoli di sezione, come nei manuali */
+}
+
+/* 3-9. Palette chiara: carta, inchiostro, un solo accento (vermiglio di segnalazione).
+   Evoluzione 19/11: carta meno beige (piu' "foglio tecnico"), grigi piu' neutri. */
+:root {
+    color-scheme: light;
+    --bg:        #f5f4f0;
+    --surface:   #fcfbf9;
+    --surface-2: #ecebe5;
+    --surface-3: #e2e0d8;
+    --border:    #d8d6cd;
+    --border-2:  #bfbcb1;
+    --border-control: #807d73;   /* 3:1 su --bg */
+
+    --accent:       #b4380a;     /* 5.5:1 su --bg: va bene anche per i link */
+    --accent-hover: color-mix(in oklch, var(--accent), black 12%);
+    --accent-dim:   color-mix(in oklch, var(--accent) 9%, transparent);
+
+    --success: #2f7d4f;
+    --success-dim: color-mix(in oklch, var(--success) 12%, transparent);
+    --warning: #8a5a00;
+
+    --text:       #1b1c1a;
+    --text-dim:   #43433f;
+    --text-muted: #5f5e58;       /* 5.7:1 su --bg */
+    --text-faint: #8d8b83;       /* solo decorazioni, mai testo da leggere */
+    --text-on-accent: #fffaf5;
+
+    --focus-ring: var(--accent); --focus-ring-width: 2px; --focus-ring-offset: 3px;
+    --selection-bg: color-mix(in oklch, var(--accent) 22%, transparent);
+    --selection-txt: var(--text);
+    --scrollbar-thumb: var(--border-2); --scrollbar-track: transparent;
+
+    --shadow-sm:      0 1px 2px rgb(30 28 20 / 0.08);
+    --shadow-card:    0 6px 18px rgb(30 28 20 / 0.10);
+    --shadow-figure:  0 18px 40px -12px rgb(30 28 20 / 0.28);
+    --overlay-bg:     rgb(27 28 26 / 0.5);
+
+    /* colori delle schermate dell'app disegnate in HTML (tema scuro di Lemora) */
+    --app-bg: #1b1b1b; --app-island: #232323; --app-line: #333333; --app-text: #ececec; --app-dim: #9a9a9a; --app-accent: #60cdff;
+    --app-title: #141414; --app-edge: #3a3a3a; --app-edge-2: #444444; --app-key: #2b2b2b;
+    --app-sel: #2e3a40; --app-row-sel: #2b3439; --app-drawer: #202426; --app-drawer-edge: #3d4a50; --app-drawer-item: #2a2f31;
+    --app-rdp: #8fd3ff; --app-rdp-bg: #1f3340; --app-vnc: #ffcf8f; --app-vnc-bg: #3d3020; --app-ok: #9fe0b4; --app-ssh-bg: #1f3a2a; --app-live: #4fbf7a;
+    --app-warn: #ffcf8f; --app-on-accent: #141414;
+    --term-bg: #0f1110; --term-text: #d6e2d8; --term-dim: #8e9a90; --term-prompt: #7cc79a; --term-line: #2a2e2b;
+    /* finto puntatore delle demo: bianco col bordo scuro come quello di Windows, si vede su ogni tema */
+    --cursor-fill: #fdfdfd; --cursor-edge: #1a1a1a; --cursor-shadow: 0 2px 4px rgb(0 0 0 / 0.35); --dur-cursor: 750ms;
+}
+
+/* telefono: la testata ha anche la riga del menu */
+@media (max-width: 47.99rem) {
+    :root { --scroll-off: calc(var(--header-h) + 2.75rem + var(--sp-4)); }
+}
+
+/* 11. Stampa: sempre carta bianca e inchiostro, qualunque tema sia attivo (le pagine Sicurezza e Per aziende si allegano a documenti) */
+@media print {
+    /* selettore piu' specifico di quelli del tema scuro, che vengono dopo */
+    html:root:not([data-theme="stampa"]) {
+        color-scheme: light;
+        --bg: #ffffff; --surface: #ffffff; --surface-2: #f2f2f0; --border: #c9c7c0; --border-2: #a9a69e;
+        --text: #1b1c1a; --text-dim: #2f2f2c; --text-muted: #55544f; --accent: #9c3008;
+    }
+}
+
+/* 12. Tema scuro: segue il sistema del visitatore, oppure la scelta salvata (data-theme su <html>) */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --bg: #121312; --surface: #1a1b1a; --surface-2: #222322; --surface-3: #2a2b29;
+        --border: #2d2e2c; --border-2: #3c3d3a; --border-control: #71726d;
+        --accent: #f26b3a; --accent-hover: color-mix(in oklch, var(--accent), white 14%);
+        --success: #4fbf7a; --warning: #d9a440;
+        --text: #e9e7e1; --text-dim: #c5c3bc; --text-muted: #9c9a92; --text-faint: #6c6b65; --text-on-accent: #1a0c05;
+        --shadow-card: 0 6px 18px rgb(0 0 0 / 0.4); --shadow-figure: 0 22px 48px -14px rgb(0 0 0 / 0.7); --overlay-bg: rgb(0 0 0 / 0.6);
+    }
+}
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #121312; --surface: #1a1b1a; --surface-2: #222322; --surface-3: #2a2b29;
+    --border: #2d2e2c; --border-2: #3c3d3a; --border-control: #71726d;
+    --accent: #f26b3a; --accent-hover: color-mix(in oklch, var(--accent), white 14%);
+    --success: #4fbf7a; --warning: #d9a440;
+    --text: #e9e7e1; --text-dim: #c5c3bc; --text-muted: #9c9a92; --text-faint: #6c6b65; --text-on-accent: #1a0c05;
+    --shadow-card: 0 6px 18px rgb(0 0 0 / 0.4); --shadow-figure: 0 22px 48px -14px rgb(0 0 0 / 0.7); --overlay-bg: rgb(0 0 0 / 0.6);
+}
+
+/* =============================================================
+   22. Linee guida del sito (memoria del progetto)
+   - Sito a piu' pagine: Home, Prodotto, Aziende, Sicurezza, Scarica.
+     Ogni pagina ha contenuti suoi: nessun testo ripetuto tra pagine,
+     al massimo un rimando con link.
+   - Tono: asciutto e impersonale. Frasi corte che dicono cosa fa il
+     programma, con un dato al posto dell'aggettivo. Niente passi da
+     tutorial, niente "ecco come", niente onesta' annunciata.
+   - Aspetto "foglio tecnico": titoli di sezione con linea spessa sopra
+     e codice in mono (P.1, A.2...), indice laterale nelle pagine
+     lunghe, figure numerate con didascalia in mono, tabelle vere.
+   - Un solo accento (vermiglio) per pulsante principale, link,
+     numeri delle figure. Verde solo per "collegato/attivo".
+     Niente gradienti, aloni, vetro, card uguali in griglia.
+   - Animazione "ricca" ma con un motivo (scelta di Ivan): l'app
+     disegnata che lavora, richiami che entrano, linee degli schemi
+     che scorrono, registro che si riempie. Tutto spento con
+     prefers-reduced-motion e visibile senza JavaScript.
+   - Nessun trattino lungo, nessuna etichetta maiuscola sopra i
+     titoli, nessun dato inventato (utenti, recensioni, numeri).
+   - Dati di esempio nelle figure: aziende inventate (Officine Brenta,
+     Studio Rossi...), mai nomi di clienti veri.
+   ============================================================= */

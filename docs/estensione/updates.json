@@ -1,0 +1,12 @@
+{
+    "addons":  {
+                   "lemora-passwords@lemora.local":  {
+                                                         "updates":  [
+                                                                         {
+                                                                             "version":  "1.0.4",
+                                                                             "update_link":  "https://codex-cpp.github.io/Lemora/estensione/lemora-firefox-1.0.4.xpi"
+                                                                         }
+                                                                     ]
+                                                     }
+               }
+}

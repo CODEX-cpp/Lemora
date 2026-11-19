@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Lemora: gestore di connessioni RDP, VNC e SSH per Windows</title>
+<meta name="description" content="Connessioni RDP, VNC e SSH ordinate per cliente, password dei dispositivi accanto alla sessione, dati cifrati sul PC. Server per i team da installare in sede. Gratuito, per Windows.">
+<link rel="canonical" href="https://codex-cpp.github.io/Lemora/it/">
+<link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/">
+<link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/">
+<link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lemora">
+<meta property="og:url" content="https://codex-cpp.github.io/Lemora/it/">
+<meta property="og:title" content="Lemora: RDP, VNC e SSH ordinati per cliente">
+<meta property="og:description" content="Gestore di connessioni remote per Windows, con password dei dispositivi e server per i team in sede.">
+<meta property="og:image" content="https://codex-cpp.github.io/Lemora/assets/img/og-it.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Finestra di Lemora con ricerca rapida, sessione RDP e password del cliente">
+<meta property="og:locale" content="it_IT"><meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f5f4f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121312" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="../assets/img/icon-180.png">
+<link rel="manifest" href="../site.webmanifest">
+<link rel="preload" href="../assets/fonts/plex-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/newsreader-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<script src="../assets/js/tema.js?v=23"></script>
+<link rel="stylesheet" href="../assets/css/tokens.css?v=23">
+<link rel="stylesheet" href="../assets/css/base.css?v=23">
+<link rel="stylesheet" href="../assets/css/main.css?v=23">
+<link rel="stylesheet" href="../assets/css/componenti.css?v=23">
+<link rel="stylesheet" href="../assets/css/pagine.css?v=23">
+<link rel="stylesheet" href="../assets/css/demos.css?v=23">
+<script src="../assets/js/main.js?v=23" defer></script>
+<script src="../assets/js/demos.js?v=23" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://codex-cpp.github.io/Lemora/#sito","name":"Lemora","url":"https://codex-cpp.github.io/Lemora/","inLanguage":["it","en"]},{"@type":"SoftwareApplication","name":"Lemora","applicationCategory":"UtilitiesApplication","applicationSubCategory":"Gestore di connessioni remote","operatingSystem":"Windows 10 (2004 o successivo), Windows 11, 64 bit","softwareVersion":"1.3.1","fileSize":"219 MB","downloadUrl":"https://codex-cpp.github.io/Lemora/download/Lemora.exe","url":"https://codex-cpp.github.io/Lemora/it/","inLanguage":"it","description":"Gestore di connessioni RDP, VNC e SSH per Windows, con cartelle per cliente, password dei dispositivi, estensione del browser e server per i team da installare in sede.","license":"https://www.gnu.org/licenses/gpl-3.0.html","isBasedOn":"https://github.com/1Remote/1Remote","image":"https://codex-cpp.github.io/Lemora/assets/img/og-it.png","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}}]}</script>
+</head>
+<body>
+<a class="salta" href="#contenuto">Vai al contenuto</a>
+
+<header class="testata">
+  <div class="testata__in">
+    <a class="marchio" href="./" aria-label="Lemora, pagina iniziale">
+      <img src="../assets/img/icon.png" alt="" width="28" height="28"><span>Lemora</span>
+    </a>
+    <nav class="menu" aria-label="Pagine">
+      <ul role="list">
+        <li><a href="prodotto/">Prodotto</a></li>
+        <li><a href="aziende/">Per aziende</a></li>
+        <li><a href="sicurezza/">Sicurezza</a></li>
+      </ul>
+    </nav>
+    <div class="testata__azioni">
+      <a class="lingua" href="../en/" hreflang="en" lang="en" data-lang="en" aria-label="English version">EN</a>
+      <button class="tema" type="button" aria-label="Cambia tema chiaro o scuro" data-tema-btn>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg>
+      </button>
+      <a class="btn btn--gho btn--sm" href="scarica/">Scarica</a>
+    </div>
+  </div>
+</header>
+
+<main id="contenuto">
+
+<!-- HERO: cosa e', per chi, e il programma che lavora (finestra disegnata in HTML, animata una volta) -->
+<section class="hero" aria-labelledby="h-hero">
+  <div class="hero__testo">
+    <p class="versione mono"><span class="punto" aria-hidden="true"></span> Versione 1.3.1 per Windows 10 e 11</p>
+    <h1 id="h-hero">RDP, VNC e SSH, ordinati per <em>cliente</em></h1>
+    <p class="hero__lead">Gestore di connessioni remote per l'assistenza informatica. Ogni cliente è una cartella con dominio, rete e credenziali; le password di NAS, switch e stampanti si aprono accanto alla sessione. I dati restano cifrati sul PC.</p>
+    <div class="hero__azioni">
+      <a class="btn btn--pri" href="scarica/">Scarica per Windows</a>
+      <a class="btn btn--gho" href="prodotto/">Vedi le funzioni</a>
+    </div>
+    <p class="hero__meta mono">Gratuito · GPL-3.0 · un solo file, .NET incluso</p>
+  </div>
+
+  <!-- la finestra principale, cliccabile e uguale al programma: ricerca, filtri, albero, elenco, riepilogo (demos.js, "finestra") -->
+  <div class="hero__figura">
+    <div class="fin" data-demo="finestra" role="group" aria-label="Demo della finestra principale di Lemora, dati di esempio">
+      <div class="fin__titolo" aria-hidden="true"><img src="../assets/img/icon.png" alt="" width="16" height="16"><span class="fin__scheda">Home</span><span class="fin__piu">+</span><span class="fin__ctrl"><i></i><i></i><i></i></span></div>
+      <div class="fin__barra">
+        <label class="fin__cerca"><span class="vh">Cerca</span><input type="text" data-cerca placeholder="Connetti/Cerca (Ctrl+F)" autocomplete="off" spellcheck="false"><span class="fin__chip" aria-hidden="true">VNC ▾</span></label>
+        <span class="fin__agg" aria-hidden="true">+ Aggiungi <small>Ctrl+N</small></span>
+        <span class="fin__seg" role="group" aria-label="Filtro per protocollo"><button type="button" data-proto-filtro="" aria-pressed="true">Tutto</button><button type="button" data-proto-filtro="RDP" aria-pressed="false">RDP</button><button type="button" data-proto-filtro="VNC" aria-pressed="false">VNC</button></span>
+      </div>
+      <div class="fin__corpo">
+        <nav class="fin__albero" aria-label="Cartelle">
+          <button type="button" data-nodo="" aria-current="false">Home</button>
+          <button type="button" data-nodo="Clinica Sole" aria-current="false"><b>C</b>Clinica Sole<span>1</span></button>
+          <button type="button" data-nodo="Farmacia Centrale" aria-current="false"><b>F</b>Farmacia Centrale<span>2</span></button>
+          <button type="button" data-nodo="Hotel Lago Blu" aria-current="false"><b>H</b>Hotel Lago Blu<span>2</span></button>
+          <button type="button" data-nodo="Officine Brenta" aria-current="false"><b>O</b>Officine Brenta<span>0</span></button>
+          <button type="button" class="fin__sotto" data-nodo="Officine Brenta/Rete" aria-current="false">Rete<span>2</span></button>
+          <button type="button" class="fin__sotto" data-nodo="Officine Brenta/Sede" aria-current="false">Sede<span>2</span></button>
+          <button type="button" class="fin__sotto" data-nodo="Officine Brenta/Server" aria-current="true">Server<span>6</span></button>
+          <button type="button" data-nodo="Studio Rossi" aria-current="false"><b>S</b>Studio Rossi<span>2</span></button>
+        </nav>
+        <div class="fin__lista">
+          <p class="fin__tlista" data-titolo-lista>SERVER SALVATI</p>
+          <ul role="list">
+            <li><button type="button" class="fin__riga" data-conn data-nome="DC01" data-ip="10.20.0.10" data-porta="3389" data-utente="BRENTA\admin" data-ereditato="1" data-proto="RDP" data-cartella="Officine Brenta/Server"><span class="fin__stella">☆</span><b class="fin__p fin__p--rdp">RDP</b><span class="fin__n">DC01<small>10.20.0.10:3389</small></span><span class="fin__u">admin</span></button></li>
+            <li><button type="button" class="fin__riga" data-conn data-nome="FS-01" data-ip="10.20.0.12" data-porta="3389" data-utente="BRENTA\admin" data-ereditato="1" data-proto="RDP" data-cartella="Officine Brenta/Server"><span class="fin__stella">☆</span><b class="fin__p fin__p--rdp">RDP</b><span class="fin__n">FS-01<small>10.20.0.12:3389</small></span><span class="fin__u">admin</span></button></li>
+            <li><button type="button" class="fin__riga" data-conn data-nome="ERP" data-ip="10.20.0.20" data-porta="3389" data-utente="BRENTA\admin" data-ereditato="1" data-proto="RDP" data-cartella="Officine Brenta/Server"><span class="fin__stella fin__stella--on">★</span><b class="fin__p fin__p--rdp">RDP</b><span class="fin__n">ERP<small>10.20.0.20:3389</small></span><span class="fin__u">admin</span></button></li>
+            <li><button type="button" class="fin__riga" data-conn data-nome="SQL-01" data-ip="10.20.0.21" data-porta="3389" data-utente="BRENTA\admin" data-ereditato="1" data-proto="RDP" data-cartella="Officine Brenta/Server"><span class="fin__stella">☆</span><b class="fin__p fin__p--rdp">RDP</b><span class="fin__n">SQL-01<small>10.20.0.21:3389</small></span><span class="fin__u">admin</span></button></li>
+            <li><button type="button" class="fin__riga" data-conn data-nome="NAS-Backup" data-ip="10.20.0.40" data-porta="22" data-utente="backup" data-proto="SSH" data-cartella="Officine Brenta/Server"><span class="fin__stella">☆</span><b class="fin__p fin__p--ssh">SSH</b><span class="fin__n">NAS-Backup<small>10.20.0.40:22</small></span><span class="fin__u">backup</span></button></li>
+            <li><button type="button" class="fin__riga" data-conn data-nome="Console iLO" data-ip="10.20.0.205" data-porta="5900" data-utente="admin" data-proto="VNC" data-cartella="Officine Brenta/Server"><span class="fin__stella">☆</span><b class="fin__p fin__p--vnc">VNC</b><span class="fin__n">Console iLO<small>10.20.0.205:5900</small></span><span class="fin__u">admin</span></button></li>
+            <li><button type="button" class="fin__riga" data-conn data-nome="Firewall" data-ip="10.20.0.1" data-porta="22" data-utente="admin" data-proto="SSH" data-cartella="Officine Brenta/Rete"><span class="fin__stella">☆</span><b class="fin__p fin__p--ssh">SSH</b><span class="fin__n">Firewall<small>10.20.0.1:22</small></span><span class="fin__u">admin</span></button></li>
+            <li><button type="button" class="fin__riga" data-conn data-nome="Switch-Core" data-ip="10.20.0.2" data-porta="22" data-utente="admin" data-proto="SSH" data-cartella="Officine Brenta/Rete"><span class="fin__stella">☆</span><b class="fin__p fin__p--ssh">SSH</b><span class="fin__n">Switch-Core<small>10.20.0.2:22</small></span><span class="fin__u">admin</span></button></li>
+            <li><button type="button" class="fin__riga" data-conn data-nome="PC-Reception" data-ip="10.20.1.21" data-porta="5900" data-utente="reception" data-proto="VNC" data-cartella="Officine Brenta/Sede"><span class="fin__stella">☆</span><b class="fin__p fin__p--vnc">VNC</b><span class="fin__n">PC-Reception<small>10.20.1.21:5900</small></span><span class="fin__u">reception</span></button></li>
+            <li><button type="button" class="fin__riga" data-conn data-nome="PC-Ufficio" data-ip="10.20.1.30" data-porta="3389" data-utente="BRENTA\admin" data-ereditato="1" data-proto="RDP" data-cartella="Officine Brenta/Sede"><span class="fin__stella">☆</span><b class="fin__p fin__p--rdp">RDP</b><span class="fin__n">PC-Ufficio<small>10.20.1.30:3389</small></span><span class="fin__u">admin</span></button></li>
+            <li><button type="button" class="fin__riga" data-conn data-nome="FS-Studio" data-ip="192.168.10.5" data-porta="3389" data-utente="STUDIOROSSI\amministratore" data-ereditato="1" data-proto="RDP" data-cartella="Studio Rossi"><span class="fin__stella">☆</span><b class="fin__p fin__p--rdp">RDP</b><span class="fin__n">FS-Studio<small>192.168.10.5:3389</small></span><span class="fin__u">amministratore</span></button></li>
+            <li><button type="button" class="fin__riga" data-conn data-nome="Print Server" data-ip="192.168.10.8" data-porta="3389" data-utente="STUDIOROSSI\amministratore" data-ereditato="1" data-proto="RDP" data-cartella="Studio Rossi"><span class="fin__stella">☆</span><b class="fin__p fin__p--rdp">RDP</b><span class="fin__n">Print Server<small>192.168.10.8:3389</small></span><span class="fin__u">amministratore</span></button></li>
+            <li><button type="button" class="fin__riga" data-conn data-nome="Server Farmacia" data-ip="192.168.1.10" data-porta="3389" data-utente="admin" data-proto="RDP" data-cartella="Farmacia Centrale"><span class="fin__stella">☆</span><b class="fin__p fin__p--rdp">RDP</b><span class="fin__n">Server Farmacia<small>192.168.1.10:3389</small></span><span class="fin__u">admin</span></button></li>
+            <li><button type="button" class="fin__riga" data-conn data-nome="Cassa-1" data-ip="192.168.1.31" data-porta="5900" data-utente="cassa" data-proto="VNC" data-cartella="Farmacia Centrale"><span class="fin__stella">☆</span><b class="fin__p fin__p--vnc">VNC</b><span class="fin__n">Cassa-1<small>192.168.1.31:5900</small></span><span class="fin__u">cassa</span></button></li>
+            <li><button type="button" class="fin__riga" data-conn data-nome="Server Prenotazioni" data-ip="192.168.50.5" data-porta="3389" data-utente="admin" data-proto="RDP" data-cartella="Hotel Lago Blu"><span class="fin__stella">☆</span><b class="fin__p fin__p--rdp">RDP</b><span class="fin__n">Server Prenotazioni<small>192.168.50.5:3389</small></span><span class="fin__u">admin</span></button></li>
+            <li><button type="button" class="fin__riga" data-conn data-nome="Router-Hotel" data-ip="192.168.50.1" data-porta="22" data-utente="admin" data-proto="SSH" data-cartella="Hotel Lago Blu"><span class="fin__stella">☆</span><b class="fin__p fin__p--ssh">SSH</b><span class="fin__n">Router-Hotel<small>192.168.50.1:22</small></span><span class="fin__u">admin</span></button></li>
+            <li><button type="button" class="fin__riga" data-conn data-nome="Server Ambulatorio" data-ip="172.16.8.10" data-porta="3389" data-utente="admin" data-proto="RDP" data-cartella="Clinica Sole"><span class="fin__stella">☆</span><b class="fin__p fin__p--rdp">RDP</b><span class="fin__n">Server Ambulatorio<small>172.16.8.10:3389</small></span><span class="fin__u">admin</span></button></li>
+          </ul>
+          <p class="fin__vuoto" data-vuoto hidden>Nessuna connessione trovata</p>
+        </div>
+        <aside class="fin__pannello" data-pannello aria-live="polite"></aside>
+      </div>
+      <script type="application/json" data-cartelle>{"":{"server":17,"sotto":5,"rete":"·","dominio":"·","cred":0,"pw":0},"Clinica Sole":{"server":1,"sotto":0,"rete":"172.16.8.0/24","dominio":"CLINICA","cred":1,"pw":2},"Farmacia Centrale":{"server":2,"sotto":0,"rete":"192.168.1.0/24","dominio":"·","cred":0,"pw":3},"Hotel Lago Blu":{"server":2,"sotto":0,"rete":"192.168.50.0/24","dominio":"HOTEL","cred":1,"pw":2},"Officine Brenta":{"server":0,"sotto":3,"rete":"10.20.0.0/24","dominio":"BRENTA","cred":2,"pw":5},"Officine Brenta/Rete":{"server":2,"sotto":0,"rete":"10.20.0.0/24","dominio":"BRENTA","cred":2,"pw":5},"Officine Brenta/Sede":{"server":2,"sotto":0,"rete":"10.20.1.0/24","dominio":"BRENTA","cred":2,"pw":5},"Officine Brenta/Server":{"server":6,"sotto":0,"rete":"10.20.0.0/24","dominio":"BRENTA","cred":2,"pw":5},"Studio Rossi":{"server":2,"sotto":0,"rete":"192.168.10.0/24","dominio":"STUDIOROSSI","cred":3,"pw":5}}</script>
+    </div>
+    <p class="didascalia"><b>Fig. 0</b> Demo della finestra principale, dati di esempio: cartelle, filtri, ricerca, stella dei preferiti, menu › delle azioni, viste List, Card e Tree. Doppio clic o Connetti apre la scheda della sessione con la linguetta Password; un indirizzo non salvato seguito da Invio apre una connessione rapida.</p>
+  </div>
+</section>
+
+<!-- PORTE: le tre pagine del sito come righe di un indice, ognuna con il proprio contenuto -->
+<section class="porte" aria-labelledby="h-porte">
+  <h2 id="h-porte" class="vh">Pagine del sito</h2>
+  <ul class="porte__lista" role="list">
+    <li class="porta">
+      <a href="prodotto/">
+        <span class="porta__cod">P</span>
+        <span class="porta__titolo">Il programma <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <span class="porta__desc">RDP, VNC, SSH, Telnet, SFTP e programmi esterni; cartelle che passano rete e credenziali, password dei dispositivi, estensione per i pannelli web, Claude dentro le sessioni.</span>
+        <ul class="porta__voci" role="list"><li>Alt+M</li><li>RDP · VNC · SSH</li><li>Linguetta Password</li><li>Estensione</li><li>Tastiera</li><li>MCP</li></ul>
+      </a>
+    </li>
+    <li class="porta">
+      <a href="aziende/">
+        <span class="porta__cod">A</span>
+        <span class="porta__titolo">Per aziende <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <span class="porta__desc">Lemora Server, su un PC o un server dell'azienda: cartelle e password condivise tra i PC approvati, registro delle attività, storico dei collegamenti.</span>
+        <ul class="porta__voci" role="list"><li>Windows · Linux</li><li>Permessi per PC</li><li>Richieste</li><li>Registro</li><li>Storico</li></ul>
+      </a>
+    </li>
+    <li class="porta">
+      <a href="sicurezza/">
+        <span class="porta__cod">S</span>
+        <span class="porta__titolo">Sicurezza <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <span class="porta__desc">Cosa è cifrato, con quale chiave, dove sta: sul PC, sul server Teams, nell'estensione, con Claude.</span>
+        <ul class="porta__voci" role="list"><li>AES-256-GCM</li><li>Windows Hello</li><li>server.key</li><li>Firma ECDSA</li></ul>
+      </a>
+    </li>
+  </ul>
+</section>
+
+<!-- PER CHI E': tre profili, ognuno con il modo d'uso e la pagina che gli serve -->
+<section class="fascia" aria-labelledby="h-profili">
+  <header class="blocco__testa">
+    <span class="blocco__cod">Profili</span>
+    <h2 id="h-profili">Per chi è</h2>
+  </header>
+  <ul class="profili" role="list">
+    <li class="profilo">
+      <p class="profilo__nome">Tecnico singolo</p>
+      <p class="profilo__modo mono">Locale · Portatile</p>
+      <p class="profilo__desc">Tutti i clienti in un archivio cifrato sul proprio PC. La copia portatile su una chiavetta per lavorare dai PC dei clienti.</p>
+      <a class="profilo__link" href="prodotto/">Il programma</a>
+    </li>
+    <li class="profilo">
+      <p class="profilo__nome">Studio di assistenza</p>
+      <p class="profilo__modo mono">Teams · server in ufficio</p>
+      <p class="profilo__desc">Cartelle e password dei clienti condivise tra i tecnici. Il tirocinante in sola lettura, chi è in prova con le modifiche da approvare.</p>
+      <a class="profilo__link" href="aziende/#permessi">PC e permessi</a>
+    </li>
+    <li class="profilo">
+      <p class="profilo__nome">IT interno</p>
+      <p class="profilo__modo mono">Teams · server Linux</p>
+      <p class="profilo__desc">Il server su una macchina della rete interna, nessun dato fuori sede. Chi si è collegato a quale server, e per quanto, resta nello storico.</p>
+      <a class="profilo__link" href="aziende/#storico">Storico dei collegamenti</a>
+    </li>
+  </ul>
+</section>
+
+<!-- MAPPA: la schermata vera della finestra principale con punti numerati; un clic mostra cosa fa quella parte -->
+<section class="fascia" aria-labelledby="h-mappa">
+  <header class="blocco__testa">
+    <span class="blocco__cod">Interfaccia</span>
+    <h2 id="h-mappa">La finestra principale, punto per punto</h2>
+  </header>
+  <div class="mappa" data-demo="mappa">
+    <figure class="fig mappa__fig">
+      <div class="fig__palco mappa__palco">
+        <img class="solo-scuro" src="../assets/img/home.webp" srcset="../assets/img/home-800.webp 800w, ../assets/img/home.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Finestra principale di Lemora: albero dei clienti, connessioni della cartella Server di Officine Brenta e riepilogo della cartella" loading="lazy" width="1400" height="880"><img class="solo-chiaro" src="../assets/img/home-chiaro-brenta.webp" srcset="../assets/img/home-chiaro-brenta-800.webp 800w, ../assets/img/home-chiaro-brenta.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Finestra principale di Lemora: albero dei clienti, connessioni della cartella Server di Officine Brenta e riepilogo della cartella" loading="lazy" width="1400" height="880">
+        <button type="button" class="mappa__punto" data-punto="1" data-zona="1.3,5.5,31.5,5" aria-label="1, Ricerca">1</button>
+        <button type="button" class="mappa__punto" data-punto="2" data-zona="33.5,5.5,15,5" aria-label="2, Aggiungi">2</button>
+        <button type="button" class="mappa__punto" data-punto="3" data-zona="70.5,5.5,28.5,5" aria-label="3, Filtri e viste">3</button>
+        <button type="button" class="mappa__punto" data-punto="4" data-zona="0.6,11.5,15.5,56" aria-label="4, Clienti">4</button>
+        <button type="button" class="mappa__punto" data-punto="5" data-zona="16.8,11.5,59,55" aria-label="5, Connessioni">5</button>
+        <button type="button" class="mappa__punto" data-punto="6" data-zona="77,11.5,22.5,45" aria-label="6, Riepilogo della cartella">6</button>
+        <button type="button" class="mappa__punto" data-punto="7" data-zona="0.6,93,15.5,6" aria-label="7, Opzioni">7</button>
+      </div>
+      <figcaption><b>Fig. 1</b> Schermata vera, dati di esempio. Un numero alla volta.</figcaption>
+    </figure>
+    <ol class="mappa__voci" role="list" aria-live="polite">
+      <li data-voce="1"><h3>Ricerca</h3><p>Cerca per nome, indirizzo o utente tra tutti i clienti. Il menu a destra del campo sceglie il protocollo di una connessione rapida verso un indirizzo non salvato.</p></li>
+      <li data-voce="2"><h3>Aggiungi</h3><p>Connessione nuova nella cartella aperta, con <kbd>Ctrl</kbd>+<kbd>N</kbd>.</p></li>
+      <li data-voce="3"><h3>Filtri e viste</h3><p>Tutto, solo RDP o solo VNC; elenco, schede o albero.</p></li>
+      <li data-voce="4"><h3>Clienti</h3><p>Una cartella per cliente, con sottocartelle per sede, rete e server. Il numero a destra conta le connessioni.</p></li>
+      <li data-voce="5"><h3>Connessioni</h3><p>Protocollo, indirizzo con porta, utente. La stella porta la connessione tra i preferiti; la freccia apre le azioni.</p></li>
+      <li data-voce="6"><h3>Riepilogo della cartella</h3><p>Rete 10.20.0.0/24 e dominio BRENTA: le connessioni dentro li ereditano. Sotto, quante credenziali e password di dispositivi ha la cartella. <a href="prodotto/#cartelle">Prodotto, P.1</a></p></li>
+      <li data-voce="7"><h3>Opzioni</h3><p>Impostazioni con <kbd>Ctrl</kbd>+<kbd>I</kbd>: temi, protocolli, cassaforte, estensione, server MCP.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- CONFRONTO: dati presi dai siti dei produttori, con la data -->
+<section class="fascia" aria-labelledby="h-confronto">
+  <header class="blocco__testa">
+    <span class="blocco__cod">Confronto</span>
+    <h2 id="h-confronto">Rispetto agli altri gestori di connessioni</h2>
+    <p>Dati dai siti dei produttori, letti il 19 novembre 2026.</p>
+  </header>
+  <div class="tabella-scorre" tabindex="0" role="region" aria-label="Tabella di confronto, scorre in orizzontale">
+    <table class="tabella">
+      <thead><tr><th scope="col"><span class="vh">Funzione</span></th><th scope="col" class="noi">Lemora</th><th scope="col">Devolutions RDM</th><th scope="col">Royal TS</th><th scope="col">mRemoteNG</th><th scope="col">Termius</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">RDP, VNC e SSH nello stesso programma</th><td class="noi">Sì</td><td>Sì</td><td>Sì</td><td>Sì</td><td>Solo SSH e SFTP</td></tr>
+        <tr><th scope="row">Credenziali e rete ereditate dalla cartella</th><td class="noi">Sì, con dominio e prefisso IP</td><td>Sì</td><td>Sì</td><td>In parte</td><td>In parte</td></tr>
+        <tr><th scope="row">Password dei dispositivi accanto alla sessione</th><td class="noi">Sì</td><td>Voci separate</td><td>Non indicato</td><td>No</td><td>No</td></tr>
+        <tr><th scope="row">Server del team sul proprio hardware</th><td class="noi">Sì, Windows o Linux, gratuito</td><td>Su Windows Server con SQL Server, a pagamento oltre la versione gratuita</td><td>Royal Server, a pagamento</td><td>No, file condiviso</td><td>No, solo cloud</td></tr>
+        <tr><th scope="row">Registro attività e storico dei collegamenti</th><td class="noi">Inclusi nel server</td><td>Nelle edizioni a pagamento</td><td>Non indicato</td><td>No</td><td>Nei piani a pagamento</td></tr>
+        <tr><th scope="row">Prezzo</th><td class="noi">Gratuito</td><td>Gratuito per uso singolo, Team a pagamento</td><td>Gratuito fino a 10 connessioni, poi licenza da 49 €</td><td>Gratuito</td><td>Da 0 a 30 $ al mese per utente</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SCARICA: chiusura della pagina con il file -->
+<section class="fascia" aria-label="Scarica">
+  <div class="striscia">
+    <p>Lemora.exe · 219 MB · Windows 10 2004+ e 11, 64 bit</p>
+    <a class="btn btn--pri" href="scarica/">Scarica</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="piede">
+  <div class="piede__in">
+    <div class="piede__col">
+      <p class="piede__marchio"><img src="../assets/img/icon.png" alt="" width="20" height="20"> Lemora</p>
+      <p>Versione modificata di <a href="https://github.com/1Remote/1Remote">1Remote</a> (© VShawn e collaboratori), licenza GPL-3.0. Non affiliato al progetto 1Remote.</p>
+    </div>
+    <nav class="piede__col" aria-labelledby="pf-sito">
+      <h2 id="pf-sito">Sito</h2>
+      <a href="prodotto/">Prodotto</a><a href="aziende/">Per aziende</a><a href="sicurezza/">Sicurezza</a><a href="scarica/">Scarica</a>
+    </nav>
+    <nav class="piede__col" aria-labelledby="pf-doc">
+      <h2 id="pf-doc">Documenti</h2>
+      <a href="privacy.html">Privacy dell'estensione</a><a href="privacy-sito.html">Privacy e cookie del sito</a><a href="https://www.gnu.org/licenses/gpl-3.0.html">Licenza GPL-3.0</a>
+    </nav>
+    <div class="piede__col">
+      <h2>Versione</h2>
+      <p class="mono">1.3.1.11119<br>19 novembre 2026<br>Estensione 1.0.4</p>
+    </div>
+    <p class="piede__colophon"><span>Nessun cookie, nessuna statistica</span><span>Dati nelle figure: di esempio</span></p>
+  </div>
+</footer>
+</body>
+</html>
