@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_ext_name__",
+  "short_name": "Lemora",
+  "version": "1.0.9",
+  "default_locale": "en",
+  "description": "__MSG_ext_description__",
+  "permissions": [
+    "alarms",
+    "nativeMessaging",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "__MSG_ext_name__",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "icons.js",
+        "content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvtmj13Svod1A0jn8GsaYZNhz75nMryTaE6j0VvsIRJglV6g1vidXzJLX+/0PHilZGdCg6KYrNCQpev1B0seb60KLiDspPYOpqkl2MBwY3auesLcFpJE1VSQjxcK/5Zx/0xYXl2gM8hYo9VWc6s4T8LzzB3k0I+Z/8L7wtAXg5t+/l3mDp1DObCz9lOrP3mCdAHwgx1v31jNneve2RrGLUiC7FUKUzxi+EbIQGMEcn1HLO9deUPjj7nKDOeaHZdddG+wRTUJgkEsDiY0K2VMl+a3t6iPQTa8HphMU5b0aobP2gv3mzPX10K7/kvPHk60Ud2iK2fP4QN1wcKq/8qUZeQIDAQAB",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "minimum_chrome_version": "110",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+  }
+}

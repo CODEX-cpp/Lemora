@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Lemora security: encryption, keys, server, extension</title>
+<meta name="description" content="AES-256-GCM, master password, Windows Hello, timed clipboard, pinned RDP certificates. What the Teams server encrypts, what the extension sees, how Claude stays under control.">
+<link rel="canonical" href="https://codex-cpp.github.io/Lemora/en/security/">
+<link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/sicurezza/">
+<link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/security/">
+<link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/security/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Lemora">
+<meta property="og:url" content="https://codex-cpp.github.io/Lemora/en/security/">
+<meta property="og:title" content="Lemora security">
+<meta property="og:description" content="Where the data is stored, which key encrypts it, what stays in plain text on the server.">
+<meta property="og:image" content="https://codex-cpp.github.io/Lemora/assets/img/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US"><meta property="og:locale:alternate" content="it_IT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f5f4f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121312" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../../assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="../../assets/img/icon-180.png">
+<link rel="manifest" href="../../site.webmanifest">
+<link rel="preload" href="../../assets/fonts/plex-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/newsreader-400.woff2" as="font" type="font/woff2" crossorigin>
+<script src="../../assets/js/tema.js?v=23"></script>
+<link rel="stylesheet" href="../../assets/css/tokens.css?v=23">
+<link rel="stylesheet" href="../../assets/css/base.css?v=23">
+<link rel="stylesheet" href="../../assets/css/main.css?v=23">
+<link rel="stylesheet" href="../../assets/css/componenti.css?v=23">
+<link rel="stylesheet" href="../../assets/css/pagine.css?v=23">
+<link rel="stylesheet" href="../../assets/css/demos.css?v=23">
+<script src="../../assets/js/main.js?v=23" defer></script>
+<script src="../../assets/js/demos.js?v=23" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Lemora","item":"https://codex-cpp.github.io/Lemora/en/"},{"@type":"ListItem","position":2,"name":"Security","item":"https://codex-cpp.github.io/Lemora/en/security/"}]}</script>
+</head>
+<body>
+<a class="salta" href="#contenuto">Skip to content</a>
+
+<header class="testata">
+  <div class="testata__in">
+    <a class="marchio" href="../" aria-label="Lemora, home page">
+      <img src="../../assets/img/icon.png" alt="" width="28" height="28"><span>Lemora</span>
+    </a>
+    <nav class="menu" aria-label="Pages">
+      <ul role="list">
+        <li><a href="../product/">Product</a></li>
+        <li><a href="../business/">For business</a></li>
+        <li><a href="./" aria-current="page">Security</a></li>
+      </ul>
+    </nav>
+    <div class="testata__azioni">
+      <a class="lingua" href="../../it/sicurezza/" hreflang="it" lang="it" data-lang="it" aria-label="Versione italiana">IT</a>
+      <button class="tema" type="button" aria-label="Switch between light and dark theme" data-tema-btn>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg>
+      </button>
+      <a class="btn btn--gho btn--sm" href="../download/">Download</a>
+    </div>
+  </div>
+</header>
+
+<main id="contenuto">
+
+<header class="pagina-testa">
+  <ol class="percorso" role="list" aria-label="Breadcrumb"><li><a href="../">Lemora</a></li><li>Security</li></ol>
+  <h1>What is encrypted, with which key, where</h1>
+  <p class="pagina-testa__lead">One section per part: the program, the server, the extension, Claude, updates.</p>
+  <dl class="dati"><div><dt>Encryption</dt><dd>AES-256-GCM</dd></div><div><dt>Key</dt><dd>PBKDF2-SHA256 · 600,000 iterations</dd></div><div><dt>Unlock</dt><dd>master password · Windows Hello</dd></div><div><dt>Signature</dt><dd>ECDSA P-256</dd></div></dl>
+</header>
+
+<div class="con-indice">
+  <nav class="indice" aria-labelledby="h-indice">
+    <p id="h-indice">On this page</p>
+    <ol role="list">
+      <li><a href="#dati"><span>S.1</span>Where the data is stored</a></li>
+      <li><a href="#cassaforte"><span>S.2</span>Encrypted vault</a></li>
+      <li><a href="#sblocco"><span>S.3</span>Unlock and clipboard</a></li>
+      <li><a href="#connessioni"><span>S.4</span>Connections</a></li>
+      <li><a href="#server"><span>S.5</span>Teams server</a></li>
+      <li><a href="#claude"><span>S.6</span>Claude</a></li>
+      <li><a href="#estensione"><span>S.7</span>Extension</a></li>
+      <li><a href="#aggiornamenti"><span>S.8</span>Updates</a></li>
+      <li><a href="#verifiche"><span>S.9</span>Code reviews</a></li>
+    </ol>
+  </nav>
+
+  <div class="corpo">
+
+    <!-- S.1 where the data is stored, per mode -->
+    <section class="blocco" id="dati" aria-labelledby="h-dati">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.1</span>
+        <h2 id="h-dati">Where the data is stored</h2>
+        <p>A single encrypted database, on the PC. Settings, window positions and pairings are in the same vault: no scattered files.</p>
+      </header>
+      <div class="tab-scorre" tabindex="0" role="region" aria-label="Where the data is stored in each mode">
+        <table class="tab">
+          <caption>Table 1 · The check for new versions happens when the window opens (S.8).</caption>
+          <thead><tr><th scope="col">Mode</th><th scope="col">What leaves the PC</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Portable</th><td>Only the check for new versions</td></tr>
+            <tr><th scope="row">Local</th><td>Only the check for new versions</td></tr>
+            <tr><th scope="row">Teams</th><td>Sync with the company server, over HTTPS, and the check for new versions</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- S.2 encrypted vault with animated figure -->
+    <section class="blocco" id="cassaforte" aria-labelledby="h-cassaforte">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.2</span>
+        <h2 id="h-cassaforte">Encrypted vault</h2>
+      </header>
+      <div class="colonne colonne--inv">
+        <dl class="voci">
+          <div class="voce"><dt>Algorithm</dt><dd>AES-256-GCM on whole rows of connections and credentials: names, addresses, users and passwords.</dd></div>
+          <div class="voce"><dt>Key</dt><dd>A random data key, wrapped with a key derived from the master password (PBKDF2-SHA256, 600,000 iterations).</dd></div>
+          <div class="voce"><dt>No DPAPI</dt><dd>The Windows protection tied to the account is not used: an administrator of the PC or of the domain cannot open the vault without the master password.</dd></div>
+          <div class="voce"><dt>No back door</dt><dd>Without the master password or Windows Hello nobody opens the vault, not even the people who wrote the program.</dd></div>
+        </dl>
+        <figure class="fig fig--piccola">
+          <div class="fig__palco fig__palco--sfondo"><img src="../../assets/img/cassaforte-sblocca.webp" alt="Unlock Lemora window: Master password field, box to open with Windows Hello on this PC, Exit and Unlock buttons" loading="lazy" width="560" height="493"></div>
+          <figcaption><b>Fig. 1</b> At startup: master password, or Windows Hello if enabled on this PC.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- S.3 unlock, verification, clipboard -->
+    <section class="blocco" id="sblocco" aria-labelledby="h-sblocco">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.3</span>
+        <h2 id="h-sblocco">Unlock, verification, clipboard</h2>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>Windows Hello</dt><dd>Fingerprint, face or PIN instead of the master password. The key is in the PC's TPM, one for each pair of PC and user.</dd></div>
+        <div class="voce"><dt>Verification before showing</dt><dd>Viewing or copying a connection password requires Hello or the Windows password. On by default, turned off in the settings.</dd></div>
+        <div class="voce"><dt>Passwords tab</dt><dd>During a session device passwords are copied at once: the vault is already open and the clipboard clears itself.</dd></div>
+        <div class="voce"><dt>Timed clipboard</dt><dd>A copied password is removed from the clipboard after 30 seconds and excluded from the <kbd>Win</kbd>+<kbd>V</kbd> history and from the cloud clipboard.</dd></div>
+        <div class="voce"><dt>Keep unlocked</dt><dd>After the fingerprint or the password, for the chosen time Lemora reopens without asking again, even after closing. It applies only to that PC and ends on signing out of Windows. "Lock and close" locks it again at once.</dd></div>
+      </dl>
+      <figure class="fig">
+        <div class="fig__palco"><img src="../../assets/img/cassaforte-impostazioni.webp" srcset="../../assets/img/cassaforte-impostazioni-800.webp 800w, ../../assets/img/cassaforte-impostazioni.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Settings, Security: Master password with Change password, Keep unlocked with a duration of 15 minutes and the Lock and close button" loading="lazy" width="1400" height="607"></div>
+        <figcaption><b>Fig. 2</b> Settings › General › Security: change of the master password and unlock duration.</figcaption>
+      </figure>
+    </section>
+
+    <!-- S.4 connections: certificates, password off the command line, import -->
+    <section class="blocco" id="connessioni" aria-labelledby="h-connessioni">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.4</span>
+        <h2 id="h-connessioni">Connections</h2>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>Certificates and fingerprints</dt><dd>Lemora remembers the RDP certificate and the SSH and SFTP server fingerprint for each connection. If they change, it warns before sending the credentials.</dd></div>
+        <div class="voce"><dt>Outdated RDP servers</dt><dd>With an old TLS version it asks before lowering security; the "always" choice stays tied to that certificate.</dd></div>
+        <div class="voce"><dt>FreeRDP</dt><dd>Parameters come from an environment variable of the process: the password never appears on the command line. The process ends together with Lemora.</dd></div>
+        <div class="voce"><dt>Import</dt><dd>Local programs, gateways and session files referenced by an imported file are shown and approved before use.</dd></div>
+        <div class="voce"><dt>Additional databases</dt><dd>For MySQL and PostgreSQL the server certificate fingerprint is remembered.</dd></div>
+      </dl>
+    </section>
+
+    <!-- S.5 Teams server: what is encrypted and what is not -->
+    <section class="blocco" id="server" aria-labelledby="h-server">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.5</span>
+        <h2 id="h-server">Teams server</h2>
+        <p>Passwords on the server are encrypted with a key kept outside the database.</p>
+      </header>
+      <div class="tab-scorre" tabindex="0" role="region" aria-label="Data protection on the server">
+        <table class="tab">
+          <caption>Table 2 · Data protection on the Teams server.</caption>
+          <thead><tr><th scope="col">Data</th><th scope="col">Protection</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Entry passwords</th><td class="si">AES-256-GCM, bound to the entry identifier. Random key in <code>server.key</code>, outside the database file.</td></tr>
+            <tr><th scope="row">Names, addresses, users, folders, log</th><td class="si">SQLite database in a folder accessible only to SYSTEM, administrators and the service on Windows; permissions 700 on Linux.</td></tr>
+            <tr><th scope="row">Traffic</th><td class="si">HTTPS with a self-signed certificate; the client requires the fingerprint seen on the first connection.</td></tr>
+            <tr><th scope="row">On the team PCs</th><td class="si">Passwords arrive inside HTTPS and go into the encrypted local copy (S.2).</td></tr>
+            <tr><th scope="row">Console</th><td class="si">Connection passwords only with "Show", which is recorded in the log. Folder and device passwords never.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figure class="fig">
+        <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/console-panoramica.webp" srcset="../../assets/img/console-panoramica-800.webp 800w, ../../assets/img/console-panoramica.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Server console, Server status: HTTPS address, SHA-256 certificate fingerprint and database folder" loading="lazy" width="1400" height="464"><img class="solo-chiaro" src="../../assets/img/console-panoramica-chiaro.webp" srcset="../../assets/img/console-panoramica-chiaro-800.webp 800w, ../../assets/img/console-panoramica-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Server console, Server status: HTTPS address, SHA-256 certificate fingerprint and database folder" loading="lazy" width="1400" height="464"></div>
+        <figcaption><b>Fig. 3</b> The SHA-256 certificate fingerprint in the console: the one each PC remembers on the first connection.</figcaption>
+      </figure>
+    </section>
+
+    <!-- S.6 Claude: boundaries -->
+    <section class="blocco" id="claude" aria-labelledby="h-claude">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.6</span>
+        <h2 id="h-claude">Claude</h2>
+        <p>The MCP server is off until it is turned on from Settings › MCP server.</p>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>This PC only</dt><dd>It listens on <code>localhost</code> and requires a token: another PC on the network cannot reach it.</dd></div>
+        <div class="voce"><dt>Selected connections</dt><dd>Claude sees only checked folders and connections. An unsaved address is valid as long as Lemora stays open.</dd></div>
+        <div class="voce"><dt>No commands on the remote PC</dt><dd>No tool runs scripts or PowerShell on the client's PC. Claude works only through the interface, like a person.</dd></div>
+        <div class="voce"><dt>Mouse and keyboard</dt><dd>Clicks and keys go to the session window. The local PC's pointer does not move.</dd></div>
+        <div class="voce"><dt>Files</dt><dd>Each transfer with <code>invia_file</code> or <code>prendi_file</code> asks the user for confirmation.</dd></div>
+        <div class="voce"><dt>Stopping it</dt><dd>A movable panel above the session pauses or stops Claude.</dd></div>
+      </dl>
+    </section>
+
+    <!-- S.7 extension: path of the password and what it sees -->
+    <section class="blocco" id="estensione" aria-labelledby="h-estensione">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.7</span>
+        <h2 id="h-estensione">Browser extension</h2>
+        <p>No account, no storage of its own, no analytics. It talks only to Lemora on the same PC, through the browser's local channel (native messaging).</p>
+      </header>
+      <figure class="flusso">
+        <ol role="list" class="flusso__nodi">
+          <li><span class="mono">1</span><strong>Browser</strong><small>recognizes the device page</small></li>
+          <li><span class="mono">2</span><strong>Lemora on the same PC</strong><small>paired extension only</small></li>
+          <li><span class="mono">3</span><strong>Encrypted vault</strong><small>master password or Windows Hello</small></li>
+          <li class="flusso__no"><span class="mono">×</span><strong>Internet, cloud</strong><small>not involved</small></li>
+        </ol>
+        <figcaption><b>Fig. 4</b> The path of a password from the vault to the login form.</figcaption>
+      </figure>
+      <div class="colonne">
+        <div>
+          <h3>What it sees</h3>
+          <ul class="elenco" role="list">
+            <li>The address of the open page, to find the right entries.</li>
+            <li>Device passwords, never connection passwords.</li>
+            <li>The password only on click of Fill in or Copy.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>How it defends itself</h3>
+          <ul class="elenco" role="list">
+            <li>Pairing confirmed in Lemora; only the hash of the code stays in the vault.</li>
+            <li>Key bound to the browser, valid for 90 days; identity confirmation every 20 minutes.</li>
+            <li>Fills in only visible, uncovered fields, never in frames of other sites, never from https pages to http.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- S.8 updates -->
+    <section class="blocco" id="aggiornamenti" aria-labelledby="h-aggiornamenti">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.8</span>
+        <h2 id="h-aggiornamenti">Updates</h2>
+        <p>Signed packages, verified before installation and installed next to the version in use.</p>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>Signature</dt><dd>Each package is signed with ECDSA P-256 and verified twice before installation. A package that does not match is deleted.</dd></div>
+        <div class="voce"><dt>Side-by-side versions</dt><dd>The new version is installed next to the one in use; the switch happens on restart.</dd></div>
+        <div class="voce"><dt>When</dt><dd>When the window opens, never during startup in the system tray. The user decides when to restart.</dd></div>
+        <div class="voce"><dt>Checksum</dt><dd>Every version published on this site has its SHA-256 checksum, to compare with the downloaded file.</dd></div>
+      </dl>
+    </section>
+
+    <!-- S.9 code reviews -->
+    <section class="blocco" id="verifiche" aria-labelledby="h-verifiche">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.9</span>
+        <h2 id="h-verifiche">Code reviews</h2>
+        <p>Eight security reviews of the code up to November 2026, with a structured method: trust boundaries, testing of each hypothesis, action and new verification.</p>
+      </header>
+      <ul class="elenco" role="list">
+        <li>No open issues after the latest review.</li>
+        <li>Protections that came from the reviews: file checks on import (S.4), passwords never on the FreeRDP command line, extension fill-in rules (S.7), clipboard cleared after 30 seconds.</li>
+      </ul>
+    </section>
+
+  </div>
+</div>
+</main>
+
+<footer class="piede">
+  <div class="piede__in">
+    <div class="piede__col">
+      <p class="piede__marchio"><img src="../../assets/img/icon.png" alt="" width="20" height="20"> Lemora</p>
+      <p>Modified version of <a href="https://github.com/1Remote/1Remote">1Remote</a> (© VShawn and contributors), GPL-3.0 license. Not affiliated with the 1Remote project.</p>
+    </div>
+    <nav class="piede__col" aria-labelledby="pf-sito">
+      <h2 id="pf-sito">Site</h2>
+      <a href="../product/">Product</a><a href="../business/">For business</a><a href="./">Security</a><a href="../download/">Download</a>
+    </nav>
+    <nav class="piede__col" aria-labelledby="pf-doc">
+      <h2 id="pf-doc">Documents</h2>
+      <a href="../privacy.html">Extension privacy</a><a href="../site-privacy.html">Site privacy and cookies</a><a href="https://www.gnu.org/licenses/gpl-3.0.html">GPL-3.0 license</a>
+    </nav>
+    <div class="piede__col">
+      <h2>Version</h2>
+      <p class="mono">1.3.1.11127<br>28 November 2026<br>Extension 1.0.9</p>
+    </div>
+    <p class="piede__colophon"><span>No cookies, no analytics</span><span>Data in the figures: sample data</span></p>
+  </div>
+</footer>
+</body>
+</html>

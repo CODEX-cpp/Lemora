@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Lemora for business: on-site server, permissions, access log</title>
+<meta name="description" content="Lemora Server for Windows or Linux: connections and passwords shared among approved PCs, permissions, requests to approve, activity log and connection history.">
+<link rel="canonical" href="https://codex-cpp.github.io/Lemora/en/business/">
+<link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/aziende/">
+<link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/business/">
+<link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/business/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Lemora">
+<meta property="og:url" content="https://codex-cpp.github.io/Lemora/en/business/">
+<meta property="og:title" content="Lemora for business">
+<meta property="og:description" content="On-premises server: sharing, per-PC permissions, activity log, connection history.">
+<meta property="og:image" content="https://codex-cpp.github.io/Lemora/assets/img/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US"><meta property="og:locale:alternate" content="it_IT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f5f4f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121312" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../../assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="../../assets/img/icon-180.png">
+<link rel="manifest" href="../../site.webmanifest">
+<link rel="preload" href="../../assets/fonts/plex-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/newsreader-400.woff2" as="font" type="font/woff2" crossorigin>
+<script src="../../assets/js/tema.js?v=23"></script>
+<link rel="stylesheet" href="../../assets/css/tokens.css?v=23">
+<link rel="stylesheet" href="../../assets/css/base.css?v=23">
+<link rel="stylesheet" href="../../assets/css/main.css?v=23">
+<link rel="stylesheet" href="../../assets/css/componenti.css?v=23">
+<link rel="stylesheet" href="../../assets/css/pagine.css?v=23">
+<link rel="stylesheet" href="../../assets/css/demos.css?v=23">
+<script src="../../assets/js/main.js?v=23" defer></script>
+<script src="../../assets/js/demos.js?v=23" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Lemora","item":"https://codex-cpp.github.io/Lemora/en/"},{"@type":"ListItem","position":2,"name":"For business","item":"https://codex-cpp.github.io/Lemora/en/business/"}]}</script>
+</head>
+<body>
+<a class="salta" href="#contenuto">Skip to content</a>
+
+<header class="testata">
+  <div class="testata__in">
+    <a class="marchio" href="../" aria-label="Lemora, home page">
+      <img src="../../assets/img/icon.png" alt="" width="28" height="28"><span>Lemora</span>
+    </a>
+    <nav class="menu" aria-label="Pages">
+      <ul role="list">
+        <li><a href="../product/">Product</a></li>
+        <li><a href="./" aria-current="page">For business</a></li>
+        <li><a href="../security/">Security</a></li>
+      </ul>
+    </nav>
+    <div class="testata__azioni">
+      <a class="lingua" href="../../it/aziende/" hreflang="it" lang="it" data-lang="it" aria-label="Versione italiana">IT</a>
+      <button class="tema" type="button" aria-label="Switch between light and dark theme" data-tema-btn>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg>
+      </button>
+      <a class="btn btn--gho btn--sm" href="../download/">Download</a>
+    </div>
+  </div>
+</header>
+
+<main id="contenuto">
+
+<header class="pagina-testa">
+  <ol class="percorso" role="list" aria-label="Breadcrumb"><li><a href="../">Lemora</a></li><li>For business</li></ol>
+  <h1>Lemora Server, on the company network</h1>
+  <p class="pagina-testa__lead">A service for Windows or Linux that shares folders, connections, credentials and device passwords among the team's PCs. Each PC must be approved; every change and every session is recorded in the log. No external server.</p>
+  <dl class="dati"><div><dt>Server</dt><dd>.NET 10 · SQLite · web console</dd></div><div><dt>Systems</dt><dd>Windows x64 · Linux x64</dd></div><div><dt>Network</dt><dd>HTTPS · port 25353</dd></div><div><dt>Price</dt><dd>free</dd></div></dl>
+</header>
+
+<div class="con-indice">
+  <nav class="indice" aria-labelledby="h-indice">
+    <p id="h-indice">On this page</p>
+    <ol role="list">
+      <li><a href="#schema"><span>A.1</span>Where the data goes</a></li>
+      <li><a href="#installazione"><span>A.2</span>Installation</a></li>
+      <li><a href="#permessi"><span>A.3</span>PCs and permissions</a></li>
+      <li><a href="#condivisione"><span>A.4</span>Sharing and offline</a></li>
+      <li><a href="#richieste"><span>A.5</span>Requests and conflicts</a></li>
+      <li><a href="#registro"><span>A.6</span>Activity log</a></li>
+      <li><a href="#storico"><span>A.7</span>Connection history</a></li>
+      <li><a href="#estensione"><span>A.8</span>Extension log</a></li>
+      <li><a href="#requisiti"><span>A.9</span>Requirements and backup</a></li>
+      <li><a href="#nis2"><span>A.10</span>NIS2 directive</a></li>
+    </ol>
+  </nav>
+
+  <div class="corpo">
+
+    <!-- A.1 diagram: data goes through the server, sessions do not -->
+    <section class="blocco" id="schema" aria-labelledby="h-schema">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.1</span>
+        <h2 id="h-schema">Where the data goes</h2>
+        <p>The server holds the shared vault. RDP, VNC and SSH sessions go from the technicians' PCs to the clients' PCs: they do not pass through the server.</p>
+      </header>
+      <figure class="schema">
+        <svg viewBox="0 0 760 340" role="img" aria-labelledby="t-schema">
+          <title id="t-schema">Three team PCs sync the vault with the on-premises Lemora Server; remote sessions go directly from the team PCs to the clients' PCs</title>
+          <g class="schema__linee">
+            <path d="M190 70 C 260 70, 270 170, 300 170"/>
+            <path d="M190 170 L 300 170"/>
+            <path d="M190 270 C 260 270, 270 170, 300 170"/>
+          </g>
+          <g class="schema__sessioni">
+            <path d="M190 62 C 400 46, 540 52, 600 60"/>
+            <path d="M190 278 C 400 294, 540 288, 600 280"/>
+          </g>
+          <g class="schema__pc">
+            <rect x="20" y="45" width="170" height="50" rx="6"/><text x="105" y="66">Technician PC 1</text><text x="105" y="83" class="mono">write</text>
+            <rect x="20" y="145" width="170" height="50" rx="6"/><text x="105" y="166">Technician PC 2</text><text x="105" y="183" class="mono">requests</text>
+            <rect x="20" y="245" width="170" height="50" rx="6"/><text x="105" y="266">Intern laptop</text><text x="105" y="283" class="mono">read-only</text>
+          </g>
+          <g class="schema__server">
+            <rect x="300" y="110" width="250" height="120" rx="8"/>
+            <text x="320" y="140" class="b">Lemora Server</text>
+            <text x="320" y="166" class="mono">shared vault</text>
+            <text x="320" y="188" class="mono">approved PCs · permissions</text>
+            <text x="320" y="210" class="mono">log · history</text>
+          </g>
+          <g class="schema__pc">
+            <rect x="600" y="40" width="140" height="44" rx="6"/><text x="670" y="67">Client PC</text>
+            <rect x="600" y="256" width="140" height="44" rx="6"/><text x="670" y="283">Client server</text>
+          </g>
+          <text x="420" y="30" class="mono schema__nota">direct RDP session</text>
+          <text x="420" y="326" class="mono schema__nota">direct SSH session</text>
+        </svg>
+        <figcaption><b>Fig. 1</b> Dashed lines: sync with the server. Solid lines: remote sessions, direct.</figcaption>
+      </figure>
+    </section>
+
+    <!-- A.2 installation in three steps -->
+    <section class="blocco" id="installazione" aria-labelledby="h-installazione">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.2</span>
+        <h2 id="h-installazione">Installation</h2>
+        <p>Run once, the server installs itself as a service and stays active across restarts.</p>
+      </header>
+      <ol class="passi" role="list">
+        <li>
+          <p><strong>Service.</strong> On Windows it runs under the LocalService account, with a firewall rule limited to private networks. On Linux it becomes a systemd service with a dynamic user; ufw or firewalld are configured accordingly. The terminal shows a one-time setup code.</p>
+<pre class="riga-cmd"><span class="pr">$</span> sudo ./Lemora.Server
+<span class="dim"># installs the service and prints the setup code</span></pre>
+        </li>
+        <li>
+          <p><strong>Web console.</strong> From the browser, at the server address: setup code, first administrator, settings. Everything else is managed from here.</p>
+<pre class="riga-cmd"><span class="pr">https://</span>192.168.10.20:25353</pre>
+        </li>
+        <li>
+          <p><strong>Team PCs.</strong> Lemora in Teams mode asks for a 6-character pairing code, valid for 30 minutes and usable once. The administrator approves the PC from the console and chooses the permission.</p>
+        </li>
+      </ol>
+      <!-- try it: the code is created in the console, typed on the PC, the administrator approves (demos.js, "abbinamento") -->
+      <div class="abbin" data-demo="abbinamento">
+        <div class="demo-riquadro">
+          <p class="demo-riquadro__tit">Try it · Console › New pairing</p>
+          <button type="button" class="demo-btn demo-btn--pri" data-crea>Create the code</button>
+          <p class="abbin__codice" data-codice aria-live="polite">······</p>
+          <p class="abbin__scad" data-scad-riga>Expires in <span data-scadenza>30:00</span> · works for one PC only</p>
+          <button type="button" class="demo-btn" data-approva hidden>Approve PC-STAGISTA as read-only</button>
+        </div>
+        <div class="demo-riquadro">
+          <p class="demo-riquadro__tit">Try it · PC-STAGISTA › Connect to Teams</p>
+          <p class="demo-campo">Server<span class="mono">https://lemora.studio.lan:25353</span></p>
+          <div class="abbin__riga">
+            <label class="demo-campo">Code<input type="text" data-campo maxlength="6" autocomplete="off" spellcheck="false" disabled></label>
+            <button type="button" class="demo-btn" data-invia disabled>Connect</button>
+          </div>
+          <p class="demo__esito" data-stato aria-live="polite"></p>
+        </div>
+      </div>
+      <figure class="fig">
+        <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/console-abbinamento.webp" srcset="../../assets/img/console-abbinamento-800.webp 800w, ../../assets/img/console-abbinamento.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, New pairing: Create the code button, server address, certificate fingerprint and the three steps to connect a PC" loading="lazy" width="1400" height="880"><img class="solo-chiaro" src="../../assets/img/console-abbinamento-chiaro.webp" srcset="../../assets/img/console-abbinamento-chiaro-800.webp 800w, ../../assets/img/console-abbinamento-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, New pairing: Create the code button, server address, certificate fingerprint and the three steps to connect a PC" loading="lazy" width="1400" height="880"></div>
+        <figcaption><b>Fig. 2</b> The real console page. The certificate fingerprint is the one the PC compares on the first connection; this test server uses port 8443 instead of the default 25353.</figcaption>
+      </figure>
+      <p class="testo">Uninstalling removes the service, the firewall rule, data and database: <code>Lemora.Server --uninstall --purge</code>.</p>
+    </section>
+
+    <!-- A.3 PCs and permissions: the permission applies to the whole PC -->
+    <section class="blocco" id="permessi" aria-labelledby="h-permessi">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.3</span>
+        <h2 id="h-permessi">PCs and permissions</h2>
+        <p>The identity is the pair of PC and Windows user. The permission covers the whole shared vault of that PC and is changed or revoked from the console at any time.</p>
+      </header>
+      <div class="tab-scorre" tabindex="0" role="region" aria-label="Permission table">
+        <table class="tab">
+          <caption>Table 1 · Per-PC permissions, chosen at approval and changeable at any time.</caption>
+          <thead><tr><th scope="col">Permission</th><th scope="col">Connections</th><th scope="col">Credentials and devices</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Read-only</th><td>Opens them, does not edit them</td><td>Uses and copies them, does not edit them</td></tr>
+            <tr><th scope="row">Requests</th><td>Each change becomes a request to approve</td><td>Same as connections</td></tr>
+            <tr><th scope="row">Write</th><td>Creates, edits, deletes</td><td>Creates, edits, deletes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <dl class="voci">
+        <div class="voce"><dt>Revocation</dt><dd>At the first contact after revocation the PC deletes its copy of the shared entries; if it stays offline, the copy is locked as described in A.4.</dd></div>
+        <div class="voce"><dt>Administrators</dt><dd>Several console administrators, with the same powers. The main one and the last remaining one cannot be deleted. After 5 failed logins the console locks for 5 minutes; a session lasts 8 hours.</dd></div>
+      </dl>
+      <!-- try it: same action from PC-GIULIA, different outcome depending on the permission; every action goes into the log (demos.js, "permessi") -->
+      <div class="colonne">
+        <div class="demo-riquadro perm" data-demo="permessi">
+          <fieldset>
+            <legend>Try it · permission of PC-GIULIA</legend>
+            <label><input type="radio" name="permesso" value="read" checked class="vh">Read-only</label>
+            <label><input type="radio" name="permesso" value="requests" class="vh">Requests</label>
+            <label><input type="radio" name="permesso" value="write" class="vh">Write</label>
+          </fieldset>
+          <div class="perm__gesti">
+            <button type="button" class="demo-btn" data-gesto="modifica" data-voce="DC01 · address .10 → .11">Edit DC01</button>
+            <button type="button" class="demo-btn" data-gesto="cancella" data-voce="NAS-Backup · Officine Brenta">Delete NAS-Backup</button>
+            <button type="button" class="demo-btn" data-gesto="scollega" data-messaggio="PC-GIULIA disconnected: at the first contact it deletes its copy of the shared entries">Disconnect the PC</button>
+          </div>
+          <p class="demo__esito" data-esito aria-live="polite"></p>
+          <div class="registro">
+            <div class="registro__barra"><b>Log</b></div>
+            <ol role="list" data-registro>
+              <li><time>09:15</time><span><span class="chi">admin</span> <span class="cosa">changed the permission</span></span><span class="dove">PC-GIULIA · giulia</span></li>
+              <li><time>08:40</time><span><span class="chi">admin</span> <span class="cosa">approved the PC</span></span><span class="dove">PC-GIULIA · giulia</span></li>
+            </ol>
+          </div>
+        </div>
+        <figure class="fig">
+          <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/console-pc.webp" srcset="../../assets/img/console-pc-800.webp 800w, ../../assets/img/console-pc.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, PCs and users: a pending PC with Reject and Approve, four approved PCs with their permission, last contact and Disconnect" loading="lazy" width="1400" height="880"><img class="solo-chiaro" src="../../assets/img/console-pc-chiaro.webp" srcset="../../assets/img/console-pc-chiaro-800.webp 800w, ../../assets/img/console-pc-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, PCs and users: a pending PC with Reject and Approve, four approved PCs with their permission, last contact and Disconnect" loading="lazy" width="1400" height="880"></div>
+          <figcaption><b>Fig. 3</b> Console › PCs and users: the permission is chosen at approval and changed from the list.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- A.4 sharing and offline copy -->
+    <section class="blocco" id="condivisione" aria-labelledby="h-condivisione">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.4</span>
+        <h2 id="h-condivisione">Sharing and offline work</h2>
+        <p>Each PC keeps an encrypted copy of the shared vault and also works with the server off or away from the office.</p>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>What is shared</dt><dd>RDP, SSH and VNC connections; the folder tree, empty folders included, with domain and prefix; folder credentials; device passwords.</dd></div>
+        <div class="voce"><dt>Sync</dt><dd>Every 20 minutes, or immediately with "Sync now".</dd></div>
+        <div class="voce"><dt>Without the server</dt><dd>After 7 days without contact the shared entries are locked on the PC. They unlock at the next sync.</dd></div>
+        <div class="voce"><dt>Sync turned off</dt><dd>A PC can turn it off; the console shows and logs it.</dd></div>
+        <div class="voce"><dt>Personal connections</dt><dd>They stay only on the PC until the technician proposes them to the server.</dd></div>
+      </dl>
+    </section>
+
+    <!-- A.5 requests, proposals, conflicts, recycle bin -->
+    <section class="blocco" id="richieste" aria-labelledby="h-richieste">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.5</span>
+        <h2 id="h-richieste">Requests, proposals and conflicts</h2>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>Requests</dt><dd>Changes from PCs with the Requests permission wait on the console page of the same name: approved or rejected, with who and when.</dd></div>
+        <div class="voce"><dt>Proposals</dt><dd>A personal connection proposed to the server becomes shared after approval. The console flags duplicates.</dd></div>
+        <div class="voce"><dt>Conflicts</dt><dd>If two PCs edit the same entry, the server's version wins; the other is kept for comparison: "Keep server version" or "Use PC version".</dd></div>
+        <div class="voce"><dt>Recycle bin</dt><dd>Deleted entries are kept with author and date and can be restored. "Delete permanently" removes the secrets and keeps the record.</dd></div>
+      </dl>
+      <figure class="fig">
+        <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/console-richieste.webp" srcset="../../assets/img/console-richieste-800.webp 800w, ../../assets/img/console-richieste.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, Requests: an edit of SRV-DATI with old and new address and a changed password, a new entry proposed for Hotel Lago Blu, the Reject and Approve buttons" loading="lazy" width="1400" height="736"><img class="solo-chiaro" src="../../assets/img/console-richieste-chiaro.webp" srcset="../../assets/img/console-richieste-chiaro-800.webp 800w, ../../assets/img/console-richieste-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, Requests: an edit of SRV-DATI with old and new address and a changed password, a new entry proposed for Hotel Lago Blu, the Reject and Approve buttons" loading="lazy" width="1400" height="736"></div>
+        <figcaption><b>Fig. 4</b> Console › Requests: only what changes is shown. The password stays hidden: it reads "changed".</figcaption>
+      </figure>
+    </section>
+
+    <!-- A.6 activity log: drawn figure that fills in -->
+    <section class="blocco" id="registro" aria-labelledby="h-registro">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.6</span>
+        <h2 id="h-registro">Activity log</h2>
+        <p>About forty event types, filterable by type, PC and date. The log contains the action, never the value of a password.</p>
+      </header>
+      <div>
+        <ul class="elenco elenco--due" role="list">
+          <li>Pairing: code created, request, approval, rejection, disconnection.</li>
+          <li>Shared entries: creation, edit, deactivation, deletion, restore, permanent deletion.</li>
+          <li>Folders, folder credentials and devices: created, edited, renamed, deleted.</li>
+          <li>Requests, proposals and conflicts, with the decision.</li>
+          <li>Password shown in the console; user, password or address copied from the Passwords tab.</li>
+          <li>Administrators created or deleted.</li>
+        </ul>
+      </div>
+      <figure class="fig">
+        <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/console-attivita.webp" srcset="../../assets/img/console-attivita-800.webp 800w, ../../assets/img/console-attivita.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, Activity log: filters by type, PC and date; rows with date, PC and user, event and detail, for example device created or folder credential created" loading="lazy" width="1400" height="880"><img class="solo-chiaro" src="../../assets/img/console-attivita-chiaro.webp" srcset="../../assets/img/console-attivita-chiaro-800.webp 800w, ../../assets/img/console-attivita-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, Activity log: filters by type, PC and date; rows with date, PC and user, event and detail, for example device created or folder credential created" loading="lazy" width="1400" height="880"></div>
+        <figcaption><b>Fig. 5</b> The real console log: devices, folder credentials and folders created by a PC and by the administrator.</figcaption>
+      </figure>
+    </section>
+
+    <!-- A.7 connection history -->
+    <section class="blocco" id="storico" aria-labelledby="h-storico">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.7</span>
+        <h2 id="h-storico">Connection history</h2>
+        <p>Every RDP, SSH or VNC session opened by a team PC, including those to personal connections or unsaved addresses.</p>
+      </header>
+      <div class="tab-scorre" tabindex="0" role="region" aria-label="Sample connection history">
+        <table class="tab">
+          <caption>Table 2 · Sample. "Interrupted": the PC disappeared without closing the session.</caption>
+          <thead><tr><th scope="col">PC</th><th scope="col">Entry</th><th scope="col">Protocol</th><th scope="col">Start</th><th scope="col">Duration</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">PC-GIULIA · giulia</th><td>FS-01 · Officine Brenta</td><td class="mono">RDP</td><td class="mono">09:02</td><td><span class="stato">in progress</span></td></tr>
+            <tr><th scope="row">PC-MARCO · marco</th><td>Firewall · Officine Brenta</td><td class="mono">SSH</td><td class="mono">08:51</td><td class="mono">6 min</td></tr>
+            <tr><th scope="row">PC-MARCO · marco</th><td>10.30.1.15 · quick connection</td><td class="mono">VNC</td><td class="mono">08:20</td><td class="mono">24 min</td></tr>
+            <tr><th scope="row">PORTATILE-STAGE · luca</th><td>PC-Reception · Studio Rossi</td><td class="mono">VNC</td><td class="mono">08:05</td><td><span class="stato stato--no">interrupted</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="testo">Filters by PC, text and date, pages of 100 rows. The history records name, address and folder; never credentials.</p>
+      <figure class="fig">
+        <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/console-collegamenti.webp" srcset="../../assets/img/console-collegamenti-800.webp 800w, ../../assets/img/console-collegamenti.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, active Sessions: two sessions, a VNC one to PC-BANCO-1 of Farmacia Centrale and an RDP one to SRV-DATI of Officine Brenta" loading="lazy" width="1400" height="416"><img class="solo-chiaro" src="../../assets/img/console-collegamenti-chiaro.webp" srcset="../../assets/img/console-collegamenti-chiaro-800.webp 800w, ../../assets/img/console-collegamenti-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, active Sessions: two sessions, a VNC one to PC-BANCO-1 of Farmacia Centrale and an RDP one to SRV-DATI of Officine Brenta" loading="lazy" width="1400" height="416"></div>
+        <figcaption><b>Fig. 6</b> Console › Sessions: who is connected to what right now; the History tab keeps the finished ones.</figcaption>
+      </figure>
+    </section>
+
+    <!-- A.8 extension log: real console screenshots -->
+    <section class="blocco" id="estensione" aria-labelledby="h-estensione">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.8</span>
+        <h2 id="h-estensione">Extension log</h2>
+        <p>With Teams, every use of the browser extension reaches the server: fill-in, copy, save, edit, deletion.</p>
+      </header>
+      <figure class="fig fig--doppia" id="fig-console">
+        <div class="doppia">
+          <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/console.webp" srcset="../../assets/img/console-800.webp 800w, ../../assets/img/console.webp 1750w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Lemora Server console with the approved PCs and their permission" loading="lazy" width="1750" height="1100"><img class="solo-chiaro" src="../../assets/img/console-chiaro.webp" srcset="../../assets/img/console-chiaro-800.webp 800w, ../../assets/img/console-chiaro.webp 1750w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Lemora Server console with the approved PCs and their permission" loading="lazy" width="1750" height="1100"></div>
+          <div class="fig__palco doppia__sopra"><img class="solo-scuro" src="../../assets/img/registro.webp" srcset="../../assets/img/registro-800.webp 800w, ../../assets/img/registro.webp 1750w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Extension log: who filled in or copied which password, on which site and when" loading="lazy" width="1750" height="1100"><img class="solo-chiaro" src="../../assets/img/registro-chiaro.webp" srcset="../../assets/img/registro-chiaro-800.webp 800w, ../../assets/img/registro-chiaro.webp 1750w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Extension log: who filled in or copied which password, on which site and when" loading="lazy" width="1750" height="1100"></div>
+          <ol class="richiami" role="list" aria-label="Figure details">
+            <li class="richiamo r1"><span>1</span>PC awaiting approval</li>
+            <li class="richiamo r2"><span>2</span>PC permission</li>
+            <li class="richiamo r3"><span>3</span>Extension log</li>
+          </ol>
+        </div>
+        <figcaption><b>Fig. 7</b> Console: list of PCs and extension log. Real screenshots with sample data.</figcaption>
+      </figure>
+      <p class="testo">For each event: PC and user, time, entry, folder, entry user, browser and site reduced to <code>https://host:port</code>, without the path.</p>
+    </section>
+
+    <!-- A.9 requirements, network, backup -->
+    <section class="blocco" id="requisiti" aria-labelledby="h-requisiti">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.9</span>
+        <h2 id="h-requisiti">Requirements, network and backup</h2>
+      </header>
+      <dl class="specifiche">
+        <div><dt>System</dt><dd>Windows x64 or Linux x64; it also runs on Raspberry Pi (Linux ARM64).</dd></div>
+        <div><dt>File</dt><dd>Lemora.Server, single file of about 100 MB with .NET included: no prerequisites to install.</dd></div>
+        <div><dt>Database</dt><dd class="mono">SQLite (server.db)</dd></div>
+        <div><dt>Network</dt><dd>HTTPS on port 25353, changeable with <code>--port</code>. Accepts only private network addresses.</dd></div>
+        <div><dt>Certificate</dt><dd>Self-signed, created on first start, valid for 10 years.</dd></div>
+        <div><dt>Backup</dt><dd>Just copy the data folder, including <code>server.key</code>: the key that opens the saved passwords.</dd></div>
+      </dl>
+      <p class="rimando">What is encrypted in the server database and what is not: <a href="../security/#server">Security, S.5</a></p>
+    </section>
+
+    <!-- A.10 NIS2: where and how far Lemora helps with the article 21 measures, then what remains with the organisation -->
+    <section class="blocco" id="nis2" aria-labelledby="h-nis2">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.10</span>
+        <h2 id="h-nis2">Lemora and the NIS2 directive</h2>
+        <p>Article 21 of the NIS2 directive lists the security measures that essential and important entities must adopt. For remote access to customer and company systems, Lemora covers a concrete part of some of these measures.</p>
+      </header>
+      <div class="tab-scorre" tabindex="0" role="region" aria-label="NIS2 measures and Lemora features">
+        <table class="tab">
+          <caption>Table 3 · References to article 21, paragraph 2, of directive (EU) 2022/2555.</caption>
+          <thead><tr><th scope="col">Measure</th><th scope="col">What Lemora does</th><th scope="col">Where</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Access control, point i</th><td>Only PCs approved with a pairing code see the shared entries. Each PC has a permission (read-only, requests, write) that is changed or revoked from the console; on revocation the PC deletes its copy.</td><td><a href="#permessi">A.3</a></td></tr>
+            <tr><th scope="row">Asset management, point i</th><td>Connections, credentials and device passwords organised by customer and site, in a single vault instead of scattered files and spreadsheets.</td><td><a href="#condivisione">A.4</a></td></tr>
+            <tr><th scope="row">Traceability and incident handling, point b</th><td>The activity log shows who changed what and when; the history shows who connected to which server and for how long. This is the data needed to reconstruct an incident.</td><td><a href="#registro">A.6</a>, <a href="#storico">A.7</a></td></tr>
+            <tr><th scope="row">Cryptography, point h</th><td>Vault encrypted with AES-256-GCM on the PC and on the server, connection to the server over TLS with certificate fingerprint check, updates signed with ECDSA.</td><td><a href="../security/">Security</a></td></tr>
+            <tr><th scope="row">Authentication, point j</th><td>Unlock with master password or Windows Hello; verification before showing or copying a password. Console locked after 5 wrong logins, 8-hour session.</td><td><a href="../security/#sblocco">Security, S.3</a>, <a href="#permessi">A.3</a></td></tr>
+            <tr><th scope="row">Cyber hygiene, point g</th><td>Passwords copied to the clipboard without Windows history and cleared after 30 seconds; the extension fills in only on click and only on pages with the device's address.</td><td><a href="#estensione">A.8</a></td></tr>
+            <tr><th scope="row">Supply chain, point d</th><td>The server runs on the company's own hardware, Windows or Linux: no data on third-party cloud services.</td><td><a href="#installazione">A.2</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="testo">Lemora is not a certified product, and using it does not on its own make an organisation NIS2 compliant. Risk analysis, incident notification, business continuity, staff training and the other measures of the directive remain the organisation's responsibility, with the tools and procedures it chooses.</p>
+    </section>
+
+  </div>
+</div>
+</main>
+
+<footer class="piede">
+  <div class="piede__in">
+    <div class="piede__col">
+      <p class="piede__marchio"><img src="../../assets/img/icon.png" alt="" width="20" height="20"> Lemora</p>
+      <p>Modified version of <a href="https://github.com/1Remote/1Remote">1Remote</a> (© VShawn and contributors), GPL-3.0 license. Not affiliated with the 1Remote project.</p>
+    </div>
+    <nav class="piede__col" aria-labelledby="pf-sito">
+      <h2 id="pf-sito">Site</h2>
+      <a href="../product/">Product</a><a href="./">For business</a><a href="../security/">Security</a><a href="../download/">Download</a>
+    </nav>
+    <nav class="piede__col" aria-labelledby="pf-doc">
+      <h2 id="pf-doc">Documents</h2>
+      <a href="../privacy.html">Extension privacy</a><a href="../site-privacy.html">Site privacy and cookies</a><a href="https://www.gnu.org/licenses/gpl-3.0.html">GPL-3.0 license</a>
+    </nav>
+    <div class="piede__col">
+      <h2>Version</h2>
+      <p class="mono">1.3.1.11127<br>28 November 2026<br>Extension 1.0.9</p>
+    </div>
+    <p class="piede__colophon"><span>No cookies, no analytics</span><span>Data in the figures: sample data</span></p>
+  </div>
+</footer>
+</body>
+</html>

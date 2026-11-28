@@ -1,0 +1,4 @@
+# Contact: da definire
+Expires: 2027-11-19T00:00:00.000Z
+Preferred-Languages: it, en
+Canonical: https://codex-cpp.github.io/Lemora/.well-known/security.txt

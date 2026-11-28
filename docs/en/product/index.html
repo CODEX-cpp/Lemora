@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Lemora features: protocols, folders, device passwords</title>
+<meta name="description" content="RDP via FreeRDP or Microsoft client, VNC with Tight and file transfer, SSH, inheriting folders, Passwords tab, Firefox extension, Claude via MCP.">
+<link rel="canonical" href="https://codex-cpp.github.io/Lemora/en/product/">
+<link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/prodotto/">
+<link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/product/">
+<link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/product/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Lemora">
+<meta property="og:url" content="https://codex-cpp.github.io/Lemora/en/product/">
+<meta property="og:title" content="Lemora features">
+<meta property="og:description" content="Protocols, client folders, device passwords, browser extension, keyboard, Claude.">
+<meta property="og:image" content="https://codex-cpp.github.io/Lemora/assets/img/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US"><meta property="og:locale:alternate" content="it_IT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f5f4f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121312" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../../assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="../../assets/img/icon-180.png">
+<link rel="manifest" href="../../site.webmanifest">
+<link rel="preload" href="../../assets/fonts/plex-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/newsreader-400.woff2" as="font" type="font/woff2" crossorigin>
+<script src="../../assets/js/tema.js?v=23"></script>
+<link rel="stylesheet" href="../../assets/css/tokens.css?v=23">
+<link rel="stylesheet" href="../../assets/css/base.css?v=23">
+<link rel="stylesheet" href="../../assets/css/main.css?v=23">
+<link rel="stylesheet" href="../../assets/css/componenti.css?v=23">
+<link rel="stylesheet" href="../../assets/css/pagine.css?v=23">
+<link rel="stylesheet" href="../../assets/css/demos.css?v=23">
+<script src="../../assets/js/main.js?v=23" defer></script>
+<script src="../../assets/js/demos.js?v=23" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Lemora","item":"https://codex-cpp.github.io/Lemora/en/"},{"@type":"ListItem","position":2,"name":"Product","item":"https://codex-cpp.github.io/Lemora/en/product/"}]}</script>
+</head>
+<body>
+<a class="salta" href="#contenuto">Skip to content</a>
+
+<header class="testata">
+  <div class="testata__in">
+    <a class="marchio" href="../" aria-label="Lemora, home page">
+      <img src="../../assets/img/icon.png" alt="" width="28" height="28"><span>Lemora</span>
+    </a>
+    <nav class="menu" aria-label="Pages">
+      <ul role="list">
+        <li><a href="./" aria-current="page">Product</a></li>
+        <li><a href="../business/">For business</a></li>
+        <li><a href="../security/">Security</a></li>
+      </ul>
+    </nav>
+    <div class="testata__azioni">
+      <a class="lingua" href="../../it/prodotto/" hreflang="it" lang="it" data-lang="it" aria-label="Versione italiana">IT</a>
+      <button class="tema" type="button" aria-label="Switch between light and dark theme" data-tema-btn>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg>
+      </button>
+      <a class="btn btn--gho btn--sm" href="../download/">Download</a>
+    </div>
+  </div>
+</header>
+
+<main id="contenuto">
+
+<header class="pagina-testa">
+  <ol class="percorso" role="list" aria-label="Breadcrumb"><li><a href="../">Lemora</a></li><li>Product</li></ol>
+  <h1>The program, for those who support many clients</h1>
+  <p class="pagina-testa__lead">The features of the Windows client, one per section, each with its status. What only teams need is on the For business page.</p>
+  <dl class="dati"><div><dt>Version</dt><dd>1.3.1.11127</dd></div><div><dt>System</dt><dd>Windows 10 2004+ · 11 · 64-bit</dd></div><div><dt>Languages</dt><dd>Italian · English</dd></div><div><dt>License</dt><dd>GPL-3.0</dd></div></dl>
+</header>
+
+<div class="con-indice">
+  <nav class="indice" aria-labelledby="h-indice">
+    <p id="h-indice">On this page</p>
+    <ol role="list">
+      <li><a href="#cartelle"><span>P.1</span>Folders and search</a></li>
+      <li><a href="#protocolli"><span>P.2</span>Protocols</a></li>
+      <li><a href="#password"><span>P.3</span>Device passwords</a></li>
+      <li><a href="#estensione"><span>P.4</span>Browser extension</a></li>
+      <li><a href="#tastiera"><span>P.5</span>Tabs and keyboard</a></li>
+      <li><a href="#claude"><span>P.6</span>Claude in the sessions</a></li>
+      <li><a href="#importa"><span>P.7</span>Import</a></li>
+      <li><a href="#aspetto"><span>P.8</span>Themes and requirements</a></li>
+      <li><a href="#teams"><span>P.9</span>With a Teams server</a></li>
+    </ol>
+  </nav>
+
+  <div class="corpo">
+
+    <!-- P.1 folders and search -->
+    <section class="blocco" id="cartelle" aria-labelledby="h-cartelle">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.1</span>
+        <h2 id="h-cartelle">One client, one folder</h2>
+        <p>The folder holds domain, network and credentials. Connections and subfolders inherit them: with the network <code>192.168.10.</code> a server address is written as just <code>5</code>.</p>
+      </header>
+      <figure class="fig" id="fig-dettagli">
+        <div class="fig__palco">
+          <img class="solo-scuro" src="../../assets/img/cartella-dettagli.webp" srcset="../../assets/img/cartella-dettagli-800.webp 800w, ../../assets/img/cartella-dettagli.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Edit folder Studio Rossi, Details tab: name and position, domain STUDIOROSSI and network 192.168.10. with Use suggested, the box Apply the domain to the 10 servers already inside, the subfolders Sede and Server with Use parent's" loading="lazy" width="1400" height="880"><img class="solo-chiaro" src="../../assets/img/cartella-dettagli-chiaro.webp" srcset="../../assets/img/cartella-dettagli-chiaro-800.webp 800w, ../../assets/img/cartella-dettagli-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Edit folder Studio Rossi, Details tab: name and position, domain STUDIOROSSI and network 192.168.10. with Use suggested, the box Apply the domain to the 10 servers already inside, the subfolders Sede and Server with Use parent's" loading="lazy" width="1400" height="880">
+          <ol class="richiami" role="list" aria-label="Figure details">
+            <li class="richiamo r1"><span>1</span>Domain</li>
+            <li class="richiamo r2"><span>2</span>Network</li>
+            <li class="richiamo r3"><span>3</span>Also the servers already inside</li>
+            <li class="richiamo r4"><span>4</span>Inheriting subfolders</li>
+          </ol>
+        </div>
+        <figcaption><b>Fig. 1</b> Edit folder, Details tab. "Use suggested" proposes domain and network from the servers the folder already contains.</figcaption>
+      </figure>
+
+      <h3 class="blocco__sotto">Domain credentials of the folder</h3>
+      <div class="colonne">
+        <div class="testo">
+          <p>The client's domain users (<code>BRENTA\admin</code>, <code>BRENTA\tecnico</code>) are saved once in the folder and apply to all its servers: in the detail of a server they are enabled with one click.</p>
+          <p>The count next to each user shows on how many servers of the folder it is enabled.</p>
+        </div>
+        <figure class="fig">
+          <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/cartella-credenziali.webp" srcset="../../assets/img/cartella-credenziali-800.webp 800w, ../../assets/img/cartella-credenziali.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Officine Brenta folder, Domain credentials tab: BRENTA\admin and BRENTA\tecnico, with the number of servers where they are enabled and the copy and edit buttons" loading="lazy" width="1400" height="520"><img class="solo-chiaro" src="../../assets/img/cartella-credenziali-chiaro.webp" srcset="../../assets/img/cartella-credenziali-chiaro-800.webp 800w, ../../assets/img/cartella-credenziali-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Officine Brenta folder, Domain credentials tab: BRENTA\admin and BRENTA\tecnico, with the number of servers where they are enabled and the copy and edit buttons" loading="lazy" width="1400" height="520"></div>
+          <figcaption><b>Fig. 2</b> Domain credentials tab: two users for all the servers of Officine Brenta.</figcaption>
+        </figure>
+      </div>
+
+      <!-- try it: change the folder's domain, network and user and see the connections inside (demos.js, "eredita") -->
+      <h3 class="blocco__sotto">Try it: what the connections receive</h3>
+      <div class="colonne">
+        <div class="demo-riquadro eredita" data-demo="eredita">
+          <p class="demo-riquadro__tit">Folder Officine Brenta › Server</p>
+          <div class="eredita__campi">
+            <label class="demo-campo">Domain<input type="text" data-campo="dominio" value="BRENTA" spellcheck="false"></label>
+            <label class="demo-campo">Network<input type="text" data-campo="prefisso" value="10.20.0." spellcheck="false"></label>
+            <label class="demo-campo">Credential<input type="text" data-campo="utente" value="admin" spellcheck="false"></label>
+          </div>
+          <table class="eredita__tab">
+            <thead><tr><th scope="col">Connection</th><th scope="col">Written</th><th scope="col">Address</th><th scope="col">Login</th></tr></thead>
+            <tbody aria-live="polite">
+              <tr data-finale="12"><th scope="row">FS-01</th><td>12</td><td data-indirizzo>10.20.0.12</td><td data-accesso>BRENTA\admin</td></tr>
+              <tr data-finale="10"><th scope="row">DC01</th><td>10</td><td data-indirizzo>10.20.0.10</td><td data-accesso>BRENTA\admin</td></tr>
+              <tr data-finale="21"><th scope="row">SQL-01</th><td>21</td><td data-indirizzo>10.20.0.21</td><td data-accesso>BRENTA\admin</td></tr>
+              <tr data-fisso="172.16.4.9"><th scope="row">VPN-Filiale</th><td>172.16.4.9</td><td>172.16.4.9</td><td>own user</td></tr>
+            </tbody>
+          </table>
+          <p class="demo__nota">The last row has a full address and its own user: the folder does not change them.</p>
+        </div>
+        <figure class="fig">
+          <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/editor-rdp.webp" srcset="../../assets/img/editor-rdp-800.webp 800w, ../../assets/img/editor-rdp.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="RDP connection editor: the Host name field shows the 10.20.1. prefix of the Sede folder and next to it only the final value 10" loading="lazy" width="1400" height="735"><img class="solo-chiaro" src="../../assets/img/editor-rdp-chiaro.webp" srcset="../../assets/img/editor-rdp-chiaro-800.webp 800w, ../../assets/img/editor-rdp-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="RDP connection editor: the Host name field shows the 10.20.1. prefix of the Sede folder and next to it only the final value 10" loading="lazy" width="1400" height="735"></div>
+          <figcaption><b>Fig. 3</b> Connection editor: the folder prefix sits in front of the field, only the final value is typed. On the right the summary, on the left the connection types.</figcaption>
+        </figure>
+      </div>
+      <div class="colonne">
+        <div class="testo">
+          <h3>Quick search, Alt+M</h3>
+          <p>Opens on top of any program and searches the connections of all clients by name, address and user. Enter opens the session; Tab switches to a quick connection to an unsaved address.</p>
+          <p>The home page shows history, favorites and recently used connections. Tags (<code>#printers</code>, <code>#vpn</code>) filter across all clients.</p>
+        </div>
+        <figure class="fig" id="fig-ricerca">
+          <div class="fig__palco sovrapposta">
+            <img class="solo-scuro" src="../../assets/img/home.webp" srcset="../../assets/img/home-800.webp 800w, ../../assets/img/home.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="" loading="lazy" width="1400" height="880"><img class="solo-chiaro" src="../../assets/img/home-chiaro-brenta.webp" srcset="../../assets/img/home-chiaro-brenta-800.webp 800w, ../../assets/img/home-chiaro-brenta.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="" loading="lazy" width="1400" height="880">
+            <img class="sovrapposta__sopra solo-scuro" src="../../assets/img/launcher.webp" alt="Quick search: typing fs shows the file servers of two clients, with address and user" loading="lazy" width="662" height="284"><img class="sovrapposta__sopra solo-chiaro" src="../../assets/img/launcher-chiaro.webp" alt="Quick search: typing fs shows the file servers of two clients, with address and user" loading="lazy" width="662" height="284">
+          </div>
+          <figcaption><b>Fig. 4</b> Quick search over the main window.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- P.2 protocols: table with engine and status -->
+    <section class="blocco" id="protocolli" aria-labelledby="h-protocolli">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.2</span>
+        <h2 id="h-protocolli">Protocols</h2>
+        <p>Each session is a tab. If the main address does not respond, Lemora tries the connection's alternative addresses in order.</p>
+      </header>
+      <div class="tab-scorre" tabindex="0" role="region" aria-label="Protocol table, scrolls horizontally">
+        <table class="tab">
+          <caption>Table 1 · Protocols and engines, version 1.3.1.</caption>
+          <thead><tr><th scope="col">Protocol</th><th scope="col">Engine</th><th scope="col">Details</th><th scope="col">Status</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">RDP</th><td>FreeRDP 3 included in the file, or the Windows client</td><td>RemoteApp, gateway, drives, printers, smart cards, audio, multiple monitors. Each PC's certificate is remembered.</td><td><span class="stato">ready</span></td></tr>
+            <tr><th scope="row">VNC</th><td>Own viewer, no external program</td><td>ZRLE, Tight, Hextile, RRE, CopyRect encodings. Auto, Low, High quality, changeable while the session is open. Text clipboard.</td><td><span class="stato">ready</span></td></tr>
+            <tr><th scope="row">Files over VNC</th><td>TightVNC 2.x protocol</td><td>Remote disk browser: download, upload, rename, delete, with conflict handling.</td><td><span class="stato">ready</span></td></tr>
+            <tr><th scope="row">SSH</th><td>KiTTY, PuTTY or Windows Terminal inside the tab</td><td>Optional built-in terminal: themes, output search, split view.</td><td><span class="stato">ready</span></td></tr>
+            <tr><th scope="row">Telnet, serial</th><td>KiTTY or PuTTY inside the tab</td><td>COM port for switches and network devices.</td><td><span class="stato">ready</span></td></tr>
+            <tr><th scope="row">SFTP, FTP</th><td>Two-pane manager</td><td>External WinSCP, if preferred.</td><td><span class="stato">ready</span></td></tr>
+            <tr><th scope="row">External programs</th><td>Any executable</td><td>Address, user and password passed as parameters.</td><td><span class="stato">ready</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="colonne">
+        <div class="testo">
+          <h3>VNC on slow lines</h3>
+          <p>With TightVNC the first screen drops from about 14.7 MB to 1.4 MB, thanks to the Tight decoder written for Lemora. In Auto quality it starts at 16 bits and the quality goes up or down with the bandwidth.</p>
+          <h3>.mora files</h3>
+          <p>A connection is exported to a <code>.mora</code> file; a double click opens it. The file contains no passwords.</p>
+        </div>
+        <figure class="fig">
+          <div class="fig__palco terminale" role="group" aria-label="Sample SSH session">
+            <div class="terminale__barra mono"><span>Firewall · 10.20.0.1</span><span class="dot"></span></div>
+<pre class="terminale__testo mono"><span class="pr">admin@fw-brenta:~$</span> show interface wan1
+wan1   up   82.91.14.6/29   1000full
+<span class="pr">admin@fw-brenta:~$</span> show vpn ipsec sa
+sede-filiale   established   rx 1.2 GB  tx 0.9 GB
+<span class="pr">admin@fw-brenta:~$</span> <span class="caret"></span></pre>
+          </div>
+          <figcaption><b>Fig. 5</b> SSH session in the built-in terminal. Sample data.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- P.3 passwords tab -->
+    <section class="blocco" id="password" aria-labelledby="h-password">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.3</span>
+        <h2 id="h-password">Device passwords, next to the session</h2>
+        <p>NAS units, switches, printers, firewalls, phone systems: one list per folder, separate from the connection credentials. During an RDP or VNC session it opens at the side with <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>P</kbd>.</p>
+      </header>
+      <figure class="fig" id="fig-password">
+        <div class="fig__palco">
+          <img class="solo-scuro" src="../../assets/img/password.webp" srcset="../../assets/img/password-800.webp 800w, ../../assets/img/password.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Passwords of the Officine Brenta folder: phone system, firewall, NAS, printer and switch, with user and copy buttons" loading="lazy" width="1400" height="880"><img class="solo-chiaro" src="../../assets/img/password-chiaro.webp" srcset="../../assets/img/password-chiaro-800.webp 800w, ../../assets/img/password-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Passwords of the Officine Brenta folder: phone system, firewall, NAS, printer and switch, with user and copy buttons" loading="lazy" width="1400" height="880">
+          <img class="riquadro-popup solo-scuro" src="../../assets/img/popup-password.webp" alt="Passwords tab open during a VNC session" loading="lazy" width="419" height="605"><img class="riquadro-popup solo-chiaro" src="../../assets/img/popup-password-chiaro.webp" alt="Passwords tab open during a VNC session" loading="lazy" width="419" height="605">
+          <ol class="richiami" role="list" aria-label="Figure details"><li class="richiamo r1"><span>1</span>Folder list</li><li class="richiamo r2"><span>2</span>Tab in the session</li></ol>
+        </div>
+        <figcaption><b>Fig. 6</b> The same list on the folder page and in the session tab.</figcaption>
+      </figure>
+      <div>
+        <dl class="voci">
+          <div class="voce"><dt>Inheritance</dt><dd>The tab shows the devices of the connection's folder and of all the folders above it: the client's network also appears inside "Sede" and "Server".</dd></div>
+          <div class="voce"><dt>Multiple logins per device</dt><dd>Administrator user, service user, panel PIN: several pairs on the same entry.</dd></div>
+          <div class="voce"><dt>Copy</dt><dd>User, password or address with one click. Verification and timed clipboard: <a href="../security/#sblocco">Security, S.3</a>.</dd></div>
+          <div class="voce"><dt>Quick connections</dt><dd>The tab is also available for an unsaved address, with the entries of the chosen folder.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- P.4 extension: what it does (what it sees and what it does not do is on the Security page) -->
+    <section class="blocco" id="estensione" aria-labelledby="h-estensione">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.4</span>
+        <h2 id="h-estensione">Extension for web panels</h2>
+        <p>Lemora Web Extension, for Firefox. On the login page of a router or NAS it offers the entries for that device and fills them in on click. Lemora installs it: without the program on the same PC it does nothing.</p>
+      </header>
+      <div class="colonne colonne--inv">
+        <figure class="fig fig--browser" id="fig-browser">
+          <div class="fig__palco browser">
+            <div class="browser__barra mono" aria-hidden="true"><span class="browser__url">http://192.168.1.1/login</span><img class="browser__ext" src="../../assets/img/icon.png" alt="" width="18" height="18"></div>
+            <div class="browser__pagina">
+              <div class="finto-login" aria-hidden="true">
+                <p class="finto-login__titolo">Router · Sign in</p>
+                <span class="finto-login__campo">admin<img src="../../assets/img/icon.png" alt="" width="16" height="16"></span>
+                <span class="finto-login__campo">••••••••••</span>
+                <span class="finto-login__btn">Sign in</span>
+              </div>
+              <img class="browser__popup" src="../../assets/img/popup-scuro.webp" srcset="../../assets/img/popup-scuro-800.webp 800w, ../../assets/img/popup-scuro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Extension panel with the router logins, open on the page" loading="lazy" width="1400" height="1000">
+            </div>
+          </div>
+          <figcaption><b>Fig. 7</b> Extension panel on a router login page.</figcaption>
+        </figure>
+        <dl class="voci">
+          <div class="voce"><dt>Fill in</dt><dd>On click of the icon in the field or in the panel. Never on its own.</dd></div>
+          <div class="voce"><dt>Save <span class="stato">since 1.0.3</span></dt><dd>After a new login it offers to save it, only if the address bar shows an IP address. On sites with a domain name it offers nothing.</dd></div>
+          <div class="voce"><dt>Folder</dt><dd>Each saved entry goes into a folder chosen at that moment.</dd></div>
+          <div class="voce"><dt>Browser</dt><dd>Firefox, signed by Mozilla, version 1.0.9. Lemora installs it from its settings.</dd></div>
+        </dl>
+      </div>
+      <!-- try it: fill in from Lemora, then a new login; the save prompt appears only with an IP in the address bar (demos.js, "browser") -->
+      <div class="bdemo" data-demo="browser">
+        <div class="bdemo__indirizzi" role="group" aria-label="Address in the bar">
+          <button type="button" class="demo-btn" data-indirizzo="ip" data-url="http://192.168.1.1/login" aria-pressed="true">Router: 192.168.1.1</button>
+          <button type="button" class="demo-btn" data-indirizzo="dominio" data-url="https://portale.esempio.it/login" aria-pressed="false">Site: portale.esempio.it</button>
+        </div>
+        <div class="fig__palco browser">
+          <div class="browser__barra mono"><span class="browser__url" data-url>http://192.168.1.1/login</span><img class="browser__ext" src="../../assets/img/icon.png" alt="" width="18" height="18"></div>
+          <div class="browser__pagina">
+            <form novalidate>
+              <p class="finto-login__titolo">Sign in</p>
+              <label class="bdemo__campo"><span class="vh">User</span><input type="text" data-utente placeholder="user" autocomplete="off" spellcheck="false">
+                <button type="button" class="bdemo__icona" data-icona aria-label="Lemora logins for this page" aria-expanded="false"><img src="../../assets/img/icon.png" alt="" width="16" height="16"></button></label>
+              <label class="bdemo__campo"><span class="vh">Password</span><input type="password" data-pw placeholder="password" autocomplete="off"></label>
+              <button type="submit" class="bdemo__invia">Sign in</button>
+            </form>
+            <div class="bdemo__popup" data-popup hidden>
+              <p>Lemora · 192.168.1.1</p>
+              <button type="button" data-voce-pw data-u="admin">Office router<code>admin · Officine Brenta</code></button>
+              <button type="button" data-voce-pw data-u="tecnico">Router, technician user<code>tecnico · Officine Brenta</code></button>
+            </div>
+            <div class="bdemo__proposta" data-proposta hidden role="dialog" aria-label="Save prompt">
+              <span>Save this login in Lemora?</span>
+              <label><span class="vh">Folder</span><select data-cartella><option>Officine Brenta</option><option>Studio Rossi</option><option>Hotel Lago Blu</option></select></label>
+              <button type="button" data-salva>Save</button><button type="button" data-non-ora>Not now</button>
+            </div>
+          </div>
+        </div>
+        <p class="demo__esito" data-esito aria-live="polite"></p>
+        <p class="demo__nota"><b>Try it</b> · the Lemora icon in the field fills in the form; or type user and password by hand and press Sign in, with the IP and with the domain.</p>
+      </div>
+    </section>
+
+    <!-- P.5 tabs, windows, keyboard -->
+    <section class="blocco" id="tastiera" aria-labelledby="h-tastiera">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.5</span>
+        <h2 id="h-tastiera">Tabs, windows and keyboard</h2>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>Detachable tabs</dt><dd>A tab dragged out becomes a window; dragged back in, it becomes a tab again. Two sessions sit side by side in split view.</dd></div>
+        <div class="voce"><dt>Browser shortcuts</dt><dd><kbd>Ctrl</kbd>+<kbd>Tab</kbd>, <kbd>Ctrl</kbd>+<kbd>W</kbd>, <kbd>Ctrl</kbd>+<kbd>T</kbd>, <kbd>F11</kbd> also work with an RDP or VNC session in the foreground.</dd></div>
+        <div class="voce"><dt>Key mapping</dt><dd>For RDP and VNC, a setting decides which combinations (<kbd>Win</kbd>, <kbd>Alt</kbd>+<kbd>Tab</kbd>…) go to the remote PC and which stay local, with exceptions per connection. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Del</kbd> stays local: Windows enforces it.</dd></div>
+        <div class="voce"><dt>Background sessions</dt><dd>With "Minimize to system tray", closing the window leaves the sessions open.</dd></div>
+      </dl>
+    </section>
+
+    <!-- P.6 Claude: what it can do. The limits are on the Security page -->
+    <section class="blocco" id="claude" aria-labelledby="h-claude">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.6</span>
+        <h2 id="h-claude">Claude inside RDP and VNC sessions</h2>
+        <p>Lemora contains a local MCP server (the protocol Claude uses to work with external programs). Claude sees the session screen, reads the text, clicks, types and waits, like a technician in front of the PC.</p>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>Find</dt><dd>Search connections, folders and details; check whether a PC responds.</dd></div>
+        <div class="voce"><dt>See</dt><dd>Screenshot with numbered elements, list of controls, text read with Windows OCR.</dd></div>
+        <div class="voce"><dt>Act</dt><dd>Click, type, keys, scroll, drag, wait for something to change.</dd></div>
+        <div class="voce"><dt>Exchange</dt><dd>Paste long texts, read the clipboard, send and fetch files with confirmation.</dd></div>
+      </dl>
+      <!-- try it: the same request step by step, with the real tools; Pause and Stop as in the program's panel (demos.js, "claude") -->
+      <div class="claude-demo" data-demo="claude">
+        <div class="claude-demo__chat">
+          <p class="demo-riquadro__tit">Try it · Claude with PC-Reception</p>
+          <ol class="claude-demo__log" data-log aria-live="polite" role="list"></ol>
+          <div class="claude-demo__comandi">
+            <button type="button" class="demo-btn demo-btn--pri" data-avvia>Run</button>
+            <button type="button" class="demo-btn" data-pausa disabled>Pause</button>
+            <button type="button" class="demo-btn" data-ferma disabled>Stop</button>
+          </div>
+        </div>
+        <div class="cschermo" data-schermo data-fase="inizio" aria-hidden="true">
+          <div class="cschermo__barra"><span>PC-Reception · 192.168.1.21 · VNC</span><span>Studio Rossi</span></div>
+          <div class="cschermo__fin">
+            <p>Printers and scanners › Office printer › Queue</p>
+            <div class="cschermo__coda"><span>Fattura 1180.pdf <em>Error</em></span><span>Preventivo Bianchi.docx <em>Error</em></span><span>Agenda settimana.pdf <em>Error</em></span></div>
+            <p class="cschermo__ok">Test page sent · printer ready</p>
+          </div>
+          <span class="cschermo__mira"></span>
+          <span class="cschermo__claude">Claude is working · Pause · Stop</span>
+        </div>
+        <script type="application/json" data-passi>[["apri_sessione","PC-Reception, VNC, credentials of the Studio Rossi folder","inizio"],["schermata","PC desktop, no window open","inizio"],["clic","Start › Settings › Printers and scanners","stampanti"],["leggi_schermo","Office printer: 3 documents in error in the queue","stampanti"],["clic","Cancel all documents","annulla"],["attendi","Queue empty","annulla"],["clic","Print a test page","prova"],["schermata","Test page sent. Session left open for checking","prova"]]</script>
+      </div>
+      <dl class="voci">
+        <div class="voce"><dt>Files</dt><dd><code>invia_file</code> and <code>prendi_file</code> go through the RDP clipboard or the TightVNC protocol, up to 500 MB per transfer.</dd></div>
+      </dl>
+      <p class="rimando">How Claude stays under the user's control: <a href="../security/#claude">Security, S.6</a></p>
+    </section>
+
+    <!-- P.7 import -->
+    <section class="blocco" id="importa" aria-labelledby="h-importa">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.7</span>
+        <h2 id="h-importa">Import</h2>
+      </header>
+      <div class="tab-scorre" tabindex="0" role="region" aria-label="Importable formats">
+        <table class="tab">
+          <caption>Table 2 · Formats from which folders and connections are imported.</caption>
+          <thead><tr><th scope="col">From</th><th scope="col">Format</th><th scope="col">Notes</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">mRemoteNG</th><td>Exported CSV</td><td>Folders and connections.</td></tr>
+            <tr><th scope="row">Windows Remote Desktop</th><td><code>.rdp</code> file</td><td>With the credentials Windows saved for that PC.</td></tr>
+            <tr><th scope="row">1Remote, Lemora</th><td>JSON or <code>.db</code> database</td><td>Also from another installation.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="rimando">Checks on imported files: <a href="../security/#connessioni">Security, S.4</a></p>
+    </section>
+
+    <!-- P.8 themes and requirements -->
+    <section class="blocco" id="aspetto" aria-labelledby="h-aspetto">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.8</span>
+        <h2 id="h-aspetto">Themes and requirements</h2>
+        <p>Ten themes: Grafite, Notte and Asfalto dark; Carta, Ghiaccio, Lavanda, Ardesia, Vino, Bosco and Terra light. The extension follows the program's theme.</p>
+      </header>
+      <figure class="fig">
+        <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/impostazioni-temi.webp" srcset="../../assets/img/impostazioni-temi-800.webp 800w, ../../assets/img/impostazioni-temi.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Settings, Appearance: the ten themes with a color preview, font type and size" loading="lazy" width="1400" height="650"><img class="solo-chiaro" src="../../assets/img/impostazioni-temi-chiaro.webp" srcset="../../assets/img/impostazioni-temi-chiaro-800.webp 800w, ../../assets/img/impostazioni-temi-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Settings, Appearance: the ten themes with a color preview, font type and size" loading="lazy" width="1400" height="650"></div>
+        <figcaption><b>Fig. 8</b> Settings › Appearance: theme, font and text size, from S to XXXL.</figcaption>
+      </figure>
+      <!-- try it: the ten themes on a small window, colours computed as in the program (demos.js, "temi") -->
+      <div class="temi" data-demo="temi">
+        <div class="temi__scelte" data-temi role="group" aria-label="Program theme"></div>
+        <div class="temi__vista">
+          <div class="fin" aria-hidden="true">
+            <div class="fin__titolo"><img src="../../assets/img/icon.png" alt="" width="16" height="16"><span class="fin__scheda">Home</span><span class="fin__piu">+</span><span class="fin__ctrl"><i></i><i></i><i></i></span></div>
+            <div class="fin__barra"><span class="fin__cerca"><span class="temi__ph">Connect/Search (Ctrl+F)</span><span class="fin__chip">VNC ▾</span></span><span class="fin__agg">+ Add</span><span class="fin__seg"><button type="button" tabindex="-1" aria-pressed="true">All</button><button type="button" tabindex="-1">RDP</button><button type="button" tabindex="-1">VNC</button></span></div>
+            <div class="fin__corpo">
+              <div class="fin__albero"><button type="button" tabindex="-1">Home</button><button type="button" tabindex="-1"><b>C</b>Clinica Sole<span>1</span></button><button type="button" tabindex="-1"><b>F</b>Farmacia Centrale<span>2</span></button><button type="button" tabindex="-1" aria-current="true"><b>O</b>Officine Brenta<span>4</span></button><button type="button" tabindex="-1"><b>S</b>Studio Rossi<span>2</span></button></div>
+              <div class="fin__lista"><p class="fin__tlista">SAVED SERVERS</p><ul role="list">
+                <li><button type="button" tabindex="-1" class="fin__riga scelta"><span class="fin__stella fin__stella--on">★</span><b class="fin__p fin__p--rdp">RDP</b><span class="fin__n">DC01<small>10.20.0.10:3389</small></span><span class="fin__u">admin</span></button></li>
+                <li><button type="button" tabindex="-1" class="fin__riga"><span class="fin__stella">☆</span><b class="fin__p fin__p--rdp">RDP</b><span class="fin__n">FS-01<small>10.20.0.12:3389</small></span><span class="fin__u">admin</span></button></li>
+                <li><button type="button" tabindex="-1" class="fin__riga"><span class="fin__stella">☆</span><b class="fin__p fin__p--ssh">SSH</b><span class="fin__n">NAS-Backup<small>10.20.0.40:22</small></span><span class="fin__u">backup</span></button></li>
+                <li><button type="button" tabindex="-1" class="fin__riga"><span class="fin__stella">☆</span><b class="fin__p fin__p--vnc">VNC</b><span class="fin__n">Console iLO<small>10.20.0.205:5900</small></span><span class="fin__u">admin</span></button></li>
+              </ul></div>
+              <div class="fin__pannello"><div class="fin__ptesta"><span class="fin__lettera fin__lettera--rdp">RDP</span><div><p class="fin__pnome">DC01</p><p class="fin__pmeta">Officine Brenta / Server</p></div></div><dl class="fin__ptab"><div><dt>Target</dt><dd><code>10.20.0.10:3389</code></dd></div><div><dt>Access</dt><dd>BRENTA\admin</dd></div></dl><p class="fin__pbott"><span class="fin__bp">Connect</span></p></div>
+            </div>
+          </div>
+          <p class="demo__nota">Theme <b data-tema-nome>Grafite</b> · colours computed with the same rules as the program, on a small window.</p>
+        </div>
+      </div>
+      <dl class="specifiche">
+        <div><dt>Components</dt><dd>.NET and FreeRDP included in the file; WebView2 for the built-in terminal (already present in Windows 11)</dd></div>
+        <div><dt>Languages</dt><dd>Italian and English complete; the other twelve inherited from 1Remote lack the new features</dd></div>
+        <div><dt>Startup</dt><dd>Window visible at once, data loaded afterwards; ReadyToRun compilation</dd></div>
+      </dl>
+      <p class="rimando">Files, checksum and installation modes: <a href="../download/">Download</a></p>
+    </section>
+
+    <!-- P.9 technician side of Teams: what the PC sees depending on the permission; the administrator side is in For business -->
+    <section class="blocco" id="teams" aria-labelledby="h-teams">
+      <header class="blocco__testa">
+        <span class="blocco__cod">P.9</span>
+        <h2 id="h-teams">With a Teams server</h2>
+        <p>Server entries appear in the same folders as the PC's own connections, with the cloud next to them. The PC's permission decides what can be done with those entries.</p>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>Read only</dt><dd>Entries open and can be copied. Edit, Duplicate, Delete and Rename are not shown; creating an entry on the server is refused with a message.</dd></div>
+        <div class="voce"><dt>Requests</dt><dd>The editor offers "Send to the server as a request". The entry stays as it is until approved; a new entry appears at once with the clock. A refusal arrives with the administrator's note.</dd></div>
+        <div class="voce"><dt>Server unreachable</dt><dd>The request stays queued on the PC, with the clock, and goes out as soon as the server responds.</dd></div>
+        <div class="voce"><dt>Withdraw or correct</dt><dd>A request still pending can be updated or withdrawn; the administrator always sees the latest version.</dd></div>
+      </dl>
+      <!-- try it: same PC, same entries, different permission (demos.js, "teams") -->
+      <div class="demo-riquadro tc" data-demo="teams">
+        <p class="demo-riquadro__tit">Try it · PC-GIULIA connected to Teams · folder Officine Brenta</p>
+        <div class="tc__comandi">
+          <fieldset class="tc__perm">
+            <legend>PC permission</legend>
+            <label><input type="radio" name="tc-permesso" value="read" class="vh" checked>Read only</label>
+            <label><input type="radio" name="tc-permesso" value="requests" class="vh">Requests</label>
+            <label><input type="radio" name="tc-permesso" value="write" class="vh">Read and write</label>
+          </fieldset>
+          <label class="tc__online"><input type="checkbox" data-online checked> Server reachable</label>
+        </div>
+        <div class="tc__app">
+          <ul class="tc__lista" role="list" data-lista>
+            <li class="tc__riga"><b class="tag tag--rdp">RDP</b><span>FS-01<code>10.20.0.12</code></span><span class="tc__stato"><span class="tc__nuvola" aria-label="shared">☁</span></span></li>
+            <li class="tc__riga tc__riga--scelta" data-voce-dc01><b class="tag tag--rdp">RDP</b><span>DC01<code>10.20.0.10</code></span><span class="tc__stato"><span class="tc__nuvola" aria-label="shared">☁</span><span class="tc__orologio" aria-label="waiting for approval" hidden>◷</span></span></li>
+          </ul>
+          <div class="tc__barra">
+            <span class="tc__azioni" data-azioni><button type="button" class="demo-btn" data-modifica>Edit DC01</button><button type="button" class="demo-btn" disabled>Duplicate</button><button type="button" class="demo-btn" disabled>Delete</button></span>
+            <button type="button" class="demo-btn" data-nuova>+ New connection in the folder</button>
+          </div>
+          <div class="tc__editor" data-editor hidden>
+            <label class="demo-campo">Address of DC01<input type="text" value="10.20.0.11" spellcheck="false"></label>
+            <label class="tc__richiesta"><input type="checkbox" data-come-richiesta checked> Send to the server as a request</label>
+            <button type="button" class="demo-btn demo-btn--pri" data-salva>Save</button>
+          </div>
+        </div>
+        <p class="demo__esito" data-msg aria-live="polite"></p>
+        <button type="button" class="demo-btn" data-rifiuta hidden>The administrator refuses</button>
+        <p class="demo__nota">The messages are the program's own. The administrator side: <a href="../business/#permessi">For business, A.3</a>.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+</main>
+
+<footer class="piede">
+  <div class="piede__in">
+    <div class="piede__col">
+      <p class="piede__marchio"><img src="../../assets/img/icon.png" alt="" width="20" height="20"> Lemora</p>
+      <p>Modified version of <a href="https://github.com/1Remote/1Remote">1Remote</a> (© VShawn and contributors), GPL-3.0 license. Not affiliated with the 1Remote project.</p>
+    </div>
+    <nav class="piede__col" aria-labelledby="pf-sito">
+      <h2 id="pf-sito">Site</h2>
+      <a href="./">Product</a><a href="../business/">For business</a><a href="../security/">Security</a><a href="../download/">Download</a>
+    </nav>
+    <nav class="piede__col" aria-labelledby="pf-doc">
+      <h2 id="pf-doc">Documents</h2>
+      <a href="../privacy.html">Extension privacy</a><a href="../site-privacy.html">Site privacy and cookies</a><a href="https://www.gnu.org/licenses/gpl-3.0.html">GPL-3.0 license</a>
+    </nav>
+    <div class="piede__col">
+      <h2>Version</h2>
+      <p class="mono">1.3.1.11127<br>28 November 2026<br>Extension 1.0.9</p>
+    </div>
+    <p class="piede__colophon"><span>No cookies, no analytics</span><span>Data in the figures: sample data</span></p>
+  </div>
+</footer>
+</body>
+</html>
