@@ -1,0 +1,1300 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <s:String x:Key="key">en-us</s:String>
+    <s:String x:Key="language_code-ISO">en-US</s:String>
+    <s:String x:Key="language_code-google">en</s:String>
+    <s:String x:Key="language_name">English (en-US)</s:String>
+    <s:String x:Key="Warning">Warning</s:String>
+    <s:String x:Key="Error">Error</s:String>
+    <s:String x:Key="Info">Info</s:String>
+    <s:String x:Key="OK">OK</s:String>
+    <s:String x:Key="Exit">Exit</s:String>
+    <s:String x:Key="Close">Close</s:String>
+    <s:String x:Key="Add">Add</s:String>
+    <s:String x:Key="Edit">Edit</s:String>
+    <s:String x:Key="Save">Save</s:String>
+    <s:String x:Key="Save as...">Save as...</s:String>
+    <s:String x:Key="Back">Back</s:String>
+    <s:String x:Key="Delete">Delete</s:String>
+    <s:String x:Key="Cancel">Cancel</s:String>
+    <s:String x:Key="Select">Select</s:String>
+    <s:String x:Key="Explore to...">Explore to...</s:String>
+    <s:String x:Key="Previous">Previous</s:String>
+    <s:String x:Key="Next">Next</s:String>
+    <s:String x:Key="Done">Done</s:String>
+    <s:String x:Key="Reset">Reset</s:String>
+    <s:String x:Key="Import">Import</s:String>
+    <s:String x:Key="Export">Export</s:String>
+    <s:String x:Key="Name">Name</s:String>
+    <s:String x:Key="File Name">File Name</s:String>
+    <s:String x:Key="Test">Test</s:String>
+    <s:String x:Key="Reconnect">Reconnect</s:String>
+    <s:String x:Key="Dismiss">Dismiss</s:String>
+    <s:String x:Key="Lock">Lock</s:String>
+    <s:String x:Key="Always on top">Always on top</s:String>
+    <s:String x:Key="Close all">Close all</s:String>
+    <s:String x:Key="Rename">Rename</s:String>
+    <s:String x:Key="Connect">Connect</s:String>
+    <s:String x:Key="Connect (New window)">Connect (New window)</s:String>
+    <s:String x:Key="Note">Note</s:String>
+    <s:String x:Key="Share">Share</s:String>
+    <s:String x:Key="Copy">Copy</s:String>
+    <s:String x:Key="Enabled">Enabled</s:String>
+    <s:String x:Key="Helper">Helper</s:String>
+    <s:String x:Key="Preview">Preview</s:String>
+    <s:String x:Key="Theme">Theme</s:String>
+    <s:String x:Key="Color">Color</s:String>
+    <s:String x:Key="Color1">Color1</s:String>
+    <s:String x:Key="Color2">Color2</s:String>
+    <s:String x:Key="Background">Background</s:String>
+    <s:String x:Key="Normal">Normal</s:String>
+    <s:String x:Key="Lighter">Lighter</s:String>
+    <s:String x:Key="Darker">Darker</s:String>
+    <s:String x:Key="Font">Font</s:String>
+    <s:String x:Key="Font size">Font size</s:String>
+    <s:String x:Key="Themes">Themes</s:String>
+    <s:String x:Key="Options">Options</s:String>
+    <s:String x:Key="About">About</s:String>
+    <s:String x:Key="Language">Language</s:String>
+    <s:String x:Key="Startup">Startup</s:String>
+    <s:String x:Key="Tags">Tags</s:String>
+    <s:String x:Key="Press Enter to add a tag, which is used for grouping servers. By right-clicking on the tags on the homepage, you can filter or pin a specific tag.">Press Enter to add a tag, which is used for grouping servers. By right-clicking on the tags on the homepage, you can filter or pin a specific tag.</s:String>
+    <s:String x:Key="Icon">Icon</s:String>
+    <s:String x:Key="Hostname">Hostname</s:String>
+    <s:String x:Key="Target">Target</s:String>
+    <s:String x:Key="Home">Home</s:String>
+    <s:String x:Key="All servers">All servers</s:String>
+    <s:String x:Key="home_favorites">FAVORITES</s:String>
+    <s:String x:Key="home_details">Show details</s:String>
+    <s:String x:Key="quick_detail_note">Quick connection, not saved</s:String>
+    <s:String x:Key="quick_detail_save">Save as server</s:String>
+    <s:String x:Key="quick_detail_remove">Remove from history</s:String>
+    <s:String x:Key="tab_new">New tab (Ctrl+T)</s:String>
+    <s:String x:Key="tab_close">Close tab (Ctrl+W)</s:String>
+    <s:String x:Key="home_fav_tip">Favorite (Ctrl+D)</s:String>
+    <s:String x:Key="home_history">HISTORY</s:String>
+    <s:String x:Key="Connect/Search">Connect/Search  (Ctrl+F)</s:String>
+    <s:String x:Key="Add to favorites">Add to favorites</s:String>
+    <s:String x:Key="More">More</s:String>
+    <s:String x:Key="editor_title_new">New connection</s:String>
+    <s:String x:Key="editor_summary">SUMMARY</s:String>
+    <s:String x:Key="editor_group_remote">REMOTE DESKTOP</s:String>
+    <s:String x:Key="editor_group_terminal">TERMINAL</s:String>
+    <s:String x:Key="editor_group_files">FILE TRANSFER</s:String>
+    <s:String x:Key="editor_group_local">LOCAL</s:String>
+    <s:String x:Key="protocol_desc_RDP">Windows Remote Desktop</s:String>
+    <s:String x:Key="protocol_desc_RemoteApp">A single Windows app</s:String>
+    <s:String x:Key="protocol_desc_VNC">Shared screen</s:String>
+    <s:String x:Key="protocol_desc_SSH">Secure shell</s:String>
+    <s:String x:Key="protocol_desc_Telnet">Unencrypted shell</s:String>
+    <s:String x:Key="protocol_desc_Serial">Serial port</s:String>
+    <s:String x:Key="protocol_desc_SFTP">Files over SSH</s:String>
+    <s:String x:Key="protocol_desc_FTP">Files over FTP</s:String>
+    <s:String x:Key="protocol_desc_APP">Local program</s:String>
+    <s:String x:Key="editor_section_destination" xml:space="preserve">DESTINATION</s:String>
+    <s:String x:Key="editor_section_users" xml:space="preserve">USERS</s:String>
+    <s:String x:Key="editor_section_advanced" xml:space="preserve">ADVANCED OPTIONS</s:String>
+    <s:String x:Key="editor_section_advanced_hint" xml:space="preserve"> · the defaults are fine in most cases</s:String>
+    <s:String x:Key="editor_section_password" xml:space="preserve">PASSWORD</s:String>
+    <s:String x:Key="editor_section_session" xml:space="preserve">Session and scripts</s:String>
+    <s:String x:Key="editor_section_look" xml:space="preserve">Appearance and tags</s:String>
+    <s:String x:Key="editor_section_client" xml:space="preserve">CLIENT</s:String>
+    <s:String x:Key="editor_section_identity">IDENTITY</s:String>
+    <s:String x:Key="settings_title">Settings</s:String>
+    <s:String x:Key="vnc_server_unreachable">The VNC server is not responding (timed out). Check address, port and VPN.</s:String>
+    <s:String x:Key="vnc_not_a_vnc_server">The address answers but it is not a VNC server.</s:String>
+    <s:String x:Key="vnc_server_refused">The VNC server refused the connection.</s:String>
+    <s:String x:Key="vnc_server_silent">The server accepts the connection but does not speak VNC (timed out).</s:String>
+    <s:String x:Key="vnc_auth_not_supported">The server requires an authentication the built-in client does not support (types: {0}). Choose RealVNC as the client in the server settings.</s:String>
+    <s:String x:Key="vnc_password_cancelled">Connection cancelled: no password entered.</s:String>
+    <s:String x:Key="vnc_menu_quality">Graphics quality</s:String>
+    <s:String x:Key="vnc_q_auto">Automatic</s:String>
+    <s:String x:Key="vnc_q_low">Low</s:String>
+    <s:String x:Key="vnc_q_high">High</s:String>
+    <s:String x:Key="vnc_q_now_low">Now: low quality (16-bit colors)</s:String>
+    <s:String x:Key="vnc_q_now_high">Now: high quality (full colors)</s:String>
+    <s:String x:Key="vnc_quality">Graphics quality</s:String>
+    <s:String x:Key="vnc_quality_auto">Automatic (starts low, rises if the connection holds)</s:String>
+    <s:String x:Key="vnc_quality_low">Low (16-bit colors, half the data)</s:String>
+    <s:String x:Key="vnc_quality_high">High (full colors)</s:String>
+    <s:String x:Key="settings_search_placeholder">Search settings…</s:String>
+    <s:String x:Key="settings_group_general">GENERAL</s:String>
+    <s:String x:Key="settings_group_launcher">QUICK LAUNCH</s:String>
+    <s:String x:Key="settings_search_none">No setting matches</s:String>
+    <s:String x:Key="settings_data_intro">Connections are stored in the local encrypted database. To share them with colleagues you can connect this PC to a Teams server (see Settings ▸ General ▸ Teams) or add a MySQL or PostgreSQL database.</s:String>
+    <s:String x:Key="settings_runner_default_for">Default program for</s:String>
+    <s:String x:Key="settings_runner_default_badge">Default</s:String>
+    <s:String x:Key="settings_runner_use_default">Use as default</s:String>
+    <s:String x:Key="settings_runner_builtin_note">Built into the app: no setup needed.</s:String>
+    <s:String x:Key="settings_font">Font</s:String>
+    <s:String x:Key="settings_font_family">Font family</s:String>
+    <s:String x:Key="settings_font_size">Font size</s:String>
+    <s:String x:Key="settings_runner_terminal_title">Built-in terminal (xterm.js)</s:String>
+    <s:String x:Key="settings_runner_terminal_desc">Inside Lemora, in a tab: themes, command blocks, search, copy and save output.</s:String>
+    <s:String x:Key="settings_runner_terminal_settings">Terminal settings…</s:String>
+    <s:String x:Key="settings_runner_add">Add program</s:String>
+    <s:String x:Key="settings_runner_intro">Choose which program opens each protocol. The built-in one works without setup; the others need the program installed.</s:String>
+    <s:String x:Key="settings_vault_intro">Credentials saved in the vault. Those shared with a folder are managed from the folder.</s:String>
+    <s:String x:Key="settings_done">Done</s:String>
+    <s:String x:Key="settings_footer">“Done” saves and returns to Home.</s:String>
+    <s:String x:Key="settings_nav_general_desc">Language, window, security</s:String>
+    <s:String x:Key="settings_nav_launcher">Quick launch</s:String>
+    <s:String x:Key="settings_nav_launcher_desc">Global shortcut and search</s:String>
+    <s:String x:Key="settings_nav_database_desc">Where connections are stored</s:String>
+    <s:String x:Key="settings_nav_theme">Appearance</s:String>
+    <s:String x:Key="settings_nav_theme_desc">Theme, font and sizes</s:String>
+    <s:String x:Key="settings_nav_protocol">Protocols</s:String>
+    <s:String x:Key="settings_nav_protocol_desc">External programs to connect</s:String>
+    <s:String x:Key="settings_nav_vault_desc">Saved credentials</s:String>
+    <s:String x:Key="settings_sec_lang">LANGUAGE AND STARTUP</s:String>
+    <s:String x:Key="settings_sec_window">WINDOW</s:String>
+    <s:String x:Key="settings_sec_security">SECURITY</s:String>
+    <s:String x:Key="settings_sec_misc">MISC</s:String>
+    <s:String x:Key="settings_sec_diag">DIAGNOSTICS</s:String>
+    <s:String x:Key="settings_lang_desc">Applies immediately to the whole app</s:String>
+    <s:String x:Key="settings_startup_title">Start with Windows</s:String>
+    <s:String x:Key="settings_startup_desc">At operating system startup</s:String>
+    <s:String x:Key="settings_close_desc">What happens when closing the main window</s:String>
+    <!-- file transfer (VNC / TightVNC) -->
+    <s:String x:Key="ft_title">File transfer</s:String>
+    <s:String x:Key="ft_title_caps">FILE TRANSFER</s:String>
+    <s:String x:Key="ft_ok">OK</s:String>
+    <s:String x:Key="ft_cancel">Cancel</s:String>
+    <s:String x:Key="ft_retry">Retry</s:String>
+    <s:String x:Key="ft_details">Details</s:String>
+    <s:String x:Key="ft_show_destination">Show destination</s:String>
+    <s:String x:Key="ft_remove">Remove</s:String>
+    <s:String x:Key="ft_close">Close</s:String>
+    <s:String x:Key="ft_up">Parent folder</s:String>
+    <s:String x:Key="ft_back">Back</s:String>
+    <s:String x:Key="ft_forward">Forward</s:String>
+    <s:String x:Key="ft_refresh">Refresh</s:String>
+    <s:String x:Key="ft_new_folder">New folder</s:String>
+    <s:String x:Key="ft_loading">Loading…</s:String>
+    <s:String x:Key="ft_upload_in">Upload to</s:String>
+    <s:String x:Key="ft_open_navigator">Open the file browser</s:String>
+    <s:String x:Key="ft_drop_title">Drop files or folders here</s:String>
+    <s:String x:Key="ft_drop_note">Or copy them in File Explorer and press Ctrl V here in the session. You can also drop them on the remote screen.</s:String>
+    <s:String x:Key="settings_alttab_title">Alt+Tab to the remote PC in VNC tabs</s:String>
+    <s:String x:Key="settings_alttab_desc">On: inside a VNC tab Alt+Tab switches windows on the remote PC, like the other shortcuts. Off: Alt+Tab stays on this PC.</s:String>
+    <s:String x:Key="ft_pick_root_crumb">Drives</s:String>
+    <s:String x:Key="ft_st_none_copied">No file copied: {0}. The limit can be changed in the settings (File transfer).</s:String>
+    <s:String x:Key="ft_copy_button">Copy files</s:String>
+    <s:String x:Key="ft_copy_tooltip">Copies to this PC the files selected on the remote PC (File Explorer or Desktop): then press Ctrl V wherever you want. The remote PC's clipboard becomes the files' path.</s:String>
+    <s:String x:Key="home_folders_menu">Folders</s:String>
+    <s:String x:Key="search_short">Search…</s:String>
+    <s:String x:Key="ft_copy_no_reply">The remote PC did not answer. This button works only if the remote PC runs Windows 11. With Windows 10 open the files panel (File button, then the arrow to enlarge it), select the files and download them from there.</s:String>
+    <s:String x:Key="ft_copy_none">No file selected on the remote PC: select them in File Explorer or on the Desktop and try again.</s:String>
+    <s:String x:Key="ft_choose_files">Choose files…</s:String>
+    <s:String x:Key="ft_choose_files_title">Choose the files to upload</s:String>
+    <s:String x:Key="ft_clear_finished">Clear finished</s:String>
+    <s:String x:Key="ft_btn_tooltip">Files: transfer to and from the remote PC</s:String>
+    <s:String x:Key="ft_btn_checking">Checking file transfer…</s:String>
+    <s:String x:Key="ft_btn_active">Transfer in progress: click to see the queue</s:String>
+    <s:String x:Key="ft_dest_choose">choose folder</s:String>
+    <s:String x:Key="ft_drop_hint">Drop on the screen to upload to {0}</s:String>
+    <s:String x:Key="ft_drop_denied">Not allowed: {0}</s:String>
+    <s:String x:Key="ft_upload_started">Upload started to {0}…</s:String>
+    <s:String x:Key="ft_paste_question">Upload {0} to {1}?</s:String>
+    <s:String x:Key="ft_paste_upload">Upload</s:String>
+    <s:String x:Key="ft_paste_change">Change folder</s:String>
+    <s:String x:Key="ft_n_files">{0} files</s:String>
+    <s:String x:Key="ft_n_folders">{0} folders</s:String>
+    <s:String x:Key="ft_n_items">{0} items</s:String>
+    <s:String x:Key="ft_prepare_start">Preparing files…</s:String>
+    <s:String x:Key="ft_prepare_progress">Preparing files… {0}% (downloading to a temporary folder)</s:String>
+    <s:String x:Key="ft_prepare_done">{0} items ready: paste them in File Explorer with Ctrl V</s:String>
+    <s:String x:Key="ft_prepare_clean">Empty temporary folder</s:String>
+
+    <s:String x:Key="ft_row_to_remote">→ remote PC · {0}</s:String>
+    <s:String x:Key="ft_row_from_remote">← from remote PC · {0}</s:String>
+    <s:String x:Key="ft_st_queued">Queued</s:String>
+    <s:String x:Key="ft_st_scanning">Calculating sizes…</s:String>
+    <s:String x:Key="ft_st_waiting">Waiting for a choice</s:String>
+    <s:String x:Key="ft_st_file_n_of">file {0} of {1}</s:String>
+    <s:String x:Key="ft_st_done">Completed in {0}</s:String>
+    <s:String x:Key="ft_st_warn">Completed with skips: {0} of {1} copied · {2} skipped</s:String>
+    <s:String x:Key="ft_st_cancelled">Cancelled</s:String>
+
+    <s:String x:Key="ft_unavail_nottight_title">Not a TightVNC server</s:String>
+    <s:String x:Key="ft_unavail_nottight_text">File transfer only works with TightVNC 2.x, not with RealVNC or other servers.</s:String>
+    <s:String x:Key="ft_unavail_disabled_title">File transfer is turned off on the server</s:String>
+    <s:String x:Key="ft_unavail_disabled_text">On the remote PC, turn on “Enable file transfers” in the TightVNC settings.</s:String>
+    <s:String x:Key="ft_unavail_disabled_action">How to turn it on</s:String>
+    <s:String x:Key="ft_unavail_disabled_howto">On the remote PC: TightVNC icon near the clock, Configuration, Server tab, tick “Enable file transfers”, OK. Then press Retry here.</s:String>
+    <s:String x:Key="ft_unavail_auth_title">Password rejected</s:String>
+    <s:String x:Key="ft_unavail_auth_text">The server did not accept the password for file transfer.</s:String>
+    <s:String x:Key="ft_unavail_auth_action">Open the connection</s:String>
+    <s:String x:Key="ft_unavail_noresponse_title">The remote PC does not respond</s:String>
+    <s:String x:Key="ft_unavail_noresponse_text">It may be locked or have no user signed in.</s:String>
+    <s:String x:Key="ft_unavail_noresponse_action">Retry</s:String>
+
+    <s:String x:Key="ft_err_auth">Password rejected by the server</s:String>
+    <s:String x:Key="ft_err_timeout">The remote PC does not respond (slow network or lost connection)</s:String>
+    <s:String x:Key="ft_err_denied">Access denied: protected folder, or the remote PC is locked (the signed-in user's permissions apply)</s:String>
+    <s:String x:Key="ft_err_notfound">Not found on the remote PC</s:String>
+    <s:String x:Key="ft_err_inuse">File in use by another program</s:String>
+    <s:String x:Key="ft_err_exists">Already exists</s:String>
+    <s:String x:Key="ft_err_notempty">The folder is not empty</s:String>
+    <s:String x:Key="ft_err_diskfull">Not enough space on the remote PC</s:String>
+    <s:String x:Key="ft_err_invalidname">Name not valid for Windows</s:String>
+    <s:String x:Key="ft_err_not_connected">the session is not connected</s:String>
+
+    <s:String x:Key="ft_conflict_title">The file already exists</s:String>
+    <s:String x:Key="ft_conflict_heading">{0} already exists in {1}</s:String>
+    <s:String x:Key="ft_conflict_question">What do you want to do?</s:String>
+    <s:String x:Key="ft_conflict_existing">EXISTING</s:String>
+    <s:String x:Key="ft_conflict_new">NEW</s:String>
+    <s:String x:Key="ft_conflict_newer_bigger">Newer · bigger</s:String>
+    <s:String x:Key="ft_conflict_newer">Newer</s:String>
+    <s:String x:Key="ft_conflict_bigger">Bigger</s:String>
+    <s:String x:Key="ft_conflict_all">Do the same for all conflicts</s:String>
+    <s:String x:Key="ft_conflict_cancel_job">Cancel transfer</s:String>
+    <s:String x:Key="ft_conflict_skip">Skip</s:String>
+    <s:String x:Key="ft_conflict_both">Keep both</s:String>
+    <s:String x:Key="ft_conflict_replace">Replace</s:String>
+    <s:String x:Key="ft_delete_title">Delete on the remote PC</s:String>
+    <s:String x:Key="ft_delete_one">Delete “{0}” from the remote PC?</s:String>
+    <s:String x:Key="ft_delete_many">Delete {0} items from the remote PC?</s:String>
+    <s:String x:Key="ft_delete_warning">This is permanent: files do not go to the recycle bin.</s:String>
+    <s:String x:Key="ft_delete_folders">Folders are deleted with everything inside.</s:String>
+    <s:String x:Key="ft_delete_dont_ask">Don't ask again</s:String>
+    <s:String x:Key="ft_delete">Delete</s:String>
+    <s:String x:Key="ft_invalid_name_rule">The name cannot be empty, end with a dot or a space, or contain  \ / : * ? " &lt; &gt; |</s:String>
+    <s:String x:Key="ft_create">Create</s:String>
+    <s:String x:Key="ft_rename">Rename</s:String>
+    <s:String x:Key="ft_newfolder_title">New folder</s:String>
+    <s:String x:Key="ft_newfolder_heading">Name of the new folder</s:String>
+    <s:String x:Key="ft_newfolder_default">New folder</s:String>
+    <s:String x:Key="ft_rename_title">Rename</s:String>
+    <s:String x:Key="ft_rename_heading">New name for “{0}”</s:String>
+
+    <s:String x:Key="ft_pick_title">Upload to…</s:String>
+    <s:String x:Key="ft_pick_choose">Choose this folder</s:String>
+    <s:String x:Key="ft_pick_remember">Remember for this server</s:String>
+    <s:String x:Key="ft_pick_root">Drives of the remote PC</s:String>
+    <s:String x:Key="ft_pick_choose_drive">Open a drive and choose a folder</s:String>
+    <s:String x:Key="ft_pick_empty">No folders in here</s:String>
+
+    <s:String x:Key="ft_navigator_title">File browser</s:String>
+    <s:String x:Key="ft_back_to_screen">← Back to the screen</s:String>
+    <s:String x:Key="ft_act_upload">Upload →</s:String>
+    <s:String x:Key="ft_act_download">← Download</s:String>
+    <s:String x:Key="ft_act_rename">Rename F2</s:String>
+    <s:String x:Key="ft_act_delete">Delete Del</s:String>
+    <s:String x:Key="ft_act_newfolder">New folder F7</s:String>
+    <s:String x:Key="ft_queue_title">TRANSFER QUEUE</s:String>
+    <s:String x:Key="ft_queue_empty">No transfers</s:String>
+    <s:String x:Key="ft_col_name">Name</s:String>
+    <s:String x:Key="ft_col_date">Date</s:String>
+    <s:String x:Key="ft_col_type">Type</s:String>
+    <s:String x:Key="ft_col_size">Size</s:String>
+    <s:String x:Key="ft_pane_empty">Empty folder</s:String>
+    <s:String x:Key="ft_pane_local">THIS PC</s:String>
+    <s:String x:Key="ft_pane_remote">REMOTE PC</s:String>
+    <s:String x:Key="ft_this_pc">This PC</s:String>
+    <s:String x:Key="ft_type_folder">Folder</s:String>
+    <s:String x:Key="ft_type_file">File</s:String>
+    <s:String x:Key="ft_items_count">{0} items</s:String>
+    <s:String x:Key="ft_selected_one">selected: {0}</s:String>
+    <s:String x:Key="ft_selected_n">{0} selected</s:String>
+    <s:String x:Key="ft_pane_denied_title">Protected folder</s:String>
+    <s:String x:Key="ft_pane_denied_text">The transfer uses the permissions of the user signed in on the remote PC. If the PC is locked, unlock it and retry.</s:String>
+    <s:String x:Key="ft_pane_notfound_title">Folder not found</s:String>
+    <s:String x:Key="ft_pane_error_title">Cannot read the folder</s:String>
+
+    <s:String x:Key="ft_settings_section">File transfer (VNC)</s:String>
+    <s:String x:Key="ft_settings_max_file">Maximum size per file (GB)</s:String>
+    <s:String x:Key="ft_settings_max_file_desc">0 = no limit. Bigger files are skipped.</s:String>
+    <s:String x:Key="ft_settings_max_job">Maximum size per transfer (GB)</s:String>
+    <s:String x:Key="ft_settings_max_job_desc">0 = no limit. Total of all files in one transfer: if it is exceeded, the transfer does not start.</s:String>
+    <s:String x:Key="ft_settings_conflict">If the file already exists</s:String>
+    <s:String x:Key="ft_settings_conflict_desc">What to do when the destination already has a file with the same name</s:String>
+    <s:String x:Key="ft_conflict_opt_ask">Ask</s:String>
+    <s:String x:Key="ft_conflict_opt_replace">Replace</s:String>
+    <s:String x:Key="ft_conflict_opt_skip">Skip</s:String>
+    <s:String x:Key="ft_conflict_opt_both">Keep both</s:String>
+    <s:String x:Key="ft_settings_temp_names">Temporary names while copying</s:String>
+    <s:String x:Key="ft_settings_temp_names_desc">Recommended: if a copy is interrupted, no half-written file is left with the real name (.lm-part).</s:String>
+    <s:String x:Key="ft_settings_default_dir">Default destination folder on the remote PC</s:String>
+    <s:String x:Key="ft_settings_default_dir_desc">Example: C:\Transfers. Empty = the user's Desktop. It can be changed per PC inside the program.</s:String>
+    <s:String x:Key="ft_settings_local_dir">Base folder on this PC</s:String>
+    <s:String x:Key="ft_settings_local_dir_desc">Where the file navigator starts when you open it. Empty = Documents.</s:String>
+    <s:String x:Key="ft_settings_browse">Browse…</s:String>
+    <s:String x:Key="ft_settings_confirm_delete">Ask before deleting on the remote PC</s:String>
+    <s:String x:Key="ft_settings_note">File transfer only works with TightVNC 2.x: “Enable file transfers” must be turned on at the remote PC.</s:String>
+    <s:String x:Key="settings_keep_sessions_title">Keep active sessions in the background</s:String>
+    <s:String x:Key="settings_keep_sessions_desc">On: VNC, RDP, SSH and other sessions stay connected while the app is in the background. Off: they are all closed when the app goes to the background.</s:String>
+    <s:String x:Key="settings_log_level">Log level</s:String>
+    <s:String x:Key="settings_log_base">Basic</s:String>
+    <s:String x:Key="settings_log_medium">Medium</s:String>
+    <s:String x:Key="settings_log_deep">Detailed</s:String>
+    <s:String x:Key="settings_log_base_desc">Warnings and errors only. Connections and drops (with the reason) are always recorded.</s:String>
+    <s:String x:Key="settings_log_medium_desc">Also the events useful to understand a problem. Connections and drops (with the reason) are always recorded.</s:String>
+    <s:String x:Key="settings_log_deep_desc">Everything, including VNC, RDP and startup details. The log grows fast: use it to investigate a problem.</s:String>
+    <s:String x:Key="settings_log_readable">Readable log</s:String>
+    <s:String x:Key="settings_log_readable_desc">In the log, connection names, addresses and users are replaced by codes like [#3f2a91]. Save here a copy of the last 7 days with the real names, to investigate a problem: keep it safe and delete it afterwards.</s:String>
+    <s:String x:Key="settings_log_readable_btn">Export…</s:String>
+    <s:String x:Key="editor_folder">Folder</s:String>
+    <s:String x:Key="editor_no_folder">No folder</s:String>
+    <s:String x:Key="editor_favorite">Favorite</s:String>
+    <s:String x:Key="editor_favorite_add">Add to favorites</s:String>
+    <s:String x:Key="editor_favorite_on">In favorites (shown in Home)</s:String>
+    <s:String x:Key="editor_ready">Ready</s:String>
+    <s:String x:Key="editor_in_folder">in {0}</s:String>
+    <s:String x:Key="editor_password_asked">Password asked</s:String>
+    <s:String x:Key="editor_password_saved">Password saved</s:String>
+    <s:String x:Key="editor_advanced_default">Default</s:String>
+    <s:String x:Key="editor_advanced_one">{0} changed</s:String>
+    <s:String x:Key="editor_advanced_n">{0} changed</s:String>
+    <s:String x:Key="editor_summary_access">Access</s:String>
+    <s:String x:Key="editor_summary_advanced">Advanced</s:String>
+    <s:String x:Key="editor_reset">Reset to defaults</s:String>
+    <s:String x:Key="protocol_help_RDP">Windows server with Remote Desktop enabled.</s:String>
+    <s:String x:Key="protocol_help_RemoteApp">Opens a single application of a Windows server, without the whole desktop.</s:String>
+    <s:String x:Key="protocol_help_VNC">Shows the remote computer's screen. It only needs a password, not a user.</s:String>
+    <s:String x:Key="protocol_help_SSH">Encrypted terminal for a Linux or network device.</s:String>
+    <s:String x:Key="protocol_help_Telnet">Unencrypted terminal: use it only on trusted networks.</s:String>
+    <s:String x:Key="protocol_help_Serial">Connects to a serial (COM) port.</s:String>
+    <s:String x:Key="protocol_help_SFTP">Encrypted file transfer, on the same port as SSH.</s:String>
+    <s:String x:Key="protocol_help_FTP">Unencrypted file transfer.</s:String>
+    <s:String x:Key="protocol_help_APP">Starts a program installed on this computer.</s:String>
+    <s:String x:Key="editor_vnc_note">Protocol note. RFB 3.8 and later are proprietary: the built-in client may not work. In that case choose another client.</s:String>
+    <s:String x:Key="editor_runner_follow">Global settings</s:String>
+    <s:String x:Key="editor_name_placeholder">e.g. Web-01 prod</s:String>
+    <s:String x:Key="folder_new">New folder</s:String>
+    <s:String x:Key="folder_new_sub">New subfolder</s:String>
+    <s:String x:Key="folder_new_default_name">New folder</s:String>
+    <s:String x:Key="folder_none_nav">No folder</s:String>
+    <s:String x:Key="toast_saved_no_folder">Saved without a folder: find it under «No folder».</s:String>
+    <s:String x:Key="folder_name_invalid">The name can not contain "/".</s:String>
+    <s:String x:Key="folder_delete_not_empty">The folder contains servers: move them before deleting it.</s:String>
+    <s:String x:Key="user_chooser_text">Choose which user to connect with.</s:String>
+    <s:String x:Key="folder_menu_settings">Credentials and network…</s:String>
+    <s:String x:Key="folder_settings_title">Credentials and network of {0}</s:String>
+    <s:String x:Key="folder_network_title">SITE NETWORK</s:String>
+    <s:String x:Key="folder_domain">Domain</s:String>
+    <s:String x:Key="folder_ip_prefix">IP prefix</s:String>
+    <s:String x:Key="folder_use_suggested">Use suggested</s:String>
+    <s:String x:Key="folder_network_hint">They apply to the servers of this folder and its subfolders. If left empty, the domain is the customer name and the prefix is computed from the servers already saved.</s:String>
+    <s:String x:Key="folder_credentials_title">SHARED CREDENTIALS</s:String>
+    <s:String x:Key="folder_credentials_hint">Valid only for the servers inside this folder and its subfolders. Changing a password changes it for every server that uses it.</s:String>
+    <s:String x:Key="folder_credentials_none">No shared credentials in this folder.</s:String>
+    <s:String x:Key="folder_credential_add">+ Add</s:String>
+    <s:String x:Key="folder_credential_used_by">Servers using it</s:String>
+    <s:String x:Key="folder_credential_delete_confirm">The user "{0}" is used by {1} servers. Delete it?</s:String>
+    <s:String x:Key="folder_delete_with_credentials_confirm">The folder "{0}" has {1} shared credentials: they will be deleted with the folder. Continue?</s:String>
+    <s:String x:Key="users_shared_header">Shared credentials of {0} · click to enable them on this server</s:String>
+    <s:String x:Key="users_shared_note">Valid only for servers inside {0} ·</s:String>
+    <s:String x:Key="users_manage_in_folder">Manage in the folder ↗</s:String>
+    <s:String x:Key="users_other_title">Other users, only for this server</s:String>
+    <s:String x:Key="users_no_shared">{0} has no shared credentials yet. Create one with "Share" on a new user, or</s:String>
+    <s:String x:Key="users_add">+ Add user</s:String>
+    <s:String x:Key="users_share">Share with the folder</s:String>
+    <s:String x:Key="users_ask">Always ask which user to use</s:String>
+    <s:String x:Key="users_default">Default user</s:String>
+    <s:String x:Key="users_default_hint">used at login, without asking</s:String>
+    <s:String x:Key="users_use_key">Private key</s:String>
+    <s:String x:Key="host_prefix_hint" xml:space="preserve">Prefix of the servers of {0} · type only the final value</s:String>
+    <s:String x:Key="host_prefix_remove" xml:space="preserve">Remove the prefix</s:String>
+    <s:String x:Key="toast_folder_applied" xml:space="preserve">From folder {0}: {1}.</s:String>
+    <s:String x:Key="toast_part_domain" xml:space="preserve">domain {0}</s:String>
+    <s:String x:Key="toast_part_prefix" xml:space="preserve">IP prefix {0} ({1} servers already saved)</s:String>
+    <s:String x:Key="toast_and" xml:space="preserve"> and </s:String>
+    <s:String x:Key="toast_domain_matches_link" xml:space="preserve">The domain "{0}" matches the folder "{1}". Link the server?</s:String>
+    <s:String x:Key="toast_domain_matches_move" xml:space="preserve">The domain "{0}" matches the folder "{1}". Move the server?</s:String>
+    <s:String x:Key="toast_domain_no_folder" xml:space="preserve">No folder "{0}". Create it and link the server?</s:String>
+    <s:String x:Key="toast_link" xml:space="preserve">Link</s:String>
+    <s:String x:Key="toast_move" xml:space="preserve">Move</s:String>
+    <s:String x:Key="toast_create_folder" xml:space="preserve">Create folder</s:String>
+    <s:String x:Key="editor_missing">Missing: {0}</s:String>
+    <s:String x:Key="editor_client">Client</s:String>
+    <s:String x:Key="Last connection">Last connection</s:String>
+    <s:String x:Key="host_unreachable">Cannot reach {0}. Check the address and that the remote service is running.</s:String>
+    <s:String x:Key="Port">Port</s:String>
+    <s:String x:Key="User">User</s:String>
+    <s:String x:Key="Password">Password</s:String>
+    <s:String x:Key="Selected">Selected</s:String>
+    <s:String x:Key="Custom">Custom</s:String>
+    <s:String x:Key="All">All</s:String>
+    <s:String x:Key="Protocol">Protocol</s:String>
+    <s:String x:Key="Cameras">Cameras</s:String>
+    <s:String x:Key="Upload">Upload</s:String>
+    <s:String x:Key="launcher_search_hint">Search a server or type an address…</s:String>
+    <s:String x:Key="launcher_quick_hint">host or host:port</s:String>
+    <s:String x:Key="launcher_footer_list">↑↓ navigate   ·   ↵ connect   ·   → actions   ·   Tab quick connect   ·   Esc close</s:String>
+    <s:String x:Key="launcher_footer_actions">↑↓ navigate   ·   ↵ run   ·   ← back   ·   Esc close</s:String>
+    <s:String x:Key="launcher_footer_quick">↑↓ history   ·   ↵ connect   ·   Tab search   ·   Esc close</s:String>
+    <s:String x:Key="session_detach">Detach to window</s:String>
+    <s:String x:Key="session_pip">Picture in picture</s:String>
+    <s:String x:Key="session_fullscreen">Full screen</s:String>
+    <s:String x:Key="session_reconnect">Reconnect</s:String>
+    <s:String x:Key="session_copy_address">Copy address</s:String>
+    <s:String x:Key="session_pin">Keep on top</s:String>
+    <s:String x:Key="session_topmost">Always on top</s:String>
+    <s:String x:Key="session_reattach">Reattach to app</s:String>
+    <s:String x:Key="session_reattach_short">Reattach</s:String>
+    <s:String x:Key="session_pip_window">Window</s:String>
+    <s:String x:Key="session_connected">Connected</s:String>
+    <s:String x:Key="session_connecting">Connecting</s:String>
+    <s:String x:Key="session_disconnected">Disconnected</s:String>
+    <s:String x:Key="session_options">Options ⌄</s:String>
+    <s:String x:Key="session_detached_title">Session in a separate window</s:String>
+    <s:String x:Key="session_show_window">Show the window</s:String>
+    <s:String x:Key="session_count_one">1 session open</s:String>
+    <s:String x:Key="session_count">{0} sessions open</s:String>
+    <s:String x:Key="home_servers">SAVED SERVERS</s:String>
+    <s:String x:Key="home_nomatch">No matches in history, favorites or saved servers. Press Enter to connect directly to what you typed.</s:String>
+    <s:String x:Key="quickfolder_title">{0} is in the network of “{1}”</s:String>
+    <s:String x:Key="quickfolder_body">Do you want to save this connection in that folder?</s:String>
+    <s:String x:Key="quickfolder_save">Save in {0}</s:String>
+    <s:String x:Key="quickfolder_ignore">Ignore</s:String>
+    <s:String x:Key="vnc_connecting">Connecting to the VNC host, please wait…</s:String>
+    <s:String x:Key="host_bad_credentials_title">Credentials not accepted · {0}</s:String>
+    <s:String x:Key="host_bad_credentials">The server rejected the credentials. Try again with the correct user and password.</s:String>
+    <s:String x:Key="host_change_credentials">Change credentials</s:String>
+    <s:String x:Key="password_wrong">Wrong password</s:String>
+    <s:String x:Key="vnc_saved_password_rejected">The server rejected the saved password. If you didn't change it, this may not be the right PC: don't try other passwords.</s:String>
+    <s:String x:Key="folder_users_suggested">USERS OF FOLDER “{0}”</s:String>
+    <s:String x:Key="use_and_connect">Use and connect</s:String>
+    <s:String x:Key="domain_chip_remove">Remove the domain (local user)</s:String>
+    <s:String x:Key="users_ask_short">Always ask</s:String>
+    <s:String x:Key="home_empty_title">No connections yet</s:String>
+    <s:String x:Key="home_empty_body">Type an address or a machine name in the bar above and press Enter, or use “Add” to save a server. History and favorites will show up here.</s:String>
+    <s:String x:Key="font_group_popular">Most used</s:String>
+    <s:String x:Key="font_group_all">All fonts</s:String>
+    <s:String x:Key="editor_new_folder">New folder…</s:String>
+    <s:String x:Key="session_display">Display ▾</s:String>
+    <s:String x:Key="session_display_auto">Fit to window</s:String>
+    <s:String x:Key="session_display_stretch">Scale to window</s:String>
+    <s:String x:Key="session_display_fixed">Fixed size</s:String>
+    <s:String x:Key="session_settings">Settings…</s:String>
+    <s:String x:Key="session_reopen">Reopen</s:String>
+    <s:String x:Key="session_reopen_tip">Closes the session and reopens it with the server's saved settings</s:String>
+    <s:String x:Key="session_settings_display">Display settings</s:String>
+    <s:String x:Key="session_settings_advanced">Advanced settings</s:String>
+    <s:String x:Key="session_reconnect_needed">Some changes (audio, clipboard, drives, performance...) are only read by the RDP client when it starts: reconnect to apply them.</s:String>
+    <s:String x:Key="session_reconnect_now">Reconnect now</s:String>
+    <s:String x:Key="session_reconnect_auto">Applying the changes by reconnecting the session: the RDP client only reads them at startup…</s:String>
+    <s:String x:Key="monitor_picker_title">Monitors</s:String>
+    <s:String x:Key="monitor_detect">Identify</s:String>
+    <s:String x:Key="monitor_picker_hint">Click the monitors to use in full screen (more than one is allowed). None selected = automatic. "Identify" shows the number on each monitor.</s:String>
+    <s:String x:Key="monitor_follow">Adapt the session to the monitors connected at that moment</s:String>
+    <s:String x:Key="vnc_fit">Fit</s:String>
+    <s:String x:Key="vnc_fit_width">Fit width</s:String>
+    <s:String x:Key="vnc_fit_height">Fit height</s:String>
+    <s:String x:Key="vnc_zoom">Zoom</s:String>
+    <s:String x:Key="vnc_zoom_reset">Reset 100%</s:String>
+    <s:String x:Key="vnc_menu_view">View</s:String>
+    <s:String x:Key="vnc_zoom_range">25% to 350% · steps of 25%</s:String>
+    <s:String x:Key="toast_connecting">Connecting to {0}…</s:String>
+    <s:String x:Key="toast_address_copied">Address copied: {0}</s:String>
+    <s:String x:Key="toast_folder_changed">Folder “{0}” updated</s:String>
+    <s:String x:Key="folder_apply_domain">Apply to the {0} servers already inside</s:String>
+    <s:String x:Key="folder_move_into_itself">A folder cannot be moved into itself.</s:String>
+    <s:String x:Key="file_transmit_root">Root</s:String>
+    <s:String x:Key="icon_picker_title">Choose an icon</s:String>
+    <s:String x:Key="Download">Download</s:String>
+    <s:String x:Key="serial_port">COM port</s:String>
+    <s:String x:Key="serial_speed">Speed (bps)</s:String>
+    <s:String x:Key="serial_data_bits">Data bits</s:String>
+    <s:String x:Key="serial_stop_bits">Stop bits</s:String>
+    <s:String x:Key="serial_parity">Parity</s:String>
+    <s:String x:Key="serial_flow_control">Flow control</s:String>
+    <s:String x:Key="serial_kitty_session">KiTTY session (file)</s:String>
+    <s:String x:Key="folder_credential_scope">It will be selectable on all {0} servers</s:String>
+    <s:String x:Key="folder_new_title">New folder</s:String>
+    <s:String x:Key="folder_rename_title">Rename folder</s:String>
+    <s:String x:Key="folder_create">Create folder</s:String>
+    <s:String x:Key="folder_parent">Inside</s:String>
+    <s:String x:Key="folder_parent_none">None (root)</s:String>
+    <s:String x:Key="folder_section_domain">DOMAIN</s:String>
+    <s:String x:Key="folder_section_network">NETWORK</s:String>
+    <s:String x:Key="folder_section_network_label">Network</s:String>
+    <s:String x:Key="folder_section_items">ITEMS</s:String>
+    <s:String x:Key="folder_domain_hint">It is suggested for the servers you move here. You can leave it empty.</s:String>
+    <s:String x:Key="folder_network_hint_short">Server addresses in this folder are suggested in this network (just type the last number).</s:String>
+    <s:String x:Key="folder_manage_title">Folder · {0}</s:String>
+    <s:String x:Key="folder_tab_credentials">Shared credentials</s:String>
+    <s:String x:Key="folder_tab_general">General</s:String>
+    <s:String x:Key="folder_tab_servers">Servers ({0})</s:String>
+    <s:String x:Key="folder_credentials_hint_n">Available to all {0} servers of this folder. On each server you turn them on with one click from the user button.</s:String>
+    <s:String x:Key="folder_credential_new_title">NEW SHARED CREDENTIAL</s:String>
+    <s:String x:Key="folder_items_summary">{0} servers · {1} subfolders · {2} shared credentials</s:String>
+    <s:String x:Key="folder_delete">Delete folder</s:String>
+    <s:String x:Key="folder_new_subfolder">New subfolder…</s:String>
+    <s:String x:Key="folder_servers_empty">No servers in this folder.</s:String>
+    <s:String x:Key="guidance_subtitle">Your remote connection manager</s:String>
+    <s:String x:Key="guidance_card_folders_title">Folders per customer</s:String>
+    <s:String x:Key="guidance_card_folders_text">Organize servers and credentials in a tree.</s:String>
+    <s:String x:Key="guidance_card_tabs_title">Sessions in tabs</s:String>
+    <s:String x:Key="guidance_card_tabs_text">Several connections in the same window.</s:String>
+    <s:String x:Key="guidance_card_launcher_title">Quick launch</s:String>
+    <s:String x:Key="guidance_card_launcher_text">Search and connect without opening the app.</s:String>
+    <s:String x:Key="Refresh">Refresh</s:String>
+    <s:String x:Key="ping_checking">Checking...</s:String>
+    <s:String x:Key="ping_failed">No response</s:String>
+    <s:String x:Key="filter_mainwindow">Keywords or '#' + tag name or 'Tab' key</s:String>
+    <s:String x:Key="Search (Ctrl+F)">Search (Ctrl + F)</s:String>
+    <s:String x:Key="hotkey_already_registered">Hot key already been registered</s:String>
+    <s:String x:Key="hotkey_registered_fail">Failed to register the hot key</s:String>
+    <s:String x:Key="string_permission_denied">Permission denied</s:String>
+    <s:String x:Key="file_transmit_host_list_header_last_update">Last update</s:String>
+    <s:String x:Key="Type">Type</s:String>
+    <s:String x:Key="file_transmit_host_list_header_size">Size</s:String>
+    <s:String x:Key="file_transmit_host_message_preview_over_size">This item is over 1 MB, are you sure you want to open it?</s:String>
+    <s:String x:Key="file_transmit_host_message_files_download_to">Please select a folder to save to</s:String>
+    <s:String x:Key="file_transmit_host_message_files_download_to_dir">Use this folder</s:String>
+    <s:String x:Key="file_transmit_host_message_select_files_to_upload">Please select files to upload</s:String>
+    <s:String x:Key="file_transmit_host_command_refresh">Refresh (F5)</s:String>
+    <s:String x:Key="Create a folder">Create a folder</s:String>
+    <s:String x:Key="file_transmit_host_command_upload">Upload (Ctrl + V)</s:String>
+    <s:String x:Key="file_transmit_host_command_select_files_upload">Select files to upload</s:String>
+    <s:String x:Key="file_transmit_host_command_select_folder_upload">Select a folder to upload</s:String>
+    <s:String x:Key="file_transmit_host_command_delete">Delete (Del)</s:String>
+    <s:String x:Key="file_transmit_host_command_save_to">Save to... (Ctrl + S)</s:String>
+    <s:String x:Key="file_transmit_host_warning_same_names_title">Replace or cancel</s:String>
+    <s:String x:Key="file_transmit_host_warning_same_names">The destination has {0} file(s) with the same name(s). Do you want to continue?</s:String>
+    <s:String x:Key="host_reconecting_info">Reconnecting...</s:String>
+    <s:String x:Key="system_options_general_title">General</s:String>
+    <s:String x:Key="Run automatically at OS startup">Run automatically at OS startup(minimized)</s:String>
+    <s:String x:Key="Confirm before closing">Confirm before closing</s:String>
+    <s:String x:Key="Show current session icon instead of the app icon when connected">Show current session icon instead of the app icon when connected</s:String>
+    <s:String x:Key="system_options_general_log_file_path">Log file</s:String>
+    <s:String x:Key="system_options_quick_match_providers">Keyword-Matchers</s:String>
+    <s:String x:Key="Launcher">Launcher</s:String>
+    <s:String x:Key="system_options_quick_launcher_enable">Enable the launcher</s:String>
+    <s:String x:Key="system_options_quick_launcher_hotkey">Hot key</s:String>
+    <s:String x:Key="system_options_data_security_database">Database</s:String>
+    <s:String x:Key="Caution: Your data will be saved unencrypted!">Caution: Your data will be saved unencrypted!</s:String>
+    <s:String x:Key="system_options_data_security_info_data_processing">Processing data. Do not close the app!</s:String>
+    <s:String x:Key="Duplicate">Duplicate</s:String>
+    <s:String x:Key="server_card_operate_copy_address">Copy hostname to clipboard</s:String>
+    <s:String x:Key="server_card_operate_copy_username">Copy username to clipboard</s:String>
+    <s:String x:Key="server_card_operate_copy_password">Copy password to clipboard</s:String>
+    <s:String x:Key="confirm_to_delete">Are you sure you want to delete?</s:String>
+    <s:String x:Key="confirm_to_delete_selected">Are you sure you want to delete all selected?</s:String>
+    <s:String x:Key="import_server_dialog_title">Select a file</s:String>
+    <s:String x:Key="import_from_json">import json</s:String>
+    <s:String x:Key="import_from_mremoteng_csv">import mRemoteNG csv</s:String>
+    <s:String x:Key="import_from_rdp_file">import *.rdp</s:String>
+    <s:String x:Key="import_from_sqlite_db">import Lemora database</s:String>
+    <s:String x:Key="import_done_0_items_added">Imported successfully, {0} item(s) added.</s:String>
+    <s:String x:Key="import_failure_with_data_format_error">Error data format!</s:String>
+    <s:String x:Key="server_editor_different_options">&lt;different options&gt;</s:String>
+    <s:String x:Key="server_editor_bulk_editing">Bulk editing</s:String>
+    <s:String x:Key="server_editor_bulk_editing_title">You are editing in bulk:</s:String>
+    <s:String x:Key="server_editor_multi_selected_count">Number of selected items:</s:String>
+    <s:String x:Key="server_editor_group_title_common">Common</s:String>
+    <s:String x:Key="Connection Info">Connection Info</s:String>
+    <s:String x:Key="Connection Settings">Connection</s:String>
+    <s:String x:Key="server_editor_group_title_display">Display</s:String>
+    <s:String x:Key="server_editor_group_title_advantage">Advanced Settings</s:String>
+    <s:String x:Key="server_editor_group_title_gateway">RD Gateway Server</s:String>
+    <s:String x:Key="server_editor_tags_tag">Can enter multiple, separated by ','</s:String>
+    <s:String x:Key="Script before connect">Script before connect</s:String>
+    <s:String x:Key="Hide script window">Hide script window(not recommended for script take long time)</s:String>
+    <s:String x:Key="Script after disconnected">Script after disconnected</s:String>
+    <s:String x:Key="Run bat before connect">Run bat before connect(e.g. run 'C:\OpenSshTunneling.bat')</s:String>
+    <s:String x:Key="Run bat after disconnected">Run bat after disconnected(e.g. run 'C:\CloseSshTunneling.bat')</s:String>
+    <s:String x:Key="Use private key">Use private key</s:String>
+    <s:String x:Key="Private key">Private key</s:String>
+    <s:String x:Key="Open SFTP when connected">Open SFTP when connected</s:String>
+    <s:String x:Key="Open SFTP">Open SFTP</s:String>
+    <s:String x:Key="server_editor_display_full_screen_flag">Full screen remote desktop</s:String>
+    <s:String x:Key="server_editor_display_full_screen_flag_window">Disable</s:String>
+    <s:String x:Key="server_editor_display_full_screen_flag_full_screen">Single screen</s:String>
+    <s:String x:Key="server_editor_display_full_screen_flag_all_screens">Multiple screens</s:String>
+    <s:String x:Key="Display the connection bar when use the full screen">Display the connection bar when use the full screen</s:String>
+    <s:String x:Key="Pin the connection bar by default">Pin the connection bar by default</s:String>
+    <s:String x:Key="New session always use full screen">New session always use full screen</s:String>
+    <s:String x:Key="New session use full screen if the last session is full screen">New session use full screen if the last session is full screen</s:String>
+    <s:String x:Key="Resolution">Resolution</s:String>
+    <s:String x:Key="Fit to window">Fit to window(Supported server: Windows Server 2012 R2 and above)</s:String>
+    <s:String x:Key="Custom resolution (stretch)">Custom resolution (stretch)</s:String>
+    <s:String x:Key="Custom resolution (fixed)">Custom resolution (fixed)</s:String>
+    <s:String x:Key="Full-screen resolution (stretch)">Full-screen resolution (stretch)</s:String>
+    <s:String x:Key="Full-screen resolution (fixed)">Full-screen resolution (fixed)</s:String>
+    <s:String x:Key="Scale">Scale</s:String>
+    <s:String x:Key="server_editor_display_rdp_performance">Performance</s:String>
+    <s:String x:Key="server_editor_display_rdp_performance_auto">Auto (judged based on connection speed)</s:String>
+    <s:String x:Key="server_editor_display_rdp_performance_high">High (32bit color with full feature support)</s:String>
+    <s:String x:Key="server_editor_display_rdp_performance_middle">Middle (16bit color with only font smoothing and desktop composition)</s:String>
+    <s:String x:Key="server_editor_display_rdp_performance_low">Low (8bit color with no feature support)</s:String>
+    <s:String x:Key="server_editor_advantage_admin">For administering a server</s:String>
+    <s:String x:Key="server_editor_advantage_resources">Resources</s:String>
+    <s:String x:Key="server_editor_advantage_clipboard">Clipboard</s:String>
+    <s:String x:Key="server_editor_advantage_key_combinations">Key Combinations</s:String>
+    <s:String x:Key="server_editor_advantage_disk_drives">Drives</s:String>
+    <s:String x:Key="Drives plug in later">Drives plug in later</s:String>
+    <s:String x:Key="server_editor_advantage_sounds">Sounds</s:String>
+    <s:String x:Key="server_editor_advantage_sounds_disabled">Disabled</s:String>
+    <s:String x:Key="server_editor_advantage_sounds_on_local">Play on local</s:String>
+    <s:String x:Key="server_editor_advantage_sounds_on_remote">Play on remote</s:String>
+    <s:String x:Key="server_editor_advantage_sound_quality">Sound Quality</s:String>
+    <s:String x:Key="server_editor_advantage_sound_quality_dynamic">Dynamic</s:String>
+    <s:String x:Key="server_editor_advantage_sound_quality_medium">Medium</s:String>
+    <s:String x:Key="server_editor_advantage_sound_quality_high">High</s:String>
+    <s:String x:Key="server_editor_advantage_audio_capture">Audio Capture</s:String>
+    <s:String x:Key="server_editor_advantage_ports">Ports</s:String>
+    <s:String x:Key="server_editor_advantage_printers">Printers</s:String>
+    <s:String x:Key="server_editor_advantage_smart_cards">Smart Cards</s:String>
+    <s:String x:Key="server_editor_advantage_ssh_version">SSH Version</s:String>
+    <s:String x:Key="server_editor_advantage_ssh_startup_auto_command">Auto command</s:String>
+    <s:String x:Key="server_editor_advantage_ssh_startup_auto_kitty_session_tip">Use external configuration by selecting a session file path for KiTTY</s:String>
+    <s:String x:Key="server_editor_advantage_sftp_startup_path">Startup path</s:String>
+    <s:String x:Key="server_editor_gateway_mode">Connection</s:String>
+    <s:String x:Key="server_editor_gateway_mode_automatically_detect">Automatically detect RD Gateway Server settings</s:String>
+    <s:String x:Key="server_editor_gateway_mode_use_these">Use the following RD Gateway Server settings</s:String>
+    <s:String x:Key="server_editor_gateway_mode_do_not_use">Do not use RD Gateway Server</s:String>
+    <s:String x:Key="server_editor_gateway_server_host_name">Host Name</s:String>
+    <s:String x:Key="server_editor_gateway_logon_method">Logon Method</s:String>
+    <s:String x:Key="server_editor_gateway_logon_method_psw">Password</s:String>
+    <s:String x:Key="server_editor_gateway_logon_method_smart_card">Smart Card</s:String>
+    <s:String x:Key="server_editor_gateway_bypass_gateway_for_local_address">Bypass RD Gateway Server for local address</s:String>
+    <s:String x:Key="How to select the specified monitors">How to select the specified monitors</s:String>
+    <s:String x:Key="mstsc.exe mode">mstsc.exe mode</s:String>
+    <s:String x:Key="In this mode RDP will start the session in the way mstsc.exe xxxx.rdp in CMD, it can offer more custom parameters.">In this mode RDP will start the session in the way 'mstsc.exe xxxx.rdp' in CMD, it can offer more custom parameters.</s:String>
+    <s:String x:Key="Note: This mode will be automatically enabled if there are 2+ monitors with different display scaling on your PC and you selected the full screen mode.">Note: This mode will be automatically enabled if there are 2+ monitors with different display scaling on your PC and you selected the full screen mode.</s:String>
+    <s:String x:Key="Additional settings">Additional settings</s:String>
+    <s:String x:Key="Preview rdp file">Preview rdp file</s:String>
+    <s:String x:Key="Check monitor number">Check monitor number</s:String>
+    <s:String x:Key="server_editor_remote_app_name">App Name</s:String>
+    <s:String x:Key="server_editor_remote_app_name_tag">Name of the app (e.g. hello)</s:String>
+    <s:String x:Key="server_editor_remote_app_fullname">App Path</s:String>
+    <s:String x:Key="server_editor_remote_app_fullname_tag">Full exe path on the server (e.g. C:\Apps\hello.exe)</s:String>
+    <s:String x:Key="about_page_feedback">Feedback</s:String>
+    <s:String x:Key="guidance_introduce">Lemora allows you to open a remote session at any time and anywhere.</s:String>
+    <s:String x:Key="guidance_feature_launcher_key">call the launcher by</s:String>
+    <s:String x:Key="guidance_feature_launcher_select">select item by</s:String>
+    <s:String x:Key="guidance_feature_launcher_connect">connect by</s:String>
+    <s:String x:Key="guidance_feature_launcher_menu">menu by</s:String>
+    <s:String x:Key="guidance_feature_tab_demo">Dragable, tearable, dockable remote session for RDP, SSH, VNC, sFTP...</s:String>
+    <s:String x:Key="guidance_feature_start_setting1">Please confirm some settings before first use.</s:String>
+    <s:String x:Key="guidance_feature_start_setting2">You are able to change this setting later in Options.</s:String>
+    <s:String x:Key="Portable mode">Portable mode</s:String>
+    <s:String x:Key="Profile is saved where executable is located">Profile is saved where executable is located</s:String>
+    <s:String x:Key="Install for current windows account">Install for current windows account</s:String>
+    <s:String x:Key="Profile is saved in your Windows AppData folder">Profile is saved in your Windows AppData folder</s:String>
+    <s:String x:Key="word_oops">Oops...</s:String>
+    <s:String x:Key="error_report_unexpected_error_occurred">Unexpected error occurred. Error info is shown below:</s:String>
+    <s:String x:Key="error_report_to_clipboard">Copy to clipboard</s:String>
+    <s:String x:Key="error_report_please_help_us_improve">Please help us improve Lemora by reporting this error.</s:String>
+    <s:String x:Key="error_report_how_help_us_improve">Simply copy the error message and choose a way to report it.</s:String>
+    <s:String x:Key="logo_selector_open_file_dialog_title">select a picture</s:String>
+    <s:String x:Key="Default">Default</s:String>
+    <s:String x:Key="Exe path">Exe path</s:String>
+    <s:String x:Key="Cmd parameter">CMD parameter</s:String>
+    <s:String x:Key="New runner name">New runner name</s:String>
+    <s:String x:Key="Can not be empty!">Can not be empty!</s:String>
+    <s:String x:Key="Hosting">Hosting</s:String>
+    <s:String x:Key="Hosting this exe in Lemora tab view?">Hosting this exe in Lemora tab windowView?</s:String>
+    <s:String x:Key="Caution: some exe can not be hosted in Lemora.">Caution: some exe can not be hosted by Lemora, please test by your self.</s:String>
+    <s:String x:Key="Show environment variables">Show environment variables</s:String>
+    <s:String x:Key="Add environment variables">Add environment variables</s:String>
+    <s:String x:Key="write permissions alert">We don't have write permissions for the `{0}` directory!\nPlease try:\n1. run as administrator\n2. change directory or file permissions \n3. move Lemora to another folder</s:String>
+    <s:String x:Key="Follow system">Follow system(Supported server: Windows Server 2012 R2 and above)</s:String>
+    <s:String x:Key="tag_tooltips">click : set this tag as filter{0}Ctrl + click : add this tag to the include list {0}Alt + click : add this tag to the exclude list</s:String>
+    <s:String x:Key="Are you sure you want to close the connection?">Are you sure you want to close the connection?</s:String>
+    <s:String x:Key="Hi there,">Hi there,</s:String>
+    <s:String x:Key="Do not show this again in current version">Do not show this again in current version</s:String>
+    <s:String x:Key="User profile">User profile</s:String>
+    <s:String x:Key="Selected runner">Selected runner</s:String>
+    <s:String x:Key="Login with password">Login with password</s:String>
+    <s:String x:Key="Login with ssh private key">Login with ssh private key</s:String>
+    <s:String x:Key="Supports the Putty-key only">Supports the Putty-key only</s:String>
+    <s:String x:Key="Supports the OpenSSH format key only with the internal SFTP client.">Supports the OpenSSH format key only with the internal SFTP client.</s:String>
+    <s:String x:Key="Supports the OpenSSH format key and Putty-key with WinSCP.">Supports the OpenSSH format key and Putty-key with WinSCP.</s:String>
+    <s:String x:Key="Environment variables">Environment variables</s:String>
+    <s:String x:Key="Before runner start the environment variables will be set">Befor runner start the environment variables will be set</s:String>
+    <s:String x:Key="Data Source name">Data Source name</s:String>
+    <s:String x:Key="Please select a Data Source">Please select a Data Source</s:String>
+    <s:String x:Key="Test connection">Test connection</s:String>
+    <s:String x:Key="Show XXX button">Show `{0}` button</s:String>
+    <s:String x:Key="Show recently used here">Show recently used here</s:String>
+    <s:String x:Key="Hide recently used">Hide recently used</s:String>
+    <s:String x:Key="tray_favorites">Favorites</s:String>
+    <s:String x:Key="tray_no_favorites">No favorites: use the star</s:String>
+    <s:String x:Key="tray_new_connection">New connection</s:String>
+    <s:String x:Key="Leave blank to inherit the default value">Leave blank to inherit the default value</s:String>
+    <s:String x:Key="Alternative">Alternative</s:String>
+    <s:String x:Key="with alternative">with alternative</s:String>
+    <s:String x:Key="Automatic address switching">Automatic address switching</s:String>
+    <s:String x:Key="Availability detection">Availability detection</s:String>
+    <s:String x:Key="Check if address is available before connect">Check if address is available before connect</s:String>
+    <s:String x:Key="When the default host or port is unavailable the alternate addresses will be tried in sequence">When the default host or port is unavailable the alternate addresses will be tried in sequence</s:String>
+    <s:String x:Key="support multi-address multi-account">support multi-address multi-account</s:String>
+    <s:String x:Key="We are not able to connect to xxx">We are not able to connect to `{0}`!</s:String>
+    <s:String x:Key="XXX is already existed!">`{0}` is already existed!</s:String>
+    <s:String x:Key="XXX is not existed!">`{0}` is not existed!</s:String>
+    <s:String x:Key="Show credentials info">Show credentials info</s:String>
+    <s:String x:Key="Sorting">Sorting</s:String>
+    <s:String x:Key="Sort by drag">Sort by drag</s:String>
+    <s:String x:Key="We can not connect database:">We can not connect database:</s:String>
+    <s:String x:Key="We can not create tables on database:">We can not create tables on database:</s:String>
+    <s:String x:Key="We can not insert into database:">We can not insert into database:</s:String>
+    <s:String x:Key="We can not update on database:">We can not update on database:</s:String>
+    <s:String x:Key="We can not read from database:">We can not read from database:</s:String>
+    <s:String x:Key="We can not select from database:">We can not select from database:</s:String>
+    <s:String x:Key="We can not delete from database:">We can not delete from database:</s:String>
+    <s:String x:Key="because:">because:</s:String>
+    <s:String x:Key="Pause">Pause</s:String>
+    <s:String x:Key="Updating">Updating</s:String>
+    <s:String x:Key="Reconnecting">Reconnecting</s:String>
+    <s:String x:Key="Next update check">Next update check</s:String>
+    <s:String x:Key="Next auto reconnect">Next auto reconnect</s:String>
+    <s:String x:Key="Pin">Pin</s:String>
+    <s:String x:Key="Unpin">Unpin</s:String>
+    <s:String x:Key="This is your list of tags. Right click for a context menu to pin them on header.">This is your list of tags. Right click for a context menu to pin them on header.</s:String>
+    <s:String x:Key="Create desktop shortcut">Create desktop shortcut</s:String>
+    <s:String x:Key="Success">Success</s:String>
+    <s:String x:Key="Failed">Failed</s:String>
+    <s:String x:Key="Please complete the windows credentials verification">Please complete the windows credentials verification</s:String>
+    <s:String x:Key="Enter your credentials">Enter your credentials</s:String>
+    <s:String x:Key="Before proceeding with sensitive operations, we need to make sure it is you.">Before proceeding with sensitive operations, we need to make sure it is you.</s:String>
+    <s:String x:Key="Verification failed. Please try again.">Verification failed. Please try again.</s:String>
+    <s:String x:Key="Security">Security</s:String>
+    <s:String x:Key="Windows credentials verification is required to view passwords">Ask for fingerprint, face or PIN before showing or copying passwords and opening the editor</s:String>
+    <s:String x:Key="Not existed">Not existed</s:String>
+    <s:String x:Key="Not a number">Not a number</s:String>
+    <s:String x:Key="Optional">Optional</s:String>
+    <s:String x:Key="Nullable">Nullable</s:String>
+    <s:String x:Key="Selections">Selections</s:String>
+    <s:String x:Key="Const value">Const value</s:String>
+    <s:String x:Key="Description">Description</s:String>
+    <s:String x:Key="Prefix">Prefix</s:String>
+    <s:String x:Key="append blank after prefix">append blank after prefix</s:String>
+    <s:String x:Key="append blank after value">append blank after value</s:String>
+    <s:String x:Key="Do you want to replace the current parameter list with preset value?">Do you want to replace the current parameter list with preset value?</s:String>
+    <s:String x:Key="One option per line">One option per line</s:String>
+    <s:String x:Key="Use vertical lines to separate descriptions">Use vertical lines to separate descriptions(value|description)</s:String>
+    <s:String x:Key="Automatically focus on the content when selecting a tab">Automatically focus on the content when selecting a tab</s:String>
+    <s:String x:Key="Copy the port along with the address when copying">Copy the port along with the address when copying</s:String>
+    <s:String x:Key="Place the close button on the left side to prevent accidental touches">Place the close button on the left side to prevent accidental touches</s:String>
+    <s:String x:Key="Ask for password when open connect">Ask for password when open connect</s:String>
+    <s:String x:Key="Remember the information above">Remember the information above</s:String>
+    <s:String x:Key="Quick Connect">Quick Connect</s:String>
+    <s:String x:Key="Allow Quick Connect to save entered address information">Allow Quick Connect to save entered address information</s:String>
+    <s:String x:Key="Yes">Yes</s:String>
+    <s:String x:Key="No">No</s:String>
+    <s:String x:Key="Click on the icon above to change it to your own image">Click on the icon above to change it to your own image</s:String>
+    <s:String x:Key="Always open in new window">Always open in new window</s:String>
+    <s:String x:Key="Set focus to local desktop when the mouse is moved out of RDP desktop">Set focus to local desktop when the mouse is moved out of RDP desktop</s:String>
+    <s:String x:Key="Close button behavior">Close button behavior</s:String>
+    <s:String x:Key="Minimize to system tray">Minimize to system tray</s:String>
+    <s:String x:Key="Credentials">Credentials</s:String>
+    <s:String x:Key="Credentials Vault">Credentials Vault</s:String>
+    <s:String x:Key="Select credentials within the same database">Select credentials within the same database</s:String>
+    <s:String x:Key="Reset main window location">Reset main window location</s:String>
+    <s:String x:Key="New server">New server</s:String>
+    <s:String x:Key="Delete folder XXXX and move its contents to parent folder">Delete folder `{0}` and move its contents to parent folder?</s:String>
+    <s:String x:Key="ListViewMode">View</s:String>
+    <s:String x:Key="ListViewMode_List">List</s:String>
+    <s:String x:Key="ListViewMode_Card">Card</s:String>
+    <s:String x:Key="ListViewMode_Tree">Tree</s:String>
+    <s:String x:Key="teams_shared_tip">On the Teams server, shared with the team</s:String>
+    <s:String x:Key="teams_pending_tip">Waiting for the administrator</s:String>
+    <s:String x:Key="server_readonly">This connection is read-only</s:String>
+    <s:String x:Key="editor_save_to">Save to</s:String>
+    <s:String x:Key="editor_save_local">Local (this PC only)</s:String>
+    <s:String x:Key="editor_save_teams">Teams (cloud, shared)</s:String>
+    <s:String x:Key="editor_send_request">Send to the server as a request</s:String>
+    <s:String x:Key="vault_create_title">Choose the master password</s:String>
+    <s:String x:Key="vault_create_info">It protects all saved connections and passwords: without it nobody (not even a PC administrator) can read your data. If you forget it the saved data cannot be recovered. On this PC you can also open Lemora with Windows Hello.</s:String>
+    <s:String x:Key="vault_unlock_title">Unlock Lemora</s:String>
+    <s:String x:Key="vault_unlock_info">Enter the master password to open your connections.</s:String>
+    <s:String x:Key="vault_change_title">Change the master password</s:String>
+    <s:String x:Key="vault_change_info">It also changes the key that encrypts the data: everything is re-encrypted and old copies of the database cannot open the new data. Windows Hello stays only on this PC (the new password will be needed on the others). At the end Lemora closes and must be opened again.</s:String>
+    <s:String x:Key="vault_password">Master password</s:String>
+    <s:String x:Key="vault_new_password">New master password</s:String>
+    <s:String x:Key="vault_confirm_password">Repeat the password</s:String>
+    <s:String x:Key="vault_remember_hello">On this PC open it with Windows Hello (fingerprint, face or PIN)</s:String>
+    <s:String x:Key="vault_unlock">Unlock</s:String>
+    <s:String x:Key="vault_save">Save</s:String>
+    <s:String x:Key="vault_cancel">Cancel</s:String>
+    <s:String x:Key="vault_exit">Exit</s:String>
+    <s:String x:Key="vault_wrong_password">Wrong password.</s:String>
+    <s:String x:Key="vault_too_short">At least 8 characters are required.</s:String>
+    <s:String x:Key="vault_mismatch">The two passwords do not match.</s:String>
+    <s:String x:Key="vault_change_done">Master password changed.</s:String>
+    <s:String x:Key="settings_vault_title">Master password</s:String>
+    <s:String x:Key="settings_vault_desc">It protects connections and passwords in the database. Changing it also changes the key that encrypts the data: old copies of the database cannot open the new data. Windows Hello stays active only on this PC.</s:String>
+    <s:String x:Key="vault_change_working">Changing the master password: re-encrypting the data…</s:String>
+    <s:String x:Key="vault_change_done_restart">Master password and data key changed: all data has been re-encrypted.{0} Lemora will now close: open it again.</s:String>
+    <s:String x:Key="vault_change_hello_removed">Windows Hello was removed from the other PCs or users ({0}): the new password will be needed there.</s:String>
+    <s:String x:Key="import_guard_title">The file starts programs or chooses where your credentials go</s:String>
+    <s:String x:Key="import_guard_text">Some entries in the file start a program on this PC when you open them, use a PuTTY session file named by the file or go through an RD gateway chosen by the file (which would receive your credentials). Import them only if the file is yours or comes from someone you trust.</s:String>
+    <s:String x:Key="import_guard_question">"Import without programs" skips the local apps and removes the commands before and after connecting, the PuTTY/KiTTY session files, private keys on other PCs of the network and the file's RD gateways.</s:String>
+    <s:String x:Key="editor_dns_suffix_title">Address completed with the folder domain</s:String>
+    <s:String x:Key="editor_dns_suffix_confirm">The domain of folder "{2}" turns {0} into {1}. The entry has saved credentials: after saving they will go to {1}. Another PC of the team may have set the domain.</s:String>
+    <s:String x:Key="editor_dns_suffix_use">Save as {0}</s:String>
+    <s:String x:Key="editor_dns_suffix_keep">Keep {0}</s:String>
+    <s:String x:Key="import_guard_session">uses the PuTTY/KiTTY session file</s:String>
+    <s:String x:Key="import_guard_gateway">goes through the RD gateway</s:String>
+    <s:String x:Key="import_guard_unc">uses a file on another PC of the network (Windows sends it your password hash):</s:String>
+    <s:String x:Key="import_guard_app">local app, starts</s:String>
+    <s:String x:Key="import_guard_before">command before connecting:</s:String>
+    <s:String x:Key="import_guard_after">command after disconnecting:</s:String>
+    <s:String x:Key="import_guard_more">... and {0} more.</s:String>
+    <s:String x:Key="import_guard_all">Import everything</s:String>
+    <s:String x:Key="import_guard_without">Import without programs</s:String>
+    <s:String x:Key="vault_change_other_sources">The master password cannot be changed while other stores are encrypted with the same key: {0}. Remove them in Settings and try again.</s:String>
+    <s:String x:Key="settings_vault_button">Change password</s:String>
+    <s:String x:Key="vault_change_failed">The master password was not changed: the database did not respond.</s:String>
+    <s:String x:Key="settings_keep_unlocked_title">Keep unlocked</s:String>
+    <s:String x:Key="settings_keep_unlocked_desc">After your fingerprint or password, Lemora reopens without asking for this long, even if you close it. Only on this PC; it also ends when you sign out of Windows.</s:String>
+    <s:String x:Key="settings_keep_unlocked_never">No, always ask</s:String>
+    <s:String x:Key="settings_keep_unlocked_1h">1 hour</s:String>
+    <s:String x:Key="settings_keep_unlocked_2h">2 hours</s:String>
+    <s:String x:Key="settings_keep_unlocked_4h">4 hours</s:String>
+    <s:String x:Key="settings_keep_unlocked_8h">8 hours</s:String>
+    <s:String x:Key="vault_lock_close">Lock and close</s:String>
+
+    <s:String x:Key="browser_pair_title">Connect the browser extension?</s:String>
+    <s:String x:Key="browser_pair_text" xml:space="preserve">The Lemora extension for {0} asks to connect.
+
+Once connected it can see and fill in web pages the device passwords saved in your folders (password manager), and save new ones. It does not see connections or other credentials.
+
+Connect only if you installed it yourself.</s:String>
+    <s:String x:Key="browser_pair_yes">Connect</s:String>
+    <s:String x:Key="browser_pair_no">Cancel</s:String>
+    <s:String x:Key="mcp_overlay_stop" xml:space="preserve">Stop</s:String>
+    <s:String x:Key="mcp_overlay_stop_tip" xml:space="preserve">Takes this session away from Claude while Lemora stays open</s:String>
+    <s:String x:Key="mcp_overlay_resume" xml:space="preserve">Resume</s:String>
+    <s:String x:Key="mcp_overlay_resume_tip" xml:space="preserve">Gives control back to Claude</s:String>
+    <s:String x:Key="mcp_overlay_pause_tip" xml:space="preserve">Stops Claude on this session so you can take the mouse and keyboard</s:String>
+    <s:String x:Key="mcp_drag_to_move" xml:space="preserve">Drag to move</s:String>
+    <s:String x:Key="mcp_text_active_default" xml:space="preserve">Claude is using this session</s:String>
+    <s:String x:Key="mcp_text_paused_default" xml:space="preserve">Claude paused: you have control</s:String>
+    <s:String x:Key="mcp_banner_stopped" xml:space="preserve">Claude is stopped</s:String>
+    <s:String x:Key="mcp_banner_active" xml:space="preserve">Claude is using Lemora</s:String>
+    <s:String x:Key="mcp_banner_resume" xml:space="preserve">Resume Claude</s:String>
+    <s:String x:Key="mcp_banner_stop" xml:space="preserve">Stop Claude</s:String>
+    <s:String x:Key="mcp_claude_json_bad_format" xml:space="preserve">the Claude Code file is not in the expected format: it was left untouched</s:String>
+    <s:String x:Key="mcp_note_teams_blocked" xml:space="preserve">blocked by the Teams administrator</s:String>
+    <s:String x:Key="mcp_note_all_later" xml:space="preserve">including those added later</s:String>
+    <s:String x:Key="mcp_note_only_checked" xml:space="preserve">only those checked below</s:String>
+    <s:String x:Key="mcp_note_allowed_apart" xml:space="preserve">allowed separately</s:String>
+    <s:String x:Key="mcp_note_excluded" xml:space="preserve">excluded</s:String>
+    <s:String x:Key="mcp_all_connections" xml:space="preserve">All connections</s:String>
+    <s:String x:Key="mcp_lock_text" xml:space="preserve">The Teams administrator has turned Claude off for this user. Turning it back on requires their permission.</s:String>
+    <s:String x:Key="mcp_status_off_teams" xml:space="preserve">Turned off by the Teams administrator</s:String>
+    <s:String x:Key="mcp_status_off" xml:space="preserve">Off: Claude cannot use Lemora</s:String>
+    <s:String x:Key="mcp_status_running" xml:space="preserve">Running on {0} · reachable only from this PC</s:String>
+    <s:String x:Key="mcp_status_not_started" xml:space="preserve">Not started on port {0}: {1}</s:String>
+    <s:String x:Key="mcp_token_show" xml:space="preserve">Show</s:String>
+    <s:String x:Key="mcp_token_hide" xml:space="preserve">Hide</s:String>
+    <s:String x:Key="mcp_regen_confirm" xml:space="preserve">The current token stops working: Claude will have to be reconnected with the new command. Continue?</s:String>
+    <s:String x:Key="mcp_regen_button" xml:space="preserve">Regenerate</s:String>
+    <s:String x:Key="mcp_server_title" xml:space="preserve">MCP Server</s:String>
+    <s:String x:Key="mcp_link_failed" xml:space="preserve">Failed: {0}</s:String>
+    <s:String x:Key="mcp_link_ok" xml:space="preserve">Linked: Claude Code sees Lemora&apos;s MCP server. Claude sessions that are already open see it after they are restarted.</s:String>
+    <s:String x:Key="mcp_link_outdated" xml:space="preserve">Linked, but with an old port or token: press Link to update.</s:String>
+    <s:String x:Key="mcp_link_none" xml:space="preserve">Not linked. Lemora adds the &quot;lemora&quot; entry to the Claude Code file ({0}), with a backup copy.</s:String>
+    <s:String x:Key="mcp_page_intro" xml:space="preserve">With the MCP server on, Claude (Claude Code) can open the RDP and VNC connections you choose below, see the screen and use the mouse and keyboard. Every action goes into the activity log and the &quot;Stop Claude&quot; panel stays visible while it works.</s:String>
+    <s:String x:Key="mcp_section_server" xml:space="preserve">Server</s:String>
+    <s:String x:Key="mcp_enable_header" xml:space="preserve">Allow Claude to use Lemora</s:String>
+    <s:String x:Key="mcp_port_hint" xml:space="preserve">Change it only if another program is using it.</s:String>
+    <s:String x:Key="mcp_token_header" xml:space="preserve">Access token</s:String>
+    <s:String x:Key="mcp_token_hint" xml:space="preserve">Without it nobody can talk to Lemora. Do not share it.</s:String>
+    <s:String x:Key="mcp_banner_header" xml:space="preserve">&quot;Stop Claude&quot; panel above other programs</s:String>
+    <s:String x:Key="mcp_banner_hint" xml:space="preserve">Appears when Claude is working and Lemora is not in the foreground. Pause and Stop always stay in the session window.</s:String>
+    <s:String x:Key="mcp_section_link" xml:space="preserve">Link Claude Code</s:String>
+    <s:String x:Key="mcp_link_header" xml:space="preserve">Claude Code on this PC</s:String>
+    <s:String x:Key="mcp_link_button" xml:space="preserve">Link</s:String>
+    <s:String x:Key="mcp_unlink_button" xml:space="preserve">Unlink</s:String>
+    <s:String x:Key="mcp_cli_hint" xml:space="preserve">Alternatively, with the Claude Code CLI installed, the same link can be made with this command:</s:String>
+    <s:String x:Key="mcp_section_what" xml:space="preserve">What Claude can use</s:String>
+    <s:String x:Key="mcp_vnc_header" xml:space="preserve">Enable control of VNC connections</s:String>
+    <s:String x:Key="mcp_vnc_hint" xml:space="preserve">All VNC connections together, saved and by address. Off: Claude sees no VNC.</s:String>
+    <s:String x:Key="mcp_rdp_title" xml:space="preserve">RDP connections</s:String>
+    <s:String x:Key="mcp_rdp_hint" xml:space="preserve">By default Claude can use all of them. Uncheck a folder or a server to exclude it: this also applies to connections added later to that folder. What is not checked, Claude does not even see.</s:String>
+    <s:String x:Key="mcp_filter_placeholder" xml:space="preserve">Search folder or server</s:String>
+    <s:String x:Key="mcp_addresses_title" xml:space="preserve">Unsaved addresses</s:String>
+    <s:String x:Key="mcp_addresses_hint" xml:space="preserve">IPs and names written in the chat</s:String>
+    <s:String x:Key="mcp_port_owner_httpsys" xml:space="preserve">another program registered in the Windows http server (maybe of another user)</s:String>
+    <s:String x:Key="mcp_port_used_by" xml:space="preserve">port {0} is already used by {1}</s:String>
+    <s:String x:Key="mcp_port_taken_warning" xml:space="preserve">Port {0} of the server for Claude is also used by another program ({1}).&#10;&#10;As long as this is so, Claude Code connects to that program and sends it the token and the commands meant for Lemora. If you do not know what it is, close it or choose another port in Settings &gt; MCP Server (and reconfigure Claude Code).</s:String>
+    <s:String x:Key="mcp_who_header" xml:space="preserve">header {0}</s:String>
+    <s:String x:Key="mcp_doing_double_click" xml:space="preserve">Double click</s:String>
+    <s:String x:Key="mcp_doing_right_click" xml:space="preserve">Right click</s:String>
+    <s:String x:Key="mcp_doing_click" xml:space="preserve">Click</s:String>
+    <s:String x:Key="mcp_doing_drag" xml:space="preserve">Drag</s:String>
+    <s:String x:Key="mcp_doing_hover" xml:space="preserve">Moves the mouse</s:String>
+    <s:String x:Key="mcp_doing_scroll_up" xml:space="preserve">Scrolls up</s:String>
+    <s:String x:Key="mcp_doing_scroll" xml:space="preserve">Scrolls</s:String>
+    <s:String x:Key="mcp_doing_screenshot" xml:space="preserve">Looks at the screen</s:String>
+    <s:String x:Key="mcp_doing_controls" xml:space="preserve">Looks for the buttons</s:String>
+    <s:String x:Key="mcp_doing_read_screen" xml:space="preserve">Reads the screen</s:String>
+    <s:String x:Key="mcp_doing_wait" xml:space="preserve">Waits</s:String>
+    <s:String x:Key="mcp_doing_type" xml:space="preserve">Types</s:String>
+    <s:String x:Key="mcp_doing_paste" xml:space="preserve">Pastes the text</s:String>
+    <s:String x:Key="mcp_doing_key" xml:space="preserve">Presses {0}</s:String>
+    <s:String x:Key="mcp_doing_key_any" xml:space="preserve">Presses a key</s:String>
+    <s:String x:Key="mcp_doing_read_clipboard" xml:space="preserve">Reads the clipboard</s:String>
+    <s:String x:Key="mcp_doing_send_files" xml:space="preserve">Sends files</s:String>
+    <s:String x:Key="mcp_doing_get_files" xml:space="preserve">Gets files</s:String>
+    <s:String x:Key="mcp_ft_allow" xml:space="preserve">Allow</s:String>
+    <s:String x:Key="mcp_ft_deny" xml:space="preserve">Deny</s:String>
+    <s:String x:Key="mcp_ft_title" xml:space="preserve">Claude: file transfer</s:String>
+    <s:String x:Key="mcp_ft_and_more" xml:space="preserve">... and {0} more</s:String>
+    <s:String x:Key="mcp_ft_send_confirm" xml:space="preserve">Claude wants to copy to the remote PC {0}:&#10;&#10;{1}&#10;&#10;{2} files, {3}.</s:String>
+    <s:String x:Key="mcp_ft_send_remote_dir" xml:space="preserve">Folder on the remote PC: {0}</s:String>
+    <s:String x:Key="mcp_ft_send_paste_here" xml:space="preserve">They will be pasted into the folder open on the remote PC.</s:String>
+    <s:String x:Key="mcp_ft_get_confirm" xml:space="preserve">Claude wants to copy from the remote PC {0} into this folder of the PC:&#10;{1}&#10;&#10;{2}</s:String>
+    <s:String x:Key="mcp_ft_get_with_folders" xml:space="preserve">(with the contents of the folders)</s:String>
+    <s:String x:Key="mcp_ft_get_selected_confirm" xml:space="preserve">Claude wants to copy from the remote PC {0} the files selected on the remote PC, into this folder of the PC:&#10;{1}</s:String>
+    <s:String x:Key="mcp_who_program" xml:space="preserve">program {0} (pid {1})</s:String>
+    <s:String x:Key="mcp_token_leaked_warning" xml:space="preserve">A browser ({0}) tried to command Lemora through the server for Claude using the right token. The request was rejected.&#10;&#10;The token has left the PC (for example to a browser extension): regenerate it in Settings &gt; MCP Server and link Claude Code again.</s:String>
+    <s:String x:Key="keymap_group_windows" xml:space="preserve">WINDOWS AND APPS</s:String>
+    <s:String x:Key="keymap_group_win" xml:space="preserve">WINDOWS KEY</s:String>
+    <s:String x:Key="keymap_group_system" xml:space="preserve">SYSTEM AND SECURITY</s:String>
+    <s:String x:Key="keymap_group_browser" xml:space="preserve">TABS AND BROWSER</s:String>
+    <s:String x:Key="keymap_combo_altTab" xml:space="preserve">Alt + Tab</s:String>
+    <s:String x:Key="keymap_combo_altEsc" xml:space="preserve">Alt + Esc</s:String>
+    <s:String x:Key="keymap_combo_altF4" xml:space="preserve">Alt + F4</s:String>
+    <s:String x:Key="keymap_combo_ctrlEsc" xml:space="preserve">Ctrl + Esc</s:String>
+    <s:String x:Key="keymap_combo_win" xml:space="preserve">Win</s:String>
+    <s:String x:Key="keymap_combo_winR" xml:space="preserve">Win + R</s:String>
+    <s:String x:Key="keymap_combo_winE" xml:space="preserve">Win + E</s:String>
+    <s:String x:Key="keymap_combo_winD" xml:space="preserve">Win + D</s:String>
+    <s:String x:Key="keymap_combo_winV" xml:space="preserve">Win + V</s:String>
+    <s:String x:Key="keymap_combo_winDot" xml:space="preserve">Win + .</s:String>
+    <s:String x:Key="keymap_combo_winTab" xml:space="preserve">Win + Tab</s:String>
+    <s:String x:Key="keymap_combo_winX" xml:space="preserve">Win + X</s:String>
+    <s:String x:Key="keymap_combo_winI" xml:space="preserve">Win + I</s:String>
+    <s:String x:Key="keymap_combo_winShiftS" xml:space="preserve">Win + Shift + S</s:String>
+    <s:String x:Key="keymap_combo_cad" xml:space="preserve">Ctrl + Alt + Del</s:String>
+    <s:String x:Key="keymap_combo_ctrlShiftEsc" xml:space="preserve">Ctrl + Shift + Esc</s:String>
+    <s:String x:Key="keymap_combo_winL" xml:space="preserve">Win + L</s:String>
+    <s:String x:Key="keymap_combo_ctrlW" xml:space="preserve">Ctrl + W</s:String>
+    <s:String x:Key="keymap_combo_ctrlD" xml:space="preserve">Ctrl + D</s:String>
+    <s:String x:Key="keymap_combo_ctrlL" xml:space="preserve">Ctrl + L</s:String>
+    <s:String x:Key="keymap_combo_ctrlTab" xml:space="preserve">Ctrl + Tab</s:String>
+    <s:String x:Key="keymap_desc_altTab" xml:space="preserve">Switch window</s:String>
+    <s:String x:Key="keymap_desc_altEsc" xml:space="preserve">Go to the next window without showing the list</s:String>
+    <s:String x:Key="keymap_desc_altF4" xml:space="preserve">Close window or program</s:String>
+    <s:String x:Key="keymap_desc_ctrlEsc" xml:space="preserve">Open the Start menu</s:String>
+    <s:String x:Key="keymap_desc_win" xml:space="preserve">Open the Start menu (and the Win combinations not listed)</s:String>
+    <s:String x:Key="keymap_desc_winR" xml:space="preserve">Run a command</s:String>
+    <s:String x:Key="keymap_desc_winE" xml:space="preserve">Open File Explorer</s:String>
+    <s:String x:Key="keymap_desc_winD" xml:space="preserve">Show or hide the desktop</s:String>
+    <s:String x:Key="keymap_desc_winV" xml:space="preserve">Clipboard history</s:String>
+    <s:String x:Key="keymap_desc_winDot" xml:space="preserve">Emoji panel</s:String>
+    <s:String x:Key="keymap_desc_winTab" xml:space="preserve">Task view, all windows</s:String>
+    <s:String x:Key="keymap_desc_winX" xml:space="preserve">System quick menu</s:String>
+    <s:String x:Key="keymap_desc_winI" xml:space="preserve">Open the settings</s:String>
+    <s:String x:Key="keymap_desc_winShiftS" xml:space="preserve">Capture part of the screen</s:String>
+    <s:String x:Key="keymap_desc_cad" xml:space="preserve">Security screen. Windows always keeps it for itself: for the remote PC use the button in the session bar</s:String>
+    <s:String x:Key="keymap_desc_ctrlShiftEsc" xml:space="preserve">Open Task Manager</s:String>
+    <s:String x:Key="keymap_desc_winL" xml:space="preserve">Lock the screen</s:String>
+    <s:String x:Key="keymap_desc_ctrlW" xml:space="preserve">Close the tab (on your PC: closes the Lemora tab)</s:String>
+    <s:String x:Key="keymap_desc_ctrlD" xml:space="preserve">Add to favorites (on your PC: not sent)</s:String>
+    <s:String x:Key="keymap_desc_ctrlL" xml:space="preserve">Select the address bar (on your PC: not sent)</s:String>
+    <s:String x:Key="keymap_desc_ctrlTab" xml:space="preserve">Go to the next tab (on your PC: next Lemora tab)</s:String>
+    <s:String x:Key="session_freerdp_not_found" xml:space="preserve">FreeRDP not found (&apos;{0}&apos;). Set where it is in Settings &gt; Protocols &gt; RDP.</s:String>
+    <s:String x:Key="ssh_hostkey_first_title" xml:space="preserve">New SSH server</s:String>
+    <s:String x:Key="ssh_hostkey_first_body" xml:space="preserve">First connection to {0}:{1}.&#10;&#10;Server fingerprint (SHA256):&#10;{2}&#10;&#10;If you know this fingerprint, or you trust the server, continue: it will be remembered for the next connections.</s:String>
+    <s:String x:Key="ssh_hostkey_continue" xml:space="preserve">Continue</s:String>
+    <s:String x:Key="ssh_hostkey_trust_continue" xml:space="preserve">Trust and continue</s:String>
+    <s:String x:Key="ssh_hostkey_other_address_title" xml:space="preserve">Different fingerprint for this address</s:String>
+    <s:String x:Key="ssh_hostkey_other_address_body" xml:space="preserve">WARNING: the fingerprint of the server {0}:{1} is not the one remembered for this address.&#10;&#10;Remembered:&#10;{2}&#10;&#10;Now:&#10;{3}&#10;&#10;Lemora remembered another fingerprint for this address, but not for this connection: it happens when two servers on different networks (for example of two customers) have the same address. If so, it is normal. Otherwise it may be someone pretending to be the server.</s:String>
+    <s:String x:Key="ssh_hostkey_changed_title" xml:space="preserve">Server fingerprint changed</s:String>
+    <s:String x:Key="ssh_hostkey_changed_body" xml:space="preserve">WARNING: the fingerprint of the server {0}:{1} has changed.&#10;&#10;Saved:&#10;{2}&#10;&#10;Now:&#10;{3}&#10;&#10;It may be a reinstalled server or someone pretending to be the server. Continue only if you know why it changed.</s:String>
+    <s:String x:Key="rdpcert_detail_no_tls_offer" xml:space="preserve">the PC does not offer TLS security (legacy RDP security)</s:String>
+    <s:String x:Key="rdpcert_detail_refuses_tls" xml:space="preserve">the PC refuses TLS and NLA (legacy RDP security)</s:String>
+    <s:String x:Key="rdpcert_detail_legacy_chosen" xml:space="preserve">the PC chose the legacy RDP security</s:String>
+    <s:String x:Key="rdpcert_trust_connect" xml:space="preserve">Trust and connect</s:String>
+    <s:String x:Key="rdpcert_other_address_title" xml:space="preserve">Different certificate for this address</s:String>
+    <s:String x:Key="rdpcert_other_address_body" xml:space="preserve">WARNING: the certificate of {0} ({1}:{2}) is not the one remembered for this address.&#10;&#10;Remembered:&#10;{3}&#10;&#10;Now:&#10;{4}&#10;&#10;Lemora remembered another certificate for this address, but not for this connection: it happens when two PCs on different networks (for example of two customers) have the same address. If so, it is normal. Otherwise it may be someone in the middle trying to get the credentials.</s:String>
+    <s:String x:Key="rdpcert_changed_title" xml:space="preserve">PC certificate changed</s:String>
+    <s:String x:Key="rdpcert_changed_body" xml:space="preserve">WARNING: the certificate of {0} ({1}:{2}) has changed.&#10;&#10;Remembered:&#10;{3}&#10;&#10;Now:&#10;{4}&#10;&#10;It may be normal (renewed certificate, reinstalled PC) or someone in the middle trying to get the credentials. Continue only if you know why it changed.</s:String>
+    <s:String x:Key="rdpcert_connect_anyway" xml:space="preserve">Connect anyway</s:String>
+    <s:String x:Key="rdpcert_notls_pinned_title" xml:space="preserve">The PC no longer uses a protected connection</s:String>
+    <s:String x:Key="rdpcert_notls_pinned_body" xml:space="preserve">WARNING: {0} ({1}:{2}) had a verified certificate and now answers that it does not use a protected connection.&#10;&#10;It may be someone in the middle trying to get the credentials. Connect only if you know that PC was changed.&#10;&#10;({3})</s:String>
+    <s:String x:Key="rdpcert_notls_title" xml:space="preserve">Unprotected connection</s:String>
+    <s:String x:Key="rdpcert_notls_body" xml:space="preserve">{0} ({1}:{2}) does not use a protected connection (TLS): there is no way to verify you are really talking to that PC, and the password travels less protected.&#10;&#10;({3})&#10;&#10;Connect anyway?</s:String>
+    <s:String x:Key="ft_err_choose_destination" xml:space="preserve">Choose a drive or a destination folder on the remote PC</s:String>
+    <s:String x:Key="ft_err_nothing_to_upload" xml:space="preserve">No files to upload</s:String>
+    <s:String x:Key="ft_err_nothing_to_download" xml:space="preserve">No items to download</s:String>
+    <s:String x:Key="ft_err_job_too_large" xml:space="preserve">The transfer ({0}) exceeds the limit of {1}</s:String>
+    <s:String x:Key="ft_err_remote_folder_same_name" xml:space="preserve">A folder with the same name exists on the remote PC</s:String>
+    <s:String x:Key="ft_err_local_folder_same_name" xml:space="preserve">A folder with the same name exists on the local PC</s:String>
+    <s:String x:Key="ft_err_compressed_list" xml:space="preserve">Listing compressed by the server: not supported</s:String>
+    <s:String x:Key="ft_err_compressed_data" xml:space="preserve">Data compressed by the server: not supported</s:String>
+    <s:String x:Key="ft_err_protocol" xml:space="preserve">Unexpected reply from the server: {0}</s:String>
+    <s:String x:Key="ft_skip_root" xml:space="preserve">drive or root path</s:String>
+    <s:String x:Key="ft_skip_invalid_windows_name" xml:space="preserve">name not valid for Windows</s:String>
+    <s:String x:Key="ft_skip_invalid_name" xml:space="preserve">invalid name</s:String>
+    <s:String x:Key="ft_skip_gone" xml:space="preserve">no longer exists</s:String>
+    <s:String x:Key="ft_skip_exists" xml:space="preserve">already exists</s:String>
+    <s:String x:Key="ft_skip_symlink" xml:space="preserve">symbolic link</s:String>
+    <s:String x:Key="ft_skip_too_big" xml:space="preserve">{0} exceeds the per-file limit of {1}</s:String>
+    <s:String x:Key="terminal_theme_fluent" xml:space="preserve">Fluent Islands Dark</s:String>
+    <s:String x:Key="terminal_theme_warm" xml:space="preserve">Warm neutral</s:String>
+    <s:String x:Key="terminal_theme_night_blue" xml:space="preserve">Night blue</s:String>
+    <s:String x:Key="terminal_theme_classic" xml:space="preserve">Classic green on black</s:String>
+    <s:String x:Key="terminal_theme_high_contrast" xml:space="preserve">High contrast</s:String>
+    <s:String x:Key="terminal_theme_light" xml:space="preserve">Light</s:String>
+    <s:String x:Key="freerdp_exit_idle" xml:space="preserve">Session closed by the server for inactivity.</s:String>
+    <s:String x:Key="freerdp_exit_logon_timeout" xml:space="preserve">Sign-in time expired.</s:String>
+    <s:String x:Key="freerdp_exit_replaced" xml:space="preserve">Another connection took the place of this session.</s:String>
+    <s:String x:Key="freerdp_exit_refused" xml:space="preserve">The server refused the connection.</s:String>
+    <s:String x:Key="freerdp_exit_no_permission" xml:space="preserve">The user is not allowed to connect to this PC.</s:String>
+    <s:String x:Key="freerdp_exit_bad_credentials" xml:space="preserve">User or password not accepted.</s:String>
+    <s:String x:Key="freerdp_exit_missing_credentials" xml:space="preserve">User or password missing.</s:String>
+    <s:String x:Key="freerdp_exit_account_locked" xml:space="preserve">Account locked.</s:String>
+    <s:String x:Key="freerdp_exit_password_expired" xml:space="preserve">The password has expired: it must be changed.</s:String>
+    <s:String x:Key="freerdp_exit_account_disabled" xml:space="preserve">Account disabled.</s:String>
+    <s:String x:Key="freerdp_exit_account_expired" xml:space="preserve">Account expired.</s:String>
+    <s:String x:Key="freerdp_exit_account_restricted" xml:space="preserve">The account cannot sign in to this PC.</s:String>
+    <s:String x:Key="freerdp_exit_licensing" xml:space="preserve">Remote Desktop server licensing problem.</s:String>
+    <s:String x:Key="freerdp_exit_dns" xml:space="preserve">PC name not found (DNS).</s:String>
+    <s:String x:Key="freerdp_exit_unreachable" xml:space="preserve">The PC does not respond: turned off, wrong address or closed port.</s:String>
+    <s:String x:Key="freerdp_exit_conn_failed" xml:space="preserve">Connection failed: try again (the reason is in the log).</s:String>
+    <s:String x:Key="freerdp_exit_tls" xml:space="preserve">Secure connection (TLS) failed, or the PC certificate is not the one checked by Lemora.</s:String>
+    <s:String x:Key="freerdp_exit_security" xml:space="preserve">The server does not accept the requested security methods.</s:String>
+    <s:String x:Key="freerdp_exit_kerberos" xml:space="preserve">Authentication server (Kerberos) not reachable.</s:String>
+    <s:String x:Key="freerdp_exit_bad_args" xml:space="preserve">Settings not accepted by FreeRDP (check the &quot;Extra parameters&quot;).</s:String>
+    <s:String x:Key="freerdp_exit_other" xml:space="preserve">Connection failed (FreeRDP, code {0}).</s:String>
+    <s:String x:Key="freerdp_not_mapped" xml:space="preserve">Not available with FreeRDP: choice of specific monitors (with several monitors it uses them all), full-screen connection bar, redirection of cameras and COM ports, gateway with automatic detection or smart card, extra settings of the Microsoft component and of the .rdp file.</s:String>
+    <s:String x:Key="runner_unsafe_value" xml:space="preserve">The value of {0} contains spaces, quotes or characters like ; &amp; | that the program &apos;{1}&apos; would read as options or commands.&#10;&#10;Fix the entry, or put {0} in quotes in the program template (Settings &gt; Protocols).</s:String>
+    <s:String x:Key="runner_exe_not_found" xml:space="preserve">Program &apos;{0}&apos; of &apos;{1}&apos; not found. Set where it is in Settings &gt; Protocols &gt; RDP.</s:String>
+    <s:String x:Key="update_bad_signature" xml:space="preserve">The update signature is not valid: package discarded</s:String>
+    <s:String x:Key="update_not_installed_copy" xml:space="preserve">this copy of Lemora is not installed with the launcher (versions folder): automatic update is not available.</s:String>
+    <s:String x:Key="update_cancelled_no_permission" xml:space="preserve">cancelled (Windows permission not granted).</s:String>
+    <s:String x:Key="update_failed_code" xml:space="preserve">code {0} (1 error, 2 folder different from the installed one, 3 invalid signature).</s:String>
+    <s:String x:Key="browser_err_bad_request" xml:space="preserve">invalid request</s:String>
+    <s:String x:Key="browser_err_unknown_request" xml:space="preserve">unknown request</s:String>
+    <s:String x:Key="browser_err_clipboard_busy" xml:space="preserve">clipboard in use by another program</s:String>
+    <s:String x:Key="browser_err_entry_no_folder" xml:space="preserve">the entry has no folder: assign one in the Lemora app</s:String>
+    <s:String x:Key="browser_err_pick_folder" xml:space="preserve">choose a folder</s:String>
+    <s:String x:Key="browser_err_folder_missing" xml:space="preserve">folder does not exist</s:String>
+    <s:String x:Key="browser_err_name_or_address" xml:space="preserve">at least a name or an address is needed</s:String>
+    <s:String x:Key="browser_err_reply_too_big" xml:space="preserve">response too large</s:String>
+    <s:String x:Key="browser_default_name" xml:space="preserve">the default browser</s:String>
+    <s:String x:Key="browser_ext_not_yet" xml:space="preserve">The extension is not available for {0} yet: it will come with the store release. For now it can be used with Firefox.</s:String>
+    <s:String x:Key="browser_ext_unsupported" xml:space="preserve">The default browser is not supported: the extension is available for Firefox (Chrome and Edge coming soon).</s:String>
+    <s:String x:Key="browser_firefox_missing" xml:space="preserve">Firefox is not installed on this PC.</s:String>
+    <s:String x:Key="browser_ext_file_missing" xml:space="preserve">The extension file is missing from this copy of Lemora.</s:String>
+    <s:String x:Key="browser_ext_old_title">Browser extension needs an update</s:String>
+    <s:String x:Key="browser_ext_old_text" xml:space="preserve">Firefox has the Lemora extension version {0}: Lemora has {1}, with fixes and new features.\n\nInstall it now? Firefox will ask you to confirm with "Add".</s:String>
+    <s:String x:Key="browser_ext_old_yes">Update</s:String>
+    <s:String x:Key="browser_ext_old_no">Later</s:String>
+    <s:String x:Key="browser_firefox_not_opened" xml:space="preserve">Firefox did not open: {0}</s:String>
+    <s:String x:Key="db_cert_changed_not_connected" xml:space="preserve">{0} server certificate {1}:{2} changed: not connected</s:String>
+    <s:String x:Key="db_already_open_other_copy" xml:space="preserve">`{0}` is already open in another copy of Lemora {1}</s:String>
+    <s:String x:Key="db_target_confirm_text" xml:space="preserve">The data source &quot;{0}&quot; ({1}) connects to {2}:{3}, database {4}, user {5}, with the saved password.&#10;&#10;You have not confirmed this destination on this PC: it may be an old configuration, or the profile file was modified. Connect only if you recognize it.</s:String>
+    <s:String x:Key="db_target_connect" xml:space="preserve">Connect</s:String>
+    <s:String x:Key="db_target_dont_connect" xml:space="preserve">Do not connect</s:String>
+    <s:String x:Key="db_target_confirm_title" xml:space="preserve">Data source to confirm</s:String>
+    <s:String x:Key="db_connection_not_confirmed" xml:space="preserve">connection not confirmed</s:String>
+    <s:String x:Key="db_cert_changed_text" xml:space="preserve">The certificate of the database server {0}:{1} ({2}) is different from the one seen before.&#10;&#10;Before:  {3}&#10;Now:     {4}&#10;&#10;It may be a certificate renewal on the server, or someone on the network posing as the server to read the database password. Accept only if you know the certificate was changed.</s:String>
+    <s:String x:Key="db_cert_accept_new" xml:space="preserve">Accept the new certificate</s:String>
+    <s:String x:Key="db_cert_changed_title" xml:space="preserve">Database certificate changed</s:String>
+    <s:String x:Key="vault_old_format_unsupported" xml:space="preserve">This database uses an old encryption format that this version cannot open: it must first be converted with an earlier version of Lemora. If you are not sure how, contact support.</s:String>
+    <s:String x:Key="vault_err_empty_password" xml:space="preserve">empty password</s:String>
+    <s:String x:Key="vault_err_not_open" xml:space="preserve">vault not open</s:String>
+    <s:String x:Key="vault_err_check_failed" xml:space="preserve">check failed (new: {0} readable out of {1}, {2} unreadable out of {3}; old: {4}; header: {5})</s:String>
+    <s:String x:Key="vault_err_change_failed" xml:space="preserve">change failed</s:String>
+    <s:String x:Key="util_msgbox_three_buttons" xml:space="preserve">{0}&#10;&#10;Yes = {1}&#10;No = {2}&#10;Cancel = {3}</s:String>
+    <s:String x:Key="startup_loading" xml:space="preserve">Loading…</s:String>
+    <s:String x:Key="startup_write_permission_fallback_appdata" xml:space="preserve">Write permission on the program folder could not be granted.&#10;The data will be saved in the user&apos;s AppData folder.</s:String>
+    <s:String x:Key="startup_db_open_elsewhere" xml:space="preserve">The database is already open in another copy of Lemora{0}.&#10;&#10;Close that copy and try again.&#10;&#10;{1}</s:String>
+    <s:String x:Key="session_back_to_window" xml:space="preserve">Back to window</s:String>
+    <s:String x:Key="session_minimize" xml:space="preserve">Minimize</s:String>
+    <s:String x:Key="session_close_connection" xml:space="preserve">Close the connection</s:String>
+    <s:String x:Key="session_fsbar_drag" xml:space="preserve">Drag to move the bar</s:String>
+    <s:String x:Key="session_fsbar_pinned" xml:space="preserve">Bar pinned: click to let it hide</s:String>
+    <s:String x:Key="session_fsbar_pin" xml:space="preserve">Pin the bar</s:String>
+    <s:String x:Key="keys_menu_title" xml:space="preserve">KEYS FOR THIS CONNECTION</s:String>
+    <s:String x:Key="keys_menu_note" xml:space="preserve">On: to the remote PC. Changes apply only to &quot;{0}&quot;; the other keys follow the {1} rules in Settings › Key mapping.</s:String>
+    <s:String x:Key="keys_changed" xml:space="preserve">changed</s:String>
+    <s:String x:Key="keys_send_to_remote_name" xml:space="preserve">{0}: send to the remote PC</s:String>
+    <s:String x:Key="keys_to_remote" xml:space="preserve">To the remote PC</s:String>
+    <s:String x:Key="keys_on_my_pc" xml:space="preserve">On my PC</s:String>
+    <s:String x:Key="keys_saved_auto" xml:space="preserve">Saved automatically, for next time too.</s:String>
+    <s:String x:Key="keys_reset_default" xml:space="preserve">Reset to default</s:String>
+    <s:String x:Key="term_title" xml:space="preserve">Terminal settings · xterm.js</s:String>
+    <s:String x:Key="term_cat_look" xml:space="preserve">Appearance</s:String>
+    <s:String x:Key="term_cat_keys" xml:space="preserve">Special keys</s:String>
+    <s:String x:Key="term_cat_behavior" xml:space="preserve">Behavior</s:String>
+    <s:String x:Key="term_cat_blocks" xml:space="preserve">Command blocks</s:String>
+    <s:String x:Key="term_cat_history" xml:space="preserve">History</s:String>
+    <s:String x:Key="term_apply_note" xml:space="preserve">Changes apply immediately to the open terminals</s:String>
+    <s:String x:Key="term_font_size" xml:space="preserve">Size</s:String>
+    <s:String x:Key="term_line_height" xml:space="preserve">Line height</s:String>
+    <s:String x:Key="term_cursor" xml:space="preserve">Cursor</s:String>
+    <s:String x:Key="term_cursor_block" xml:space="preserve">Block</s:String>
+    <s:String x:Key="term_cursor_bar" xml:space="preserve">Bar</s:String>
+    <s:String x:Key="term_cursor_underline" xml:space="preserve">Underline</s:String>
+    <s:String x:Key="term_cursor_shape" xml:space="preserve">Shape</s:String>
+    <s:String x:Key="term_cursor_blink" xml:space="preserve">Blinking</s:String>
+    <s:String x:Key="term_keys_bar" xml:space="preserve">Show the special keys bar</s:String>
+    <s:String x:Key="term_keys_bar_hint" xml:space="preserve">A bar below the terminal with the keys that are not on every keyboard: one click sends the key.</s:String>
+    <s:String x:Key="term_key_arrows" xml:space="preserve">Arrows</s:String>
+    <s:String x:Key="term_key_custom" xml:space="preserve">Custom key</s:String>
+    <s:String x:Key="term_custom_label" xml:space="preserve">Custom key label</s:String>
+    <s:String x:Key="term_custom_text" xml:space="preserve">Text sent</s:String>
+    <s:String x:Key="term_custom_text_hint" xml:space="preserve">You can write {0} (Enter), {1} (Tab) and {2} (Esc). Example: sudo -i{0}</s:String>
+    <s:String x:Key="term_scrollback" xml:space="preserve">Lines kept</s:String>
+    <s:String x:Key="term_scrollback_hint" xml:space="preserve">More lines = more memory for each open session.</s:String>
+    <s:String x:Key="term_bell_none" xml:space="preserve">None</s:String>
+    <s:String x:Key="term_bell_visual" xml:space="preserve">Visual</s:String>
+    <s:String x:Key="term_bell_sound" xml:space="preserve">Sound</s:String>
+    <s:String x:Key="term_bell" xml:space="preserve">Bell</s:String>
+    <s:String x:Key="term_bell_hint" xml:space="preserve">What happens when the server sends the beep signal.</s:String>
+    <s:String x:Key="term_copy_on_select" xml:space="preserve">Copy on select</s:String>
+    <s:String x:Key="term_copy_on_select_hint" xml:space="preserve">Text selected with the mouse goes straight to the clipboard.</s:String>
+    <s:String x:Key="term_warn_paste" xml:space="preserve">Warn when pasting multiple lines</s:String>
+    <s:String x:Key="term_warn_paste_hint" xml:space="preserve">Pasting multiple lines into a shell runs them one after another.</s:String>
+    <s:String x:Key="term_shell_integration_hint" xml:space="preserve">Sends the remote shell (bash/zsh) a line that marks the start and end of each command. On by default. Applies from the next connection.</s:String>
+    <s:String x:Key="term_show" xml:space="preserve">Show</s:String>
+    <s:String x:Key="term_sent_line_title" xml:space="preserve">Line sent to the shell</s:String>
+    <s:String x:Key="term_show_sent_line" xml:space="preserve">Show the line sent</s:String>
+    <s:String x:Key="term_show_sent_line_hint" xml:space="preserve">To see exactly what is sent.</s:String>
+    <s:String x:Key="term_never" xml:space="preserve">Never</s:String>
+    <s:String x:Key="term_lines_or_more" xml:space="preserve">{0} lines or more</s:String>
+    <s:String x:Key="term_auto_collapse" xml:space="preserve">Automatically collapse long output</s:String>
+    <s:String x:Key="term_show_duration" xml:space="preserve">Show duration and time next to the command</s:String>
+    <s:String x:Key="term_show_copy_save" xml:space="preserve">Show the Copy and Save buttons on each command</s:String>
+    <s:String x:Key="term_show_copy_save_hint" xml:space="preserve">Copies the output or saves it to a text file.</s:String>
+    <s:String x:Key="term_verify_host_key" xml:space="preserve">Verify the server fingerprint</s:String>
+    <s:String x:Key="term_verify_host_key_hint" xml:space="preserve">On the first connection it asks for confirmation and remembers the fingerprint; if it changes, it warns you. Keeping it on protects against someone posing as the server.</s:String>
+    <s:String x:Key="term_server_clipboard" xml:space="preserve">The server can write to the clipboard</s:String>
+    <s:String x:Key="term_server_clipboard_hint" xml:space="preserve">Some programs on the server (tmux, vim) can copy text to your clipboard. Off for security; reading the clipboard is never allowed.</s:String>
+    <s:String x:Key="term_confirm_links" xml:space="preserve">Ask for confirmation before opening a link</s:String>
+    <s:String x:Key="term_confirm_links_hint" xml:space="preserve">Links in the terminal open with Ctrl+click.</s:String>
+    <s:String x:Key="term_history_limit" xml:space="preserve">Commands remembered in the panel</s:String>
+    <s:String x:Key="term_history_limit_hint" xml:space="preserve">The history lasts as long as the open session: it is not saved to disk.</s:String>
+    <s:String x:Key="term_open_link_question" xml:space="preserve">Open this address in the browser?&#10;&#10;{0}</s:String>
+    <s:String x:Key="term_open" xml:space="preserve">Open</s:String>
+    <s:String x:Key="term_open_link_title" xml:space="preserve">Open link</s:String>
+    <s:String x:Key="term_error" xml:space="preserve">Terminal: {0}</s:String>
+    <s:String x:Key="term_paste_trailing_newline" xml:space="preserve">The pasted text ends with a line break: the shell will run it right away.&#10;&#10;Paste?</s:String>
+    <s:String x:Key="term_paste_lines" xml:space="preserve">You are pasting {0} lines: the shell will run them one after another.&#10;&#10;Paste?</s:String>
+    <s:String x:Key="term_paste" xml:space="preserve">Paste</s:String>
+    <s:String x:Key="term_paste_lines_title" xml:space="preserve">Paste multiple lines</s:String>
+    <s:String x:Key="term_save_filter" xml:space="preserve">Text files (*.txt)|*.txt|All files (*.*)|*.*</s:String>
+    <s:String x:Key="term_connecting" xml:space="preserve">Connecting to {0}:{1} ...</s:String>
+    <s:String x:Key="term_closed_by_server" xml:space="preserve">Session closed by the server.</s:String>
+    <s:String x:Key="term_conn_cancelled_fingerprint" xml:space="preserve">Connection cancelled: server fingerprint not confirmed.</s:String>
+    <s:String x:Key="term_conn_failed" xml:space="preserve">Connection failed: {0}</s:String>
+    <s:String x:Key="vnc_lost_title" xml:space="preserve">Connection lost</s:String>
+    <s:String x:Key="vnc_lost_msg" xml:space="preserve">Connection lost...</s:String>
+    <s:String x:Key="vnc_lost_countdown" xml:space="preserve">{0}&#10;Lost for {1:00}:{2:00}  ·  next check in {3} s  ·  checks: {4}</s:String>
+    <s:String x:Key="vnc_pc_on_vnc_off" xml:space="preserve">PC on, VNC not running yet</s:String>
+    <s:String x:Key="vnc_pc_unreachable" xml:space="preserve">PC unreachable</s:String>
+    <s:String x:Key="vnc_name_not_found" xml:space="preserve">PC name not found on the network: the PC may be on, but the network does not know its address yet (after a reboot it can take a few minutes). If you know the IP, connect with it.</s:String>
+    <s:String x:Key="vnc_pc_back" xml:space="preserve">PC reachable again, preparing the connection…</s:String>
+    <s:String x:Key="vnc_reconnecting" xml:space="preserve">Connecting…</s:String>
+    <s:String x:Key="vnc_server_incomplete" xml:space="preserve">The server did not complete the connection</s:String>
+    <s:String x:Key="vnc_reconnected_toast" xml:space="preserve">{0}: reconnected</s:String>
+    <s:String x:Key="rdp_lowtls_text" xml:space="preserve">{0} uses old security (typical of Windows Server 2008/2012 without updates) and the protected connection failed.&#10;&#10;Lemora can retry with reduced protection: the connection stays encrypted, but with weaker methods.&#10;&#10;If this PC has always connected without problems, do not continue: someone may be getting in the middle.</s:String>
+    <s:String x:Key="rdp_lowtls_always" xml:space="preserve">Always for this server</s:String>
+    <s:String x:Key="rdp_lowtls_yes" xml:space="preserve">Yes, connect</s:String>
+    <s:String x:Key="rdp_lowtls_once" xml:space="preserve">Only this time</s:String>
+    <s:String x:Key="rdp_lowtls_title" xml:space="preserve">Server with old security</s:String>
+    <s:String x:Key="rdp_lowtls_toast_title" xml:space="preserve">{0}: reduced protection</s:String>
+    <s:String x:Key="rdp_lowtls_toast_saved" xml:space="preserve">Server with old security, choice remembered for this certificate.</s:String>
+    <s:String x:Key="rdp_lowtls_forget" xml:space="preserve">Don&apos;t remember anymore</s:String>
+    <s:String x:Key="rdp_lowtls_forgotten" xml:space="preserve">Choice forgotten: next time Lemora will ask again</s:String>
+    <s:String x:Key="session_term_search" xml:space="preserve">Search the output (Ctrl+F)</s:String>
+    <s:String x:Key="session_split_term" xml:space="preserve">Split the view: place a second session side by side</s:String>
+    <s:String x:Key="session_term_settings" xml:space="preserve">Terminal settings</s:String>
+    <s:String x:Key="session_term_history" xml:space="preserve">Command history (Ctrl+Shift+H)</s:String>
+    <s:String x:Key="session_keys_tip" xml:space="preserve">Keys of this connection: to the remote PC or to your PC</s:String>
+    <s:String x:Key="session_keys_name" xml:space="preserve">Keys of this connection</s:String>
+    <s:String x:Key="session_cad" xml:space="preserve">Ctrl Alt Del</s:String>
+    <s:String x:Key="session_cad_tip" xml:space="preserve">Ctrl + Alt + Del</s:String>
+    <s:String x:Key="session_split" xml:space="preserve">Split the view: place another session side by side (or drag a tab onto this one)</s:String>
+    <s:String x:Key="session_open_sftp" xml:space="preserve">Open SFTP on this server</s:String>
+    <s:String x:Key="session_close_this" xml:space="preserve">Close this session</s:String>
+    <s:String x:Key="session_split_one_instance" xml:space="preserve">This protocol opens only one session per server: drag another tab onto this one to place them side by side.</s:String>
+    <s:String x:Key="session_split_close_text" xml:space="preserve">This tab contains two sessions: {0} and {1}. Closing it closes both and ends the connections.</s:String>
+    <s:String x:Key="session_split_close_both" xml:space="preserve">Close both</s:String>
+    <s:String x:Key="session_split_close_title" xml:space="preserve">Close both sessions?</s:String>
+    <s:String x:Key="term_fingerprint_tip" xml:space="preserve">Encrypted connection&#10;Server fingerprint (SHA256):&#10;{0}</s:String>
+    <s:String x:Key="rdp_reopen_mstsc_devices" xml:space="preserve">Cameras and COM ports: the session reopens with the Microsoft RDP client (FreeRDP does not support them on Windows)</s:String>
+    <s:String x:Key="rdp_lowtls_toast" xml:space="preserve">{0}: connected with reduced protection (server with old security)</s:String>
+    <s:String x:Key="keymap_title" xml:space="preserve">Key mapping</s:String>
+    <s:String x:Key="keymap_on_off_hint" xml:space="preserve">On: the combination goes to the remote PC. Off: it stays on your PC.</s:String>
+    <s:String x:Key="keymap_section_screen" xml:space="preserve">SCREEN</s:String>
+    <s:String x:Key="keymap_fullscreen_desc" xml:space="preserve">How the session opens in full screen</s:String>
+    <s:String x:Key="keymap_fsbar" xml:space="preserve">Connection bar in full screen</s:String>
+    <s:String x:Key="keymap_fsbar_desc" xml:space="preserve">Show the bar when the session is in full screen</s:String>
+    <s:String x:Key="keymap_res_desc" xml:space="preserve">Supported server: Windows Server 2012 R2 and later</s:String>
+    <s:String x:Key="keymap_sys_scale" xml:space="preserve">Follow the system scale</s:String>
+    <s:String x:Key="keymap_sys_scale_desc" xml:space="preserve">Uses the Windows scale. If you turn it off, you choose it</s:String>
+    <s:String x:Key="keymap_scale_desc" xml:space="preserve">Size of texts and icons in the session</s:String>
+    <s:String x:Key="keymap_monfit" xml:space="preserve">Fit to the connected monitors</s:String>
+    <s:String x:Key="keymap_monfit_desc" xml:space="preserve">The session adapts to the monitors present at that moment</s:String>
+    <s:String x:Key="keymap_fit" xml:space="preserve">Fit</s:String>
+    <s:String x:Key="keymap_fit_desc" xml:space="preserve">How the session fills the window</s:String>
+    <s:String x:Key="keymap_fixed_zoom" xml:space="preserve">Fixed zoom</s:String>
+    <s:String x:Key="keymap_zoom_desc" xml:space="preserve">Used with &quot;Fixed zoom&quot;: moving the cursor scrolls by itself</s:String>
+    <s:String x:Key="keymap_vnc_note" xml:space="preserve">Fit and zoom apply when the remote PC has several monitors joined (very wide or very tall image): with a single monitor the remote screen fits whole in the window.</s:String>
+    <s:String x:Key="keymap_shortcuts_group" xml:space="preserve">SHORTCUTS · {0}</s:String>
+    <s:String x:Key="keymap_intro" xml:space="preserve">They apply to all new {0} connections. Inside a connection you can change a single key: it stays saved only for that connection.</s:String>
+    <s:String x:Key="keymap_full_single" xml:space="preserve">Enable (single monitor)</s:String>
+    <s:String x:Key="keymap_full_all" xml:space="preserve">Enable (all monitors)</s:String>
+    <s:String x:Key="keymap_res_custom_stretch" xml:space="preserve">Custom, stretched</s:String>
+    <s:String x:Key="keymap_res_custom_fixed" xml:space="preserve">Custom, fixed</s:String>
+    <s:String x:Key="keymap_res_full_stretch" xml:space="preserve">Full screen, stretched</s:String>
+    <s:String x:Key="keymap_res_full_fixed" xml:space="preserve">Full screen, fixed</s:String>
+    <s:String x:Key="settings_browser_title" xml:space="preserve">Browser extension</s:String>
+    <s:String x:Key="settings_browser_paired" xml:space="preserve">Paired extensions</s:String>
+    <s:String x:Key="settings_browser_unpair_all" xml:space="preserve">Unpair all</s:String>
+    <s:String x:Key="settings_browser_unpair" xml:space="preserve">Unpair</s:String>
+    <s:String x:Key="settings_browser_unpair_name" xml:space="preserve">Unpair {0}</s:String>
+    <s:String x:Key="settings_browser_note" xml:space="preserve">The Lemora Web Extension for Chrome, Edge and Firefox fills in the folders&apos; device passwords on web pages and saves new ones. It does not see the connections or the other credentials.</s:String>
+    <s:String x:Key="settings_browser_detail" xml:space="preserve">{0} · paired on {1:d} · last used {2:d} · expires after {3} days without use</s:String>
+    <s:String x:Key="settings_browser_none" xml:space="preserve">No extension paired.</s:String>
+    <s:String x:Key="settings_browser_unpair_one" xml:space="preserve">Unpair the {0} extension? To use it again you will have to confirm the pairing in Lemora.</s:String>
+    <s:String x:Key="settings_browser_unpair_all_q" xml:space="preserve">Unpair all the browser extensions? To use them again you will have to confirm the pairing in Lemora.</s:String>
+    <s:String x:Key="settings_browser_default" xml:space="preserve">Default browser: {0}</s:String>
+    <s:String x:Key="settings_browser_install" xml:space="preserve">Install</s:String>
+    <s:String x:Key="settings_browser_reinstall" xml:space="preserve">Reinstall</s:String>
+    <s:String x:Key="settings_browser_portable" xml:space="preserve">This copy of Lemora is not installed (portable): the extension works only with Lemora installed.</s:String>
+    <s:String x:Key="settings_browser_installed" xml:space="preserve">Installed. If you removed it or it does not work, reinstall it.</s:String>
+    <s:String x:Key="settings_browser_not_installed" xml:space="preserve">Not installed. Firefox will ask to add it.</s:String>
+    <s:String x:Key="settings_nav_vault_desc_long" xml:space="preserve">Saved credentials, browser extension</s:String>
+    <s:String x:Key="settings_nav_keymap_desc" xml:space="preserve">Key combinations and screen for RDP and VNC</s:String>
+    <s:String x:Key="settings_nav_keymap_short" xml:space="preserve">Shortcuts and screen for RDP and VNC</s:String>
+    <s:String x:Key="settings_nav_mcp" xml:space="preserve">MCP server</s:String>
+    <s:String x:Key="settings_nav_mcp_desc" xml:space="preserve">Claude and the connections it can use</s:String>
+    <s:String x:Key="settings_search_other_pages" xml:space="preserve">In the other pages</s:String>
+    <s:String x:Key="settings_search_words_vault" xml:space="preserve">credentials vault password archive extension browser firefox chrome edge plugin paired pair unpair install reinstall</s:String>
+    <s:String x:Key="settings_search_words_keymap" xml:space="preserve">keys keyboard shortcuts combinations alt tab win windows print screenshot capture full screen zoom fit rdp vnc</s:String>
+    <s:String x:Key="settings_search_words_database" xml:space="preserve">database archive sqlite mysql postgres file saved connections folder data</s:String>
+    <s:String x:Key="settings_search_words_theme" xml:space="preserve">appearance theme colors dark light font character sizes</s:String>
+    <s:String x:Key="settings_search_words_protocol" xml:space="preserve">protocols external programs freerdp mstsc putty kitty winscp filezilla ssh sftp vnc telnet</s:String>
+    <s:String x:Key="settings_search_words_mcp" xml:space="preserve">mcp claude artificial intelligence ai assistant</s:String>
+    <s:String x:Key="settings_freerdp_desc" xml:space="preserve">Open source RDP client instead of the Microsoft component. Resolution, performance, clipboard, drives, printers, audio, smart cards, gateway and full screen come from the RDP settings of each server.</s:String>
+    <s:String x:Key="settings_freerdp_program" xml:space="preserve">Program</s:String>
+    <s:String x:Key="settings_freerdp_extra" xml:space="preserve">Extra parameters</s:String>
+    <s:String x:Key="settings_freerdp_extra_hint" xml:space="preserve">One per line, e.g. /gfx:avc444</s:String>
+    <s:String x:Key="settings_claude_box" xml:space="preserve">Claude box in the session</s:String>
+    <s:String x:Key="settings_claude_working" xml:space="preserve">While Claude is working</s:String>
+    <s:String x:Key="settings_claude_working_name" xml:space="preserve">Text while Claude is working</s:String>
+    <s:String x:Key="settings_claude_paused" xml:space="preserve">With Claude paused</s:String>
+    <s:String x:Key="settings_claude_paused_name" xml:space="preserve">Text with Claude paused</s:String>
+    <s:String x:Key="about_license_notice" xml:space="preserve">GPL-3.0. Modified version of 1Remote: contains code © VShawn and contributors. Details and sources: github.com/CODEX-cpp/Lemora (NOTICE.md).</s:String>
+    <s:String x:Key="home_filter_all" xml:space="preserve">All</s:String>
+    <s:String x:Key="session_split_drop_hint" xml:space="preserve">Side by side</s:String>
+    <s:String x:Key="ft_mark_skipped" xml:space="preserve">skipped</s:String>
+    <s:String x:Key="ft_mark_error" xml:space="preserve">error</s:String>
+    <s:String x:Key="settings_log_file_name" xml:space="preserve">Lemora-log</s:String>
+    <s:String x:Key="ft_err_host_no_response" xml:space="preserve">The server {0}:{1} does not respond</s:String>
+    <s:String x:Key="ft_err_not_vnc" xml:space="preserve">The server does not speak the VNC protocol</s:String>
+    <s:String x:Key="ft_err_refused" xml:space="preserve">The server refuses the connection</s:String>
+    <s:String x:Key="ft_err_not_tight" xml:space="preserve">The server is not TightVNC: file transfer is not available</s:String>
+    <s:String x:Key="ft_err_no_vnc_auth" xml:space="preserve">The server does not accept the VNC password</s:String>
+    <s:String x:Key="ft_err_password_rejected" xml:space="preserve">Password rejected by the server</s:String>
+    <s:String x:Key="ft_err_ft_disabled" xml:space="preserve">File transfer is disabled on the server (TightVNC setting &quot;Enable file transfers&quot;)</s:String>
+    <s:String x:Key="ft_err_password_missing" xml:space="preserve">Missing password</s:String>
+    <s:String x:Key="ft_err_password_unusable" xml:space="preserve">Password not usable for VNC authentication</s:String>
+    <s:String x:Key="ft_err_connection_closed" xml:space="preserve">Connection closed</s:String>
+    <s:String x:Key="ft_err_no_longer_receives" xml:space="preserve">The server no longer receives data</s:String>
+    <s:String x:Key="ft_err_server_closed" xml:space="preserve">The server closed the connection</s:String>
+    <s:String x:Key="ft_err_no_response" xml:space="preserve">The server does not respond</s:String>
+</ResourceDictionary>

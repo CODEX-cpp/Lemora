@@ -1,0 +1,4 @@
+# Visual C++ libraries inside the exe: without them, on a clean Windows (without "Visual C++ Redistributable") the launcher did not start
+# ("VCRUNTIME140.dll not found", seen in Windows Sandbox)
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static"]

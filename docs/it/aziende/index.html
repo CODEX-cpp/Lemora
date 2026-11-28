@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Lemora per aziende: server in sede, permessi, registro accessi</title>
+<meta name="description" content="Lemora Server per Windows o Linux: connessioni e password condivise tra i PC approvati, permessi, richieste da approvare, registro delle attività e storico dei collegamenti.">
+<link rel="canonical" href="https://codex-cpp.github.io/Lemora/it/aziende/">
+<link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/aziende/">
+<link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/business/">
+<link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/business/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Lemora">
+<meta property="og:url" content="https://codex-cpp.github.io/Lemora/it/aziende/">
+<meta property="og:title" content="Lemora per aziende">
+<meta property="og:description" content="Server da installare in sede: condivisione, permessi per PC, registro delle attività, storico dei collegamenti.">
+<meta property="og:image" content="https://codex-cpp.github.io/Lemora/assets/img/og-it.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="it_IT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f5f4f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121312" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../../assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="../../assets/img/icon-180.png">
+<link rel="manifest" href="../../site.webmanifest">
+<link rel="preload" href="../../assets/fonts/plex-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/newsreader-400.woff2" as="font" type="font/woff2" crossorigin>
+<script src="../../assets/js/tema.js?v=23"></script>
+<link rel="stylesheet" href="../../assets/css/tokens.css?v=23">
+<link rel="stylesheet" href="../../assets/css/base.css?v=23">
+<link rel="stylesheet" href="../../assets/css/main.css?v=23">
+<link rel="stylesheet" href="../../assets/css/componenti.css?v=23">
+<link rel="stylesheet" href="../../assets/css/pagine.css?v=23">
+<link rel="stylesheet" href="../../assets/css/demos.css?v=23">
+<script src="../../assets/js/main.js?v=23" defer></script>
+<script src="../../assets/js/demos.js?v=23" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Lemora","item":"https://codex-cpp.github.io/Lemora/it/"},{"@type":"ListItem","position":2,"name":"Per aziende","item":"https://codex-cpp.github.io/Lemora/it/aziende/"}]}</script>
+</head>
+<body>
+<a class="salta" href="#contenuto">Vai al contenuto</a>
+
+<header class="testata">
+  <div class="testata__in">
+    <a class="marchio" href="../" aria-label="Lemora, pagina iniziale">
+      <img src="../../assets/img/icon.png" alt="" width="28" height="28"><span>Lemora</span>
+    </a>
+    <nav class="menu" aria-label="Pagine">
+      <ul role="list">
+        <li><a href="../prodotto/">Prodotto</a></li>
+        <li><a href="./" aria-current="page">Per aziende</a></li>
+        <li><a href="../sicurezza/">Sicurezza</a></li>
+      </ul>
+    </nav>
+    <div class="testata__azioni">
+      <a class="lingua" href="../../en/business/" hreflang="en" lang="en" data-lang="en" aria-label="English version">EN</a>
+      <button class="tema" type="button" aria-label="Cambia tema chiaro o scuro" data-tema-btn>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg>
+      </button>
+      <a class="btn btn--gho btn--sm" href="../scarica/">Scarica</a>
+    </div>
+  </div>
+</header>
+
+<main id="contenuto">
+
+<header class="pagina-testa">
+  <ol class="percorso" role="list" aria-label="Percorso"><li><a href="../">Lemora</a></li><li>Per aziende</li></ol>
+  <h1>Lemora Server, sulla rete dell'azienda</h1>
+  <p class="pagina-testa__lead">Un servizio per Windows o Linux che condivide cartelle, connessioni, credenziali e password dei dispositivi tra i PC del team. Ogni PC va approvato, ogni modifica e ogni collegamento restano nel registro. Nessun server esterno.</p>
+  <dl class="dati"><div><dt>Server</dt><dd>.NET 10 · SQLite · console web</dd></div><div><dt>Sistemi</dt><dd>Windows x64 · Linux x64</dd></div><div><dt>Rete</dt><dd>HTTPS · porta 25353</dd></div><div><dt>Prezzo</dt><dd>gratuito</dd></div></dl>
+</header>
+
+<div class="con-indice">
+  <nav class="indice" aria-labelledby="h-indice">
+    <p id="h-indice">In questa pagina</p>
+    <ol role="list">
+      <li><a href="#schema"><span>A.1</span>Dove passano i dati</a></li>
+      <li><a href="#installazione"><span>A.2</span>Installazione</a></li>
+      <li><a href="#permessi"><span>A.3</span>PC e permessi</a></li>
+      <li><a href="#condivisione"><span>A.4</span>Condivisione e offline</a></li>
+      <li><a href="#richieste"><span>A.5</span>Richieste e conflitti</a></li>
+      <li><a href="#registro"><span>A.6</span>Registro attività</a></li>
+      <li><a href="#storico"><span>A.7</span>Storico collegamenti</a></li>
+      <li><a href="#estensione"><span>A.8</span>Registro estensione</a></li>
+      <li><a href="#requisiti"><span>A.9</span>Requisiti e backup</a></li>
+      <li><a href="#nis2"><span>A.10</span>Direttiva NIS2</a></li>
+    </ol>
+  </nav>
+
+  <div class="corpo">
+
+    <!-- A.1 schema: i dati passano dal server, le sessioni no -->
+    <section class="blocco" id="schema" aria-labelledby="h-schema">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.1</span>
+        <h2 id="h-schema">Dove passano i dati</h2>
+        <p>Il server tiene l'archivio condiviso. Le sessioni RDP, VNC e SSH partono dai PC dei tecnici verso i PC dei clienti: non passano dal server.</p>
+      </header>
+      <figure class="schema">
+        <svg viewBox="0 0 760 340" role="img" aria-labelledby="t-schema">
+          <title id="t-schema">Tre PC del team sincronizzano l'archivio con Lemora Server in sede; le sessioni remote vanno direttamente dai PC del team ai PC dei clienti</title>
+          <g class="schema__linee">
+            <path d="M190 70 C 260 70, 270 170, 300 170"/>
+            <path d="M190 170 L 300 170"/>
+            <path d="M190 270 C 260 270, 270 170, 300 170"/>
+          </g>
+          <g class="schema__sessioni">
+            <path d="M190 62 C 400 46, 540 52, 600 60"/>
+            <path d="M190 278 C 400 294, 540 288, 600 280"/>
+          </g>
+          <g class="schema__pc">
+            <rect x="20" y="45" width="170" height="50" rx="6"/><text x="105" y="66">PC tecnico 1</text><text x="105" y="83" class="mono">scrittura</text>
+            <rect x="20" y="145" width="170" height="50" rx="6"/><text x="105" y="166">PC tecnico 2</text><text x="105" y="183" class="mono">richieste</text>
+            <rect x="20" y="245" width="170" height="50" rx="6"/><text x="105" y="266">Portatile stage</text><text x="105" y="283" class="mono">sola lettura</text>
+          </g>
+          <g class="schema__server">
+            <rect x="300" y="110" width="250" height="120" rx="8"/>
+            <text x="320" y="140" class="b">Lemora Server</text>
+            <text x="320" y="166" class="mono">archivio condiviso</text>
+            <text x="320" y="188" class="mono">PC approvati · permessi</text>
+            <text x="320" y="210" class="mono">registro · storico</text>
+          </g>
+          <g class="schema__pc">
+            <rect x="600" y="40" width="140" height="44" rx="6"/><text x="670" y="67">PC cliente</text>
+            <rect x="600" y="256" width="140" height="44" rx="6"/><text x="670" y="283">Server cliente</text>
+          </g>
+          <text x="420" y="30" class="mono schema__nota">sessione RDP diretta</text>
+          <text x="420" y="326" class="mono schema__nota">sessione SSH diretta</text>
+        </svg>
+        <figcaption><b>Fig. 1</b> Linee tratteggiate: sincronizzazione con il server. Linee continue: sessioni remote, dirette.</figcaption>
+      </figure>
+    </section>
+
+    <!-- A.2 installazione in tre passi -->
+    <section class="blocco" id="installazione" aria-labelledby="h-installazione">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.2</span>
+        <h2 id="h-installazione">Installazione</h2>
+        <p>Avviato una volta, il server si installa come servizio e resta attivo ai riavvii.</p>
+      </header>
+      <ol class="passi" role="list">
+        <li>
+          <p><strong>Servizio.</strong> Su Windows gira con l'account LocalService e una regola del firewall limitata alle reti private. Su Linux diventa un servizio systemd con utente dinamico; ufw o firewalld vengono configurati di conseguenza. Nel terminale compare un codice di avvio monouso.</p>
+<pre class="riga-cmd"><span class="pr">$</span> sudo ./Lemora.Server
+<span class="dim"># installa il servizio e stampa il codice di avvio</span></pre>
+        </li>
+        <li>
+          <p><strong>Console web.</strong> Dal browser, all'indirizzo del server: codice di avvio, primo amministratore, impostazioni. Tutto il resto si gestisce da qui.</p>
+<pre class="riga-cmd"><span class="pr">https://</span>192.168.10.20:25353</pre>
+        </li>
+        <li>
+          <p><strong>PC del team.</strong> Lemora in modalità Teams chiede un codice di abbinamento di 6 caratteri, valido 30 minuti e usabile una volta. L'amministratore approva il PC dalla console e sceglie il permesso.</p>
+        </li>
+      </ol>
+      <!-- prova: il codice nasce nella console, si scrive sul PC, l'amministratore approva (demos.js, "abbinamento") -->
+      <div class="abbin" data-demo="abbinamento">
+        <div class="demo-riquadro">
+          <p class="demo-riquadro__tit">Prova · Console › Nuovo abbinamento</p>
+          <button type="button" class="demo-btn demo-btn--pri" data-crea>Crea il codice</button>
+          <p class="abbin__codice" data-codice aria-live="polite">······</p>
+          <p class="abbin__scad" data-scad-riga>Scade tra <span data-scadenza>30:00</span> · vale per un solo PC</p>
+          <button type="button" class="demo-btn" data-approva hidden>Approva PC-STAGISTA in sola lettura</button>
+        </div>
+        <div class="demo-riquadro">
+          <p class="demo-riquadro__tit">Prova · PC-STAGISTA › Collega a Teams</p>
+          <p class="demo-campo">Server<span class="mono">https://lemora.studio.lan:25353</span></p>
+          <div class="abbin__riga">
+            <label class="demo-campo">Codice<input type="text" data-campo maxlength="6" autocomplete="off" spellcheck="false" disabled></label>
+            <button type="button" class="demo-btn" data-invia disabled>Collega</button>
+          </div>
+          <p class="demo__esito" data-stato aria-live="polite"></p>
+        </div>
+      </div>
+      <figure class="fig">
+        <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/console-abbinamento.webp" srcset="../../assets/img/console-abbinamento-800.webp 800w, ../../assets/img/console-abbinamento.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, Nuovo abbinamento: pulsante Crea il codice, indirizzo del server, impronta del certificato e i tre passi per collegare un PC" loading="lazy" width="1400" height="880"><img class="solo-chiaro" src="../../assets/img/console-abbinamento-chiaro.webp" srcset="../../assets/img/console-abbinamento-chiaro-800.webp 800w, ../../assets/img/console-abbinamento-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, Nuovo abbinamento: pulsante Crea il codice, indirizzo del server, impronta del certificato e i tre passi per collegare un PC" loading="lazy" width="1400" height="880"></div>
+        <figcaption><b>Fig. 2</b> La pagina vera della console. L'impronta del certificato è quella che il PC confronta al primo collegamento; questo server di prova usa la porta 8443 al posto della predefinita 25353.</figcaption>
+      </figure>
+      <p class="testo">La disinstallazione toglie servizio, regola del firewall, dati e database: <code>Lemora.Server --uninstall --purge</code>.</p>
+    </section>
+
+    <!-- A.3 PC e permessi: il permesso vale per il PC intero -->
+    <section class="blocco" id="permessi" aria-labelledby="h-permessi">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.3</span>
+        <h2 id="h-permessi">PC e permessi</h2>
+        <p>L'identità è la coppia PC e utente di Windows. Il permesso vale per tutto l'archivio condiviso di quel PC e si cambia o si revoca dalla console in qualsiasi momento.</p>
+      </header>
+      <div class="tab-scorre" tabindex="0" role="region" aria-label="Tabella dei permessi">
+        <table class="tab">
+          <caption>Tab. 1 · Permessi per PC, scelti all'approvazione e modificabili in ogni momento.</caption>
+          <thead><tr><th scope="col">Permesso</th><th scope="col">Connessioni</th><th scope="col">Credenziali e dispositivi</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Sola lettura</th><td>Le apre, non le modifica</td><td>Le usa e le copia, non le modifica</td></tr>
+            <tr><th scope="row">Richieste</th><td>Ogni modifica diventa una richiesta da approvare</td><td>Come per le connessioni</td></tr>
+            <tr><th scope="row">Scrittura</th><td>Crea, modifica, cancella</td><td>Crea, modifica, cancella</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <dl class="voci">
+        <div class="voce"><dt>Revoca</dt><dd>Al primo contatto dopo la revoca il PC cancella la sua copia delle voci condivise; se resta offline, la copia si blocca come descritto in A.4.</dd></div>
+        <div class="voce"><dt>Amministratori</dt><dd>Più amministratori della console, con gli stessi poteri. Il principale e l'ultimo rimasto non si cancellano. Dopo 5 accessi sbagliati la console si blocca per 5 minuti; la sessione dura 8 ore.</dd></div>
+      </dl>
+      <!-- prova: stesso gesto da PC-GIULIA, esito diverso a seconda del permesso; ogni gesto va nel registro (demos.js, "permessi") -->
+      <div class="colonne">
+        <div class="demo-riquadro perm" data-demo="permessi">
+          <fieldset>
+            <legend>Prova · permesso di PC-GIULIA</legend>
+            <label><input type="radio" name="permesso" value="read" checked class="vh">Sola lettura</label>
+            <label><input type="radio" name="permesso" value="requests" class="vh">Richieste</label>
+            <label><input type="radio" name="permesso" value="write" class="vh">Scrittura</label>
+          </fieldset>
+          <div class="perm__gesti">
+            <button type="button" class="demo-btn" data-gesto="modifica" data-voce="DC01 · indirizzo .10 → .11">Modifica DC01</button>
+            <button type="button" class="demo-btn" data-gesto="cancella" data-voce="NAS-Backup · Officine Brenta">Cancella NAS-Backup</button>
+            <button type="button" class="demo-btn" data-gesto="scollega" data-messaggio="PC-GIULIA scollegato: al primo contatto cancella la sua copia delle voci condivise">Scollega il PC</button>
+          </div>
+          <p class="demo__esito" data-esito aria-live="polite"></p>
+          <div class="registro">
+            <div class="registro__barra"><b>Registro</b></div>
+            <ol role="list" data-registro>
+              <li><time>09:15</time><span><span class="chi">admin</span> <span class="cosa">ha cambiato il permesso</span></span><span class="dove">PC-GIULIA · giulia</span></li>
+              <li><time>08:40</time><span><span class="chi">admin</span> <span class="cosa">ha approvato il PC</span></span><span class="dove">PC-GIULIA · giulia</span></li>
+            </ol>
+          </div>
+        </div>
+        <figure class="fig">
+          <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/console-pc.webp" srcset="../../assets/img/console-pc-800.webp 800w, ../../assets/img/console-pc.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, PC e utenti: un PC in attesa con Rifiuta e Approva, quattro PC approvati con il loro permesso, ultimo contatto e Scollega" loading="lazy" width="1400" height="880"><img class="solo-chiaro" src="../../assets/img/console-pc-chiaro.webp" srcset="../../assets/img/console-pc-chiaro-800.webp 800w, ../../assets/img/console-pc-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, PC e utenti: un PC in attesa con Rifiuta e Approva, quattro PC approvati con il loro permesso, ultimo contatto e Scollega" loading="lazy" width="1400" height="880"></div>
+          <figcaption><b>Fig. 3</b> Console › PC e utenti: il permesso si sceglie già all'approvazione e si cambia dall'elenco.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- A.4 condivisione e copia offline -->
+    <section class="blocco" id="condivisione" aria-labelledby="h-condivisione">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.4</span>
+        <h2 id="h-condivisione">Condivisione e lavoro offline</h2>
+        <p>Ogni PC tiene una copia cifrata dell'archivio condiviso e lavora anche con il server spento o fuori sede.</p>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>Cosa si condivide</dt><dd>Connessioni RDP, SSH e VNC; l'albero delle cartelle, anche vuote, con dominio e prefisso; credenziali di cartella; password dei dispositivi.</dd></div>
+        <div class="voce"><dt>Sincronizzazione</dt><dd>Ogni 20 minuti, oppure subito con "Sincronizza ora".</dd></div>
+        <div class="voce"><dt>Senza server</dt><dd>Dopo 7 giorni senza contatto le voci condivise si bloccano sul PC. Si sbloccano alla prima sincronizzazione.</dd></div>
+        <div class="voce"><dt>Sincronizzazione spenta</dt><dd>Un PC può spegnerla; la console lo mostra e lo registra.</dd></div>
+        <div class="voce"><dt>Connessioni personali</dt><dd>Restano solo sul PC finché il tecnico non le propone al server.</dd></div>
+      </dl>
+    </section>
+
+    <!-- A.5 richieste, proposte, conflitti, cestino -->
+    <section class="blocco" id="richieste" aria-labelledby="h-richieste">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.5</span>
+        <h2 id="h-richieste">Richieste, proposte e conflitti</h2>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>Richieste</dt><dd>Le modifiche dei PC con permesso Richieste aspettano nella pagina omonima della console: approvate o rifiutate, con chi e quando.</dd></div>
+        <div class="voce"><dt>Proposte</dt><dd>Una connessione personale proposta al server diventa condivisa dopo l'approvazione. La console segnala i doppioni.</dd></div>
+        <div class="voce"><dt>Conflitti</dt><dd>Se due PC modificano la stessa voce vale quella del server; l'altra resta da confrontare: "Tieni versione server" o "Usa versione del PC".</dd></div>
+        <div class="voce"><dt>Cestino</dt><dd>Le voci cancellate restano con autore e data e si ripristinano. "Elimina definitivamente" toglie i segreti e lascia la traccia.</dd></div>
+      </dl>
+      <figure class="fig">
+        <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/console-richieste.webp" srcset="../../assets/img/console-richieste-800.webp 800w, ../../assets/img/console-richieste.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, Richieste: una modifica di SRV-DATI con indirizzo vecchio e nuovo e password cambiata, una voce nuova proposta per Hotel Lago Blu, i pulsanti Rifiuta e Approva" loading="lazy" width="1400" height="736"><img class="solo-chiaro" src="../../assets/img/console-richieste-chiaro.webp" srcset="../../assets/img/console-richieste-chiaro-800.webp 800w, ../../assets/img/console-richieste-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, Richieste: una modifica di SRV-DATI con indirizzo vecchio e nuovo e password cambiata, una voce nuova proposta per Hotel Lago Blu, i pulsanti Rifiuta e Approva" loading="lazy" width="1400" height="736"></div>
+        <figcaption><b>Fig. 4</b> Console › Richieste: si vede solo ciò che cambia. La password resta nascosta: compare "cambiata".</figcaption>
+      </figure>
+    </section>
+
+    <!-- A.6 registro attivita': figura disegnata che si riempie -->
+    <section class="blocco" id="registro" aria-labelledby="h-registro">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.6</span>
+        <h2 id="h-registro">Registro delle attività</h2>
+        <p>Circa quaranta tipi di evento, filtrabili per tipo, PC e date. Il registro contiene l'azione, mai il valore di una password.</p>
+      </header>
+      <div>
+        <ul class="elenco elenco--due" role="list">
+          <li>Abbinamenti: codice creato, richiesta, approvazione, rifiuto, scollegamento.</li>
+          <li>Voci condivise: creazione, modifica, disattivazione, cancellazione, ripristino, eliminazione definitiva.</li>
+          <li>Cartelle, credenziali di cartella e dispositivi: creati, modificati, rinominati, cancellati.</li>
+          <li>Richieste, proposte e conflitti, con la decisione.</li>
+          <li>Password mostrata nella console; utente, password o indirizzo copiati dalla linguetta.</li>
+          <li>Amministratori creati o eliminati.</li>
+        </ul>
+      </div>
+      <figure class="fig">
+        <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/console-attivita.webp" srcset="../../assets/img/console-attivita-800.webp 800w, ../../assets/img/console-attivita.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, Registro attività: filtri per tipo, PC e date; righe con data, PC e utente, evento e dettaglio, per esempio dispositivo creato o credenziale di cartella creata" loading="lazy" width="1400" height="880"><img class="solo-chiaro" src="../../assets/img/console-attivita-chiaro.webp" srcset="../../assets/img/console-attivita-chiaro-800.webp 800w, ../../assets/img/console-attivita-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, Registro attività: filtri per tipo, PC e date; righe con data, PC e utente, evento e dettaglio, per esempio dispositivo creato o credenziale di cartella creata" loading="lazy" width="1400" height="880"></div>
+        <figcaption><b>Fig. 5</b> Il registro vero della console: dispositivi, credenziali di cartella e cartelle create da un PC e dall'amministratore.</figcaption>
+      </figure>
+    </section>
+
+    <!-- A.7 storico dei collegamenti -->
+    <section class="blocco" id="storico" aria-labelledby="h-storico">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.7</span>
+        <h2 id="h-storico">Storico dei collegamenti</h2>
+        <p>Ogni sessione RDP, SSH o VNC aperta da un PC del team, anche verso connessioni personali o indirizzi non salvati.</p>
+      </header>
+      <div class="tab-scorre" tabindex="0" role="region" aria-label="Esempio di storico dei collegamenti">
+        <table class="tab">
+          <caption>Tab. 2 · Esempio. "Interrotto": il PC è sparito senza chiudere la sessione.</caption>
+          <thead><tr><th scope="col">PC</th><th scope="col">Voce</th><th scope="col">Protocollo</th><th scope="col">Inizio</th><th scope="col">Durata</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">PC-GIULIA · giulia</th><td>FS-01 · Officine Brenta</td><td class="mono">RDP</td><td class="mono">09:02</td><td><span class="stato">in corso</span></td></tr>
+            <tr><th scope="row">PC-MARCO · marco</th><td>Firewall · Officine Brenta</td><td class="mono">SSH</td><td class="mono">08:51</td><td class="mono">6 min</td></tr>
+            <tr><th scope="row">PC-MARCO · marco</th><td>10.30.1.15 · connessione rapida</td><td class="mono">VNC</td><td class="mono">08:20</td><td class="mono">24 min</td></tr>
+            <tr><th scope="row">PORTATILE-STAGE · luca</th><td>PC-Reception · Studio Rossi</td><td class="mono">VNC</td><td class="mono">08:05</td><td><span class="stato stato--no">interrotto</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="testo">Filtri per PC, testo e date, pagine da 100 righe. Lo storico registra nome, indirizzo e cartella; mai credenziali.</p>
+      <figure class="fig">
+        <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/console-collegamenti.webp" srcset="../../assets/img/console-collegamenti-800.webp 800w, ../../assets/img/console-collegamenti.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, Collegamenti in corso: due sessioni, una VNC verso PC-BANCO-1 di Farmacia Centrale e una RDP verso SRV-DATI di Officine Brenta" loading="lazy" width="1400" height="416"><img class="solo-chiaro" src="../../assets/img/console-collegamenti-chiaro.webp" srcset="../../assets/img/console-collegamenti-chiaro-800.webp 800w, ../../assets/img/console-collegamenti-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console, Collegamenti in corso: due sessioni, una VNC verso PC-BANCO-1 di Farmacia Centrale e una RDP verso SRV-DATI di Officine Brenta" loading="lazy" width="1400" height="416"></div>
+        <figcaption><b>Fig. 6</b> Console › Collegamenti: chi è collegato a cosa adesso; la scheda Storico tiene quelli finiti.</figcaption>
+      </figure>
+    </section>
+
+    <!-- A.8 registro dell'estensione: schermate vere della console -->
+    <section class="blocco" id="estensione" aria-labelledby="h-estensione">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.8</span>
+        <h2 id="h-estensione">Registro dell'estensione</h2>
+        <p>Con Teams, ogni uso dell'estensione del browser arriva al server: compilazione, copia, salvataggio, modifica, cancellazione.</p>
+      </header>
+      <figure class="fig fig--doppia" id="fig-console">
+        <div class="doppia">
+          <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/console.webp" srcset="../../assets/img/console-800.webp 800w, ../../assets/img/console.webp 1750w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console di Lemora Server con i PC approvati e il loro permesso" loading="lazy" width="1750" height="1100"><img class="solo-chiaro" src="../../assets/img/console-chiaro.webp" srcset="../../assets/img/console-chiaro-800.webp 800w, ../../assets/img/console-chiaro.webp 1750w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console di Lemora Server con i PC approvati e il loro permesso" loading="lazy" width="1750" height="1100"></div>
+          <div class="fig__palco doppia__sopra"><img class="solo-scuro" src="../../assets/img/registro.webp" srcset="../../assets/img/registro-800.webp 800w, ../../assets/img/registro.webp 1750w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Registro dell'estensione: chi ha compilato o copiato quale password, su quale sito e quando" loading="lazy" width="1750" height="1100"><img class="solo-chiaro" src="../../assets/img/registro-chiaro.webp" srcset="../../assets/img/registro-chiaro-800.webp 800w, ../../assets/img/registro-chiaro.webp 1750w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Registro dell'estensione: chi ha compilato o copiato quale password, su quale sito e quando" loading="lazy" width="1750" height="1100"></div>
+          <ol class="richiami" role="list" aria-label="Dettagli della figura">
+            <li class="richiamo r1"><span>1</span>PC in attesa di approvazione</li>
+            <li class="richiamo r2"><span>2</span>Permesso del PC</li>
+            <li class="richiamo r3"><span>3</span>Registro dell'estensione</li>
+          </ol>
+        </div>
+        <figcaption><b>Fig. 7</b> Console: elenco dei PC e registro dell'estensione. Schermate reali con dati di esempio.</figcaption>
+      </figure>
+      <p class="testo">Per ogni evento: PC e utente, ora, voce, cartella, utente della voce, browser e sito ridotto a <code>https://host:porta</code>, senza percorso.</p>
+    </section>
+
+    <!-- A.9 requisiti, rete, backup -->
+    <section class="blocco" id="requisiti" aria-labelledby="h-requisiti">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.9</span>
+        <h2 id="h-requisiti">Requisiti, rete e backup</h2>
+      </header>
+      <dl class="specifiche">
+        <div><dt>Sistema</dt><dd>Windows x64 o Linux x64; funziona anche su Raspberry Pi (Linux ARM64).</dd></div>
+        <div><dt>File</dt><dd>Lemora.Server, file unico di circa 100 MB con .NET incluso: nessun prerequisito da installare.</dd></div>
+        <div><dt>Database</dt><dd class="mono">SQLite (server.db)</dd></div>
+        <div><dt>Rete</dt><dd>HTTPS sulla porta 25353, modificabile con <code>--port</code>. Accetta solo indirizzi di reti private.</dd></div>
+        <div><dt>Certificato</dt><dd>Autofirmato, creato al primo avvio, valido 10 anni.</dd></div>
+        <div><dt>Backup</dt><dd>Basta copiare la cartella dati, compreso <code>server.key</code>: la chiave che apre le password salvate.</dd></div>
+      </dl>
+      <p class="rimando">Cosa è cifrato nel database del server e cosa no: <a href="../sicurezza/#server">Sicurezza, S.5</a></p>
+    </section>
+
+    <!-- A.10 NIS2: dove e fin dove Lemora aiuta con le misure dell'articolo 21, poi cosa resta all'organizzazione -->
+    <section class="blocco" id="nis2" aria-labelledby="h-nis2">
+      <header class="blocco__testa">
+        <span class="blocco__cod">A.10</span>
+        <h2 id="h-nis2">Lemora e la direttiva NIS2</h2>
+        <p>L'articolo 21 della direttiva NIS2 elenca le misure di sicurezza che i soggetti essenziali e importanti devono adottare. Per gli accessi remoti ai sistemi dei clienti e dell'azienda, Lemora copre una parte concreta di alcune di queste misure.</p>
+      </header>
+      <div class="tab-scorre" tabindex="0" role="region" aria-label="Misure NIS2 e funzioni di Lemora">
+        <table class="tab">
+          <caption>Tab. 3 · Riferimenti all'articolo 21, paragrafo 2, della direttiva (UE) 2022/2555.</caption>
+          <thead><tr><th scope="col">Misura</th><th scope="col">Cosa fa Lemora</th><th scope="col">Dove</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Controllo degli accessi, lettera i</th><td>Solo i PC approvati con un codice di abbinamento vedono le voci condivise. Ogni PC ha un permesso (sola lettura, richieste, scrittura) che si cambia o si revoca dalla console; alla revoca il PC cancella la sua copia.</td><td><a href="#permessi">A.3</a></td></tr>
+            <tr><th scope="row">Gestione degli asset, lettera i</th><td>Connessioni, credenziali e password dei dispositivi ordinate per cliente e sede, in un unico archivio invece che in file e fogli sparsi.</td><td><a href="#condivisione">A.4</a></td></tr>
+            <tr><th scope="row">Tracciabilità e gestione degli incidenti, lettera b</th><td>Il registro delle attività dice chi ha cambiato cosa e quando; lo storico dice chi si è collegato a quale server e per quanto. Sono i dati che servono per ricostruire un incidente.</td><td><a href="#registro">A.6</a>, <a href="#storico">A.7</a></td></tr>
+            <tr><th scope="row">Crittografia, lettera h</th><td>Archivio cifrato con AES-256-GCM sul PC e sul server, collegamento al server con TLS e controllo dell'impronta del certificato, aggiornamenti firmati con ECDSA.</td><td><a href="../sicurezza/">Sicurezza</a></td></tr>
+            <tr><th scope="row">Autenticazione, lettera j</th><td>Sblocco con password principale o Windows Hello; verifica prima di mostrare o copiare una password. Console con blocco dopo 5 accessi sbagliati e sessione di 8 ore.</td><td><a href="../sicurezza/#sblocco">Sicurezza, S.3</a>, <a href="#permessi">A.3</a></td></tr>
+            <tr><th scope="row">Igiene informatica, lettera g</th><td>Password copiate negli appunti senza cronologia di Windows e cancellate dopo 30 secondi; l'estensione compila solo al clic e solo sulle pagine con l'indirizzo del dispositivo.</td><td><a href="#estensione">A.8</a></td></tr>
+            <tr><th scope="row">Catena di fornitura, lettera d</th><td>Il server gira su hardware dell'azienda, Windows o Linux: nessun dato su servizi cloud di terzi.</td><td><a href="#installazione">A.2</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="testo">Lemora non è un prodotto certificato e il suo uso, da solo, non rende un'organizzazione conforme alla NIS2. Analisi dei rischi, notifica degli incidenti, continuità operativa, formazione del personale e le altre misure della direttiva restano a carico dell'organizzazione, con gli strumenti e le procedure che sceglie.</p>
+    </section>
+
+  </div>
+</div>
+</main>
+
+<footer class="piede">
+  <div class="piede__in">
+    <div class="piede__col">
+      <p class="piede__marchio"><img src="../../assets/img/icon.png" alt="" width="20" height="20"> Lemora</p>
+      <p>Versione modificata di <a href="https://github.com/1Remote/1Remote">1Remote</a> (© VShawn e collaboratori), licenza GPL-3.0. Non affiliato al progetto 1Remote.</p>
+    </div>
+    <nav class="piede__col" aria-labelledby="pf-sito">
+      <h2 id="pf-sito">Sito</h2>
+      <a href="../prodotto/">Prodotto</a><a href="./">Per aziende</a><a href="../sicurezza/">Sicurezza</a><a href="../scarica/">Scarica</a>
+    </nav>
+    <nav class="piede__col" aria-labelledby="pf-doc">
+      <h2 id="pf-doc">Documenti</h2>
+      <a href="../privacy.html">Privacy dell'estensione</a><a href="../privacy-sito.html">Privacy e cookie del sito</a><a href="https://www.gnu.org/licenses/gpl-3.0.html">Licenza GPL-3.0</a>
+    </nav>
+    <div class="piede__col">
+      <h2>Versione</h2>
+      <p class="mono">1.3.1.11127<br>28 novembre 2026<br>Estensione 1.0.9</p>
+    </div>
+    <p class="piede__colophon"><span>Nessun cookie, nessuna statistica</span><span>Dati nelle figure: di esempio</span></p>
+  </div>
+</footer>
+</body>
+</html>

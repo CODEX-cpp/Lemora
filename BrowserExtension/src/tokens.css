@@ -1,0 +1,51 @@
+/* Lemora: the extension's color, size and duration values. Same colors as the app's "Grafite" theme (ConfigurationService.ThemeConfig)
+   (dark islands, light-blue accent, 4px corners); when opened, the popup replaces them with those of the Lemora theme. */
+@layer tokens, base, layout, components;
+
+@layer tokens {
+  :root {
+    color-scheme: dark;
+    --bg: #1e1e1e;          /* window */
+    --surface: #262626;     /* top bar, menu */
+    --card: color-mix(in srgb, var(--bg) 78%, #000);   /* data islands, a bit darker than the window */
+    --raised: #33383c;      /* selected entry */
+    --text: #f0f0f0;
+    --text-2: rgb(240 240 240 / 0.72);
+    --text-3: rgb(240 240 240 / 0.55);
+    --line: #2e2e2e;
+    --line-2: #4a4a4a;
+    --hover: rgb(240 240 240 / 0.06);
+    --field: #2b2b2b;       /* background of the entry icons */
+    --warn-bg: rgb(253 214 99 / 0.12);
+    --accent: #60cdff;
+    --accent-ink: #00283b;
+    --ok: #6ccb5f;
+    --warn: #fdd663;
+    --danger: #ff9b94;
+
+    --font: "Segoe UI Variable Text", "Segoe UI", "Noto Sans", system-ui, sans-serif;
+    --mono: "Cascadia Mono", Consolas, monospace;
+    --fs-1: 12px;
+    --fs-2: 13px;
+    --fs-3: 14px;
+    --fs-4: 19px;
+    --fw-strong: 600;
+
+    --sp-1: 4px;
+    --sp-2: 8px;
+    --sp-3: 12px;
+    --sp-4: 16px;
+    --radius: 4px;
+    --bar-h: 56px;
+    --row-h: 56px;
+    --ctl-h: 36px;
+    --list-w: 262px;
+    --popup-w: 700px;
+    --popup-h: 500px;
+    --state-w: 380px;
+    --state-h: 430px;
+    --dur: 120ms;
+    --focus: 2px solid var(--accent);
+    --shadow: 0 8px 24px rgb(0 0 0 / 0.4);
+  }
+}

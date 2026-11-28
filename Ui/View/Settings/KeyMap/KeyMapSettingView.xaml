@@ -1,0 +1,186 @@
+<UserControl x:Class="Lemora.View.Settings.KeyMap.KeyMapSettingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:fpx="clr-namespace:Lemora.Utils"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Lemora.View.Settings.KeyMap"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance local:KeyMapSettingViewModel}"
+             d:DesignHeight="800" d:DesignWidth="800">
+    <UserControl.Resources>
+        <!-- shown only with RDP / only with VNC at the top -->
+        <Style x:Key="OnlyRdp" TargetType="FrameworkElement">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsVnc}" Value="True"><Setter Property="Visibility" Value="Collapsed" /></DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="OnlyVnc" TargetType="FrameworkElement">
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsVnc}" Value="True"><Setter Property="Visibility" Value="Visible" /></DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <!-- "To the remote PC" in accent, "On my PC" in grey -->
+        <Style x:Key="KeyStatus" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="Foreground" Value="{DynamicResource IslandSecondaryTextBrush}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsOn}" Value="True"><Setter Property="Foreground" Value="{DynamicResource AccentMidBrush}" /></DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="LinkButton" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Foreground" Value="{DynamicResource AccentMidBrush}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <TextBlock x:Name="T" Text="{TemplateBinding Content}" FontSize="{fpx:FontPx 12.5}" Foreground="{TemplateBinding Foreground}" Background="Transparent" />
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="T" Property="TextDecorations" Value="Underline" /></Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="{DynamicResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- fixed header: stays visible while the page scrolls, opaque so the content does not show through -->
+        <Border Grid.Row="0" Background="{DynamicResource BackgroundBrush}" BorderThickness="0 0 0 1" BorderBrush="{DynamicResource IslandDividerBrush}">
+            <StackPanel MaxWidth="840" HorizontalAlignment="Stretch" Margin="32 24 32 14">
+                <TextBlock Style="{StaticResource SettingPageTitle}" Text="{DynamicResource keymap_title}" />
+                <Grid Margin="0 10 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ListBox Style="{StaticResource SegmentedListBox}" SelectedIndex="{Binding ProtocolIndex, Mode=TwoWay}" VerticalAlignment="Top"
+                             AutomationProperties.AutomationId="KeyMapProtocol" AutomationProperties.Name="{DynamicResource Protocol}">
+                        <ListBoxItem Content="RDP" AutomationProperties.AutomationId="KeyMapRdp" />
+                        <ListBoxItem Content="VNC" AutomationProperties.AutomationId="KeyMapVnc" />
+                    </ListBox>
+                    <TextBlock Grid.Column="1" Margin="14 0 0 0" VerticalAlignment="Center" TextWrapping="Wrap" Style="{StaticResource TextBlockBase}"
+                               FontSize="{fpx:FontPx 12.5}" Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{Binding IntroText}" />
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel MaxWidth="840" HorizontalAlignment="Stretch" Margin="32 14 32 32">
+                <TextBlock TextWrapping="Wrap" Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 12.5}" Foreground="{DynamicResource IslandSecondaryTextBrush}"
+                           Text="{DynamicResource keymap_on_off_hint}" />
+
+                <!-- the four groups of keys -->
+                <ItemsControl ItemsSource="{Binding Groups}" Focusable="False">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="local:KeyGroupViewModel">
+                            <StackPanel>
+                                <Border BorderThickness="0 0 0 1" BorderBrush="{DynamicResource IslandDividerBrush}" Margin="0 22 0 0" Padding="0 0 0 6">
+                                    <TextBlock Style="{StaticResource SettingSection}" Margin="0" Text="{Binding Title}" />
+                                </Border>
+                                <ItemsControl ItemsSource="{Binding Rows}" Focusable="False">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="local:KeyRowViewModel">
+                                            <Border Padding="2 11" BorderThickness="0 0 0 1" BorderBrush="{DynamicResource IslandDividerBrush}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="100" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel VerticalAlignment="Center" Margin="0 0 16 0">
+                                                        <TextBlock Style="{StaticResource TextBlockBase}" FontFamily="Cascadia Mono, Consolas" FontSize="{fpx:FontPx 14}" FontWeight="SemiBold" Text="{Binding Combo}" />
+                                                        <TextBlock Style="{StaticResource TextBlockBase}" Margin="0 3 0 0" TextWrapping="Wrap" FontSize="{fpx:FontPx 12.5}"
+                                                                   Foreground="{DynamicResource IslandSecondaryTextBrush}" Text="{Binding Description}" />
+                                                    </StackPanel>
+                                                    <TextBlock Grid.Column="1" Style="{StaticResource KeyStatus}" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="{fpx:FontPx 12.5}" Text="{Binding StatusText}" />
+                                                    <CheckBox Grid.Column="2" Margin="14 0 0 0" VerticalAlignment="Center" Style="{StaticResource ToggleSwitch}"
+                                                              IsChecked="{Binding IsOn, Mode=TwoWay}" IsEnabled="{Binding CanChange}"
+                                                              AutomationProperties.Name="{Binding AccessibleName}" />
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <!-- screen -->
+                <Border BorderThickness="0 0 0 1" BorderBrush="{DynamicResource IslandDividerBrush}" Margin="0 22 0 0" Padding="0 0 0 6">
+                    <TextBlock Style="{StaticResource SettingSection}" Margin="0" Text="{DynamicResource keymap_section_screen}" />
+                </Border>
+
+                <StackPanel Style="{StaticResource OnlyRdp}">
+                    <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource session_fullscreen}" Tag="{DynamicResource keymap_fullscreen_desc}">
+                        <ComboBox Width="230" Height="34" ItemsSource="{Binding FullChoices}" DisplayMemberPath="Label" SelectedValuePath="Value"
+                                  SelectedValue="{Binding Full, Mode=TwoWay}" AutomationProperties.Name="{DynamicResource session_fullscreen}" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource keymap_fsbar}" Tag="{DynamicResource keymap_fsbar_desc}">
+                        <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding FsBar, Mode=TwoWay}" AutomationProperties.Name="{DynamicResource keymap_fsbar}" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource Resolution}" Tag="{DynamicResource keymap_res_desc}">
+                        <ComboBox Width="230" Height="34" ItemsSource="{Binding ResChoices}" DisplayMemberPath="Label" SelectedValuePath="Value"
+                                  SelectedValue="{Binding Res, Mode=TwoWay}" AutomationProperties.Name="{DynamicResource Resolution}" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource keymap_sys_scale}" Tag="{DynamicResource keymap_sys_scale_desc}">
+                        <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding SysScale, Mode=TwoWay}" AutomationProperties.Name="{DynamicResource keymap_sys_scale}" />
+                    </HeaderedContentControl>
+                    <!-- only with the system scale off -->
+                    <HeaderedContentControl Header="{DynamicResource Scale}" Tag="{DynamicResource keymap_scale_desc}">
+                        <HeaderedContentControl.Style>
+                            <Style TargetType="HeaderedContentControl" BasedOn="{StaticResource SettingRow}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SysScale}" Value="True"><Setter Property="Visibility" Value="Collapsed" /></DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </HeaderedContentControl.Style>
+                        <StackPanel Orientation="Horizontal">
+                            <Slider Width="200" Style="{StaticResource IslandSlider}" Minimum="100" Maximum="300" TickFrequency="25" IsSnapToTickEnabled="True"
+                                    SmallChange="25" LargeChange="25" VerticalAlignment="Center" Value="{Binding Scale, Mode=TwoWay}" AutomationProperties.Name="{DynamicResource Scale}" />
+                            <TextBlock Margin="12 0 0 0" Width="44" TextAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockBase}" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource AccentMidBrush}" Text="{Binding ScaleText}" />
+                            <Button Margin="10 0 0 0" VerticalAlignment="Center" Style="{StaticResource LinkButton}" Content="{DynamicResource vnc_zoom_reset}" Command="{Binding CmdResetScale}" />
+                        </StackPanel>
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource keymap_monfit}" Tag="{DynamicResource keymap_monfit_desc}">
+                        <CheckBox Style="{StaticResource ToggleSwitch}" IsChecked="{Binding MonFit, Mode=TwoWay}" AutomationProperties.Name="{DynamicResource keymap_monfit}" />
+                    </HeaderedContentControl>
+                </StackPanel>
+
+                <StackPanel Style="{StaticResource OnlyVnc}">
+                    <HeaderedContentControl Style="{StaticResource SettingRow}" Header="{DynamicResource keymap_fit}" Tag="{DynamicResource keymap_fit_desc}">
+                        <ListBox Style="{StaticResource SegmentedListBox}" SelectedIndex="{Binding FitIndex, Mode=TwoWay}" AutomationProperties.Name="{DynamicResource keymap_fit}">
+                            <ListBoxItem Content="{DynamicResource vnc_fit_width}" />
+                            <ListBoxItem Content="{DynamicResource vnc_fit_height}" />
+                            <ListBoxItem Content="{DynamicResource keymap_fixed_zoom}" />
+                        </ListBox>
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Header="{DynamicResource vnc_zoom}" Tag="{DynamicResource keymap_zoom_desc}">
+                        <HeaderedContentControl.Style>
+                            <Style TargetType="HeaderedContentControl" BasedOn="{StaticResource SettingRow}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ZoomDimmed}" Value="True"><Setter Property="Opacity" Value="0.6" /></DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </HeaderedContentControl.Style>
+                        <StackPanel Orientation="Horizontal">
+                            <Slider Width="200" Style="{StaticResource IslandSlider}" Minimum="25" Maximum="350" TickFrequency="5" IsSnapToTickEnabled="True"
+                                    SmallChange="5" LargeChange="25" VerticalAlignment="Center" Value="{Binding Zoom, Mode=TwoWay}" AutomationProperties.Name="Zoom" />
+                            <TextBlock Margin="12 0 0 0" Width="44" TextAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockBase}" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource AccentMidBrush}" Text="{Binding ZoomText}" />
+                            <Button Margin="10 0 0 0" VerticalAlignment="Center" Style="{StaticResource LinkButton}" Content="{DynamicResource vnc_zoom_reset}" Command="{Binding CmdResetZoom}" />
+                        </StackPanel>
+                    </HeaderedContentControl>
+                    <TextBlock Margin="0 10 0 0" TextWrapping="Wrap" Style="{StaticResource TextBlockBase}" FontSize="{fpx:FontPx 12}" Foreground="{DynamicResource IslandSecondaryTextBrush}"
+                               Text="{DynamicResource keymap_vnc_note}" />
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

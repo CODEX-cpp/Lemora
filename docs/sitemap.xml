@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://codex-cpp.github.io/Lemora/it/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/"/>
+  </url>
+  <url>
+    <loc>https://codex-cpp.github.io/Lemora/en/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/"/>
+  </url>
+  <url>
+    <loc>https://codex-cpp.github.io/Lemora/it/prodotto/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/prodotto/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/product/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/product/"/>
+  </url>
+  <url>
+    <loc>https://codex-cpp.github.io/Lemora/en/product/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/prodotto/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/product/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/product/"/>
+  </url>
+  <url>
+    <loc>https://codex-cpp.github.io/Lemora/it/aziende/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/aziende/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/business/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/business/"/>
+  </url>
+  <url>
+    <loc>https://codex-cpp.github.io/Lemora/en/business/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/aziende/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/business/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/business/"/>
+  </url>
+  <url>
+    <loc>https://codex-cpp.github.io/Lemora/it/sicurezza/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/sicurezza/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/security/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/security/"/>
+  </url>
+  <url>
+    <loc>https://codex-cpp.github.io/Lemora/en/security/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/sicurezza/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/security/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/security/"/>
+  </url>
+  <url>
+    <loc>https://codex-cpp.github.io/Lemora/it/scarica/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/scarica/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/download/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/download/"/>
+  </url>
+  <url>
+    <loc>https://codex-cpp.github.io/Lemora/en/download/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/scarica/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/download/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/download/"/>
+  </url>
+  <url>
+    <loc>https://codex-cpp.github.io/Lemora/it/privacy.html</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/privacy.html"/>
+  </url>
+  <url>
+    <loc>https://codex-cpp.github.io/Lemora/en/privacy.html</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/privacy.html"/>
+  </url>
+  <url>
+    <loc>https://codex-cpp.github.io/Lemora/it/privacy-sito.html</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/privacy-sito.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/site-privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/site-privacy.html"/>
+  </url>
+  <url>
+    <loc>https://codex-cpp.github.io/Lemora/en/site-privacy.html</loc>
+    <lastmod>2026-11-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/privacy-sito.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/site-privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/site-privacy.html"/>
+  </url>
+</urlset>

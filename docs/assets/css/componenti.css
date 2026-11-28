@@ -1,0 +1,290 @@
+/* componenti.css: componenti ripresi dal sito vecchio e ancora usati (hero con l'app disegnata, richiami, terminale,
+   cassaforte, schema, flusso dell'estensione, Claude, tabella di confronto, limiti, figure). Gli stili delle sezioni
+   del sito vecchio che nessuna pagina usa piu' sono stati tolti il 19/11. */
+@layer componenti {
+
+/* =================== HERO =================== */
+.hero { max-width: var(--page-max); margin: 0 auto; padding: var(--sp-8) var(--side) var(--sp-9); display: grid; gap: var(--sp-7); }
+.versione { display: inline-flex; align-items: center; gap: var(--sp-2); font-size: var(--text-xs); color: var(--text-muted); margin-bottom: var(--sp-5); }
+.punto { inline-size: 0.5rem; block-size: 0.5rem; border-radius: var(--r-pill); background: var(--success); box-shadow: 0 0 0 3px var(--success-dim); }
+.hero h1 { font-size: var(--text-display); max-width: 13ch; }
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero__lead { margin-top: var(--sp-5); font-size: var(--text-lg); line-height: 1.5; color: var(--text-dim); max-width: 34rem; }
+.hero__azioni { margin-top: var(--sp-6); display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+.hero__meta { margin-top: var(--sp-5); font-size: var(--text-xs); color: var(--text-muted); }
+.hero__figura { display: grid; gap: var(--sp-3); min-width: 0; }
+
+/* finestra dell'app disegnata in HTML: colori dell'app (sempre scura), testo nitido e animabile */
+.app { --a: var(--app-accent); background: var(--app-bg); color: var(--app-text); border-radius: var(--r-lg); border: var(--hair) solid var(--app-edge); box-shadow: var(--shadow-figure); overflow: hidden; font-size: 0.8125rem; font-family: var(--font-body); }
+.app__barra { display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-2) var(--sp-3); background: var(--app-title); border-bottom: var(--hair) solid var(--app-line); }
+.app__barra img { border-radius: var(--r-sm); }
+.app__scheda { padding: 2px var(--sp-3); border-radius: var(--r-sm); color: var(--app-dim); display: inline-flex; align-items: center; gap: 6px; }
+.app__scheda--on { background: var(--app-island); color: var(--app-text); }
+.app__scheda--rdp { visibility: hidden; }
+.app__scheda .dot { inline-size: 6px; block-size: 6px; border-radius: var(--r-pill); background: var(--app-live); }
+.app__finestra { margin-left: auto; display: flex; gap: 10px; }
+.app__finestra i { inline-size: 10px; block-size: 1px; background: var(--app-dim); }
+.app__corpo { padding: var(--sp-3); display: grid; gap: var(--sp-3); }
+.app__cerca { display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-2) var(--sp-3); border-radius: var(--r-md); background: var(--app-island); border: var(--hair) solid var(--a); font-family: var(--font-mono); min-height: 2.1rem; }
+.app__lente { inline-size: 10px; block-size: 10px; border: 1.5px solid var(--app-dim); border-radius: var(--r-pill); }
+.app__cerca kbd { margin-left: auto; background: var(--app-key); color: var(--app-dim); border-color: var(--app-edge-2); }
+.caret { display: inline-block; inline-size: 1px; block-size: 1em; background: currentColor; vertical-align: -2px; }
+.app__cols { display: grid; grid-template-columns: minmax(0, 9.5rem) minmax(0, 1fr); gap: var(--sp-3); min-height: 15rem; position: relative; }
+.app__albero, .app__albero ul { list-style: none; margin: 0; padding: 0; }
+.app__albero { background: var(--app-island); border-radius: var(--r-md); padding: var(--sp-2); display: grid; gap: 2px; align-content: start; color: var(--app-dim); }
+.app__albero li { padding: 3px var(--sp-2); border-radius: var(--r-sm); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app__albero > li.on { color: var(--app-text); }
+.app__albero ul { padding-left: var(--sp-3); }
+.app__albero .sel { background: var(--app-sel); color: var(--app-text); box-shadow: inset 2px 0 0 var(--a); }
+.app__lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; align-content: start; }
+.app__lista li { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr) auto; align-items: center; gap: var(--sp-2); padding: 6px var(--sp-2); border-radius: var(--r-sm); background: var(--app-island); transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
+.app__lista li.fuori { opacity: 0.25; }
+.app__lista li.scelta { box-shadow: inset 2px 0 0 var(--a); background: var(--app-row-sel); }
+.app__lista code { color: var(--app-dim); font-size: 0.75rem; }
+.tag { font-family: var(--font-mono); font-weight: var(--fw-medium); font-size: 0.6875rem; padding: 1px 0; text-align: center; border-radius: var(--r-sm); }
+.tag--rdp { color: var(--app-rdp); background: var(--app-rdp-bg); }
+.tag--vnc { color: var(--app-vnc); background: var(--app-vnc-bg); }
+.tag--ssh { color: var(--app-ok); background: var(--app-ssh-bg); }
+.app__cassetto { position: absolute; inset: 0 0 0 auto; inline-size: min(17rem, 70%); background: var(--app-drawer); border-left: var(--hair) solid var(--app-drawer-edge); border-radius: var(--r-md); padding: var(--sp-3); display: grid; gap: var(--sp-2); align-content: start; transform: translateX(105%); opacity: 0; }
+.app__titoletto { font-size: 0.75rem; color: var(--app-dim); }
+.app__voce { display: grid; grid-template-columns: 1fr auto; gap: 2px var(--sp-2); padding: var(--sp-2); border-radius: var(--r-sm); background: var(--app-drawer-item); }
+.app__voce span { grid-column: 1 / -1; color: var(--app-text); }
+.app__voce code { color: var(--app-dim); font-size: 0.75rem; }
+.app__nota { font-size: 0.75rem; color: var(--app-ok); opacity: 0; }
+
+/* richiami numerati sopra le schermate: posizioni in percentuale della figura */
+.richiami { position: absolute; inset: 0; list-style: none; margin: 0; padding: 0; pointer-events: none; }
+.richiamo { position: absolute; display: inline-flex; align-items: center; gap: var(--sp-2); padding: 4px var(--sp-3) 4px 4px; background: var(--surface); color: var(--text); border: var(--hair) solid var(--border-2); border-radius: var(--r-pill); font-size: var(--text-xs); box-shadow: var(--shadow-card); white-space: nowrap; }
+.richiamo span { inline-size: 1.4rem; block-size: 1.4rem; display: grid; place-items: center; border-radius: var(--r-pill); background: var(--accent); color: var(--text-on-accent); font-family: var(--font-mono); font-size: 0.75rem; }
+
+/* terminale disegnato in HTML */
+.terminale { background: var(--term-bg); color: var(--term-text); padding: 0; }
+.terminale__barra { display: flex; justify-content: space-between; align-items: center; padding: var(--sp-2) var(--sp-4); border-bottom: var(--hair) solid var(--term-line); color: var(--term-dim); font-size: var(--text-xs); }
+.terminale__barra .dot { inline-size: 8px; block-size: 8px; border-radius: var(--r-pill); background: var(--app-live); }
+.terminale__testo { margin: 0; padding: var(--sp-5); font-size: 0.875rem; line-height: 1.7; white-space: pre; overflow-x: auto; }
+.terminale__testo .pr { color: var(--term-prompt); }
+
+/* =================== CASSAFORTE (Sicurezza S.2) =================== */
+.cassaforte { margin: 0; align-self: start; background: var(--app-bg); color: var(--app-text); border-radius: var(--r-lg); padding: var(--sp-5); display: grid; gap: var(--sp-2); box-shadow: var(--shadow-figure); font-size: var(--text-sm); }
+.cassaforte__riga { display: flex; justify-content: space-between; gap: var(--sp-4); padding: var(--sp-2) 0; border-bottom: var(--hair) solid var(--app-line); }
+.cassaforte__riga span:first-child { color: var(--app-dim); }
+.cassaforte__stato { display: flex; align-items: center; gap: var(--sp-2); margin-top: var(--sp-2); color: var(--app-dim); }
+.lucchetto { inline-size: 0.8rem; block-size: 0.65rem; border: 1.5px solid currentColor; border-radius: 2px; position: relative; }
+.lucchetto::before { content: ""; position: absolute; left: 50%; bottom: 100%; inline-size: 0.5rem; block-size: 0.45rem; margin-left: -0.25rem; border: 1.5px solid currentColor; border-bottom: 0; border-radius: 0.3rem 0.3rem 0 0; transition: transform var(--dur-base) var(--ease-out); transform-origin: right bottom; }
+[data-stato-aperto] { display: none; }
+.cassaforte.aperta .cassaforte__stato { color: var(--app-ok); }
+.cassaforte.aperta .lucchetto::before { transform: translateY(-2px) rotate(25deg); }
+.cassaforte.aperta [data-stato-chiuso] { display: none; }
+.cassaforte.aperta [data-stato-aperto] { display: inline; }
+
+/* =================== SCHEMA (Per aziende A.1) =================== */
+.schema { margin: 0; display: grid; gap: var(--sp-3); }
+.schema svg { inline-size: 100%; }
+.schema__linee path { fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 4 5; }
+.schema__pc rect { fill: var(--surface); stroke: var(--border-2); }
+.schema__server rect { fill: var(--app-bg); stroke: var(--app-line); }
+.schema text { font-family: var(--font-body); font-size: 15px; fill: var(--text); text-anchor: middle; }
+.schema text.mono { font-family: var(--font-mono); font-size: 12px; fill: var(--text-muted); }
+.schema__server text { text-anchor: start; fill: var(--app-text); }
+.schema__server text.mono { fill: var(--app-dim); }
+.schema__server text.b { font-weight: var(--fw-semibold); font-size: 17px; }
+.schema figcaption { font-size: var(--text-xs); color: var(--text-muted); }
+
+/* =================== ESTENSIONE =================== */
+.flusso { margin: 0 0 var(--sp-7); display: grid; gap: var(--sp-3); }
+.flusso__nodi { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-3); }
+.flusso__nodi li { display: grid; grid-template-columns: 2rem 1fr; column-gap: var(--sp-3); padding: var(--sp-4); border: var(--hair) solid var(--border-2); border-radius: var(--r-md); background: var(--surface); position: relative; }
+.flusso__nodi li > span { grid-row: span 2; inline-size: 1.75rem; block-size: 1.75rem; display: grid; place-items: center; border-radius: var(--r-pill); background: var(--accent); color: var(--text-on-accent); font-size: var(--text-xs); }
+.flusso__nodi small { color: var(--text-muted); font-size: var(--text-xs); }
+.flusso__nodi .flusso__no { border-style: dashed; background: transparent; color: var(--text-muted); }
+.flusso__nodi .flusso__no strong { text-decoration: line-through; text-decoration-color: var(--accent); color: var(--text-muted); }
+.flusso__nodi .flusso__no > span { background: transparent; color: var(--accent); border: var(--hair) solid var(--accent); }
+.flusso figcaption { font-size: var(--text-xs); color: var(--text-muted); }
+
+/* =================== CLAUDE (Prodotto P.6) =================== */
+.strumenti { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--sp-2); align-content: start; font-size: var(--text-xs); }
+.strumenti li { padding: var(--sp-1) var(--sp-3); border: var(--hair) solid var(--border-2); border-radius: var(--r-sm); color: var(--text-dim); background: var(--surface); }
+.chat { margin: 0; display: grid; gap: var(--sp-3); }
+.chat p { max-width: none; padding: var(--sp-4); border-radius: var(--r-md); }
+.chat__io { background: var(--surface-2); justify-self: end; max-width: 34rem; }
+.chat__ai { background: var(--surface); border: var(--hair) solid var(--border); display: grid; gap: var(--sp-2); }
+.chat__ai .mono { font-size: var(--text-xs); color: var(--accent); }
+.chat figcaption { font-size: var(--text-xs); color: var(--text-muted); }
+
+/* =================== CONFRONTO =================== */
+.tabella-scorre { overflow-x: auto; border: var(--hair) solid var(--border); border-radius: var(--r-md); }
+.tabella { inline-size: 100%; min-width: 46rem; font-size: var(--text-sm); }
+.tabella th, .tabella td { padding: var(--sp-3) var(--sp-4); text-align: left; vertical-align: top; border-bottom: var(--hair) solid var(--border); }
+.tabella thead th { font-weight: var(--fw-semibold); font-size: var(--text-xs); font-family: var(--font-mono); color: var(--text-muted); }
+.tabella tbody th { font-weight: var(--fw-medium); color: var(--text); inline-size: 26%; }
+.tabella td { color: var(--text-dim); }
+.tabella .noi { background: var(--accent-dim); color: var(--text); }
+.tabella thead .noi { color: var(--text); }
+.tabella tr:last-child > * { border-bottom: 0; }
+
+/* =================== LIMITI =================== */
+.limiti__lista { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-4); }
+.limiti__lista li { color: var(--text-dim); max-width: 64ch; padding-left: var(--sp-5); border-left: 2px solid var(--border-2); }
+
+/* =================== SCHERMI LARGHI =================== */
+@media (min-width: 48rem) {
+    .flusso__nodi { grid-template-columns: repeat(4, 1fr); }
+}
+@media (min-width: 64rem) {
+    .hero { grid-template-columns: 5fr 7fr; align-items: center; padding-top: var(--sp-9); }
+    .cassaforte { position: sticky; top: calc(var(--header-h) + var(--sp-6)); }
+}
+
+/* figura che esce dal bordo destro solo sugli schermi molto larghi (sotto, verrebbe tagliata) */
+@media (min-width: 90rem) {
+    .hero__figura { margin-right: calc(-1 * var(--sp-7)); }
+}
+
+/* =================== MOVIMENTO ("ricco" ma con un motivo) ===================
+   Solo con JS attivo (classe .js su <html>) e senza "riduci movimento":
+   senza JS tutto e' visibile e fermo. */
+@media (prefers-reduced-motion: no-preference) {
+    .js [data-anim] { opacity: 0; transform: translateY(var(--move-md)); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }
+    .js [data-anim].visto { opacity: 1; transform: none; }
+
+    /* richiami: entrano uno dopo l'altro quando la figura e' a vista */
+    .js .richiamo { opacity: 0; transform: scale(0.85); transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
+    .js .visto .richiamo { opacity: 1; transform: none; }
+    .js .visto .r2 { transition-delay: 180ms; }
+    .js .visto .r3 { transition-delay: 360ms; }
+
+    /* linee dello schema del team che "scorrono" verso il server */
+    .js .schema.visto .schema__linee path { animation: flusso 1.6s linear 4; }
+    .js .flusso__nodi li { opacity: 0; transform: translateY(var(--move-sm)); transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
+    .js .flusso.visto .flusso__nodi li { opacity: 1; transform: none; }
+    .js .flusso.visto .flusso__nodi li:nth-child(2) { transition-delay: 150ms; }
+    .js .flusso.visto .flusso__nodi li:nth-child(3) { transition-delay: 300ms; }
+    .js .flusso.visto .flusso__nodi li:nth-child(4) { transition-delay: 600ms; }
+
+    /* la finestra dell'hero si alza appena con lo scorrimento (scroll-driven dove supportato) */
+    @supports (animation-timeline: view()) {
+        .hero__figura .app { animation: alza linear both; animation-timeline: scroll(root); animation-range: 0 60vh; }
+    }
+
+    .caret { animation: lampeggia 1s steps(1) infinite; }
+    .app__cassetto.aperto { transition: transform var(--dur-slow) var(--ease-out), opacity var(--dur-slow) var(--ease-out); }
+}
+.app__cassetto.aperto { transform: none; opacity: 1; }
+.app__scheda--rdp.aperta { visibility: visible; }
+.app__nota.mostra { opacity: 1; transition: opacity var(--dur-base) var(--ease-out); }
+
+@keyframes flusso { to { stroke-dashoffset: -18; } }
+@keyframes lampeggia { 50% { opacity: 0; } }
+@keyframes alza { to { transform: translateY(-3%) scale(0.985); } }
+}
+
+/* figura dell'estensione: finestra del browser disegnata, pagina di accesso finta, popup vero sopra */
+@layer componenti {
+.browser { background: var(--surface-2); }
+.browser__barra { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-2) var(--sp-3); background: var(--surface-3); border-bottom: var(--hair) solid var(--border); font-size: var(--text-xs); color: var(--text-muted); }
+.browser__url { flex: 1; padding: 2px var(--sp-3); border-radius: var(--r-pill); background: var(--surface); }
+.browser__ext { border-radius: var(--r-sm); box-shadow: 0 0 0 2px var(--accent); }
+.browser__pagina { position: relative; min-height: 22rem; padding: var(--sp-6); }
+.finto-login { inline-size: min(16rem, 60%); display: grid; gap: var(--sp-3); padding: var(--sp-5); background: var(--surface); border: var(--hair) solid var(--border); border-radius: var(--r-md); font-size: var(--text-sm); }
+.finto-login__titolo { font-weight: var(--fw-semibold); }
+.finto-login__campo { display: flex; justify-content: space-between; align-items: center; padding: var(--sp-2) var(--sp-3); border: var(--hair) solid var(--border-control); border-radius: var(--r-sm); font-family: var(--font-mono); font-size: var(--text-xs); }
+.finto-login__campo img { border-radius: 3px; }
+.finto-login__btn { padding: var(--sp-2); text-align: center; border-radius: var(--r-sm); background: var(--text); color: var(--bg); font-weight: var(--fw-semibold); }
+.browser__popup { position: absolute; right: 3%; top: 4%; inline-size: 66%; border-radius: var(--r-md); box-shadow: var(--shadow-figure); border: var(--hair) solid var(--app-edge); }
+@media (prefers-reduced-motion: no-preference) {
+    .js .browser__popup { opacity: 0; transform: translateY(-10px) scale(0.98); transform-origin: top right; transition: opacity var(--dur-slow) var(--ease-out) 300ms, transform var(--dur-slow) var(--ease-out) 300ms; }
+    .js .visto .browser__popup { opacity: 1; transform: none; }
+}
+}
+
+/* telefono: nella finestra disegnata spariscono gli IP e l'albero si stringe, cosi' nulla esce dal riquadro */
+@layer componenti {
+@media (max-width: 30rem) {
+    .app__cols { grid-template-columns: minmax(0, 6.5rem) minmax(0, 1fr); }
+    .app__lista code { display: none; }
+    .app__lista span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .app__cassetto { inline-size: 85%; }
+}
+}
+
+/* figura doppia: due schermate sovrapposte, la seconda spostata in basso a destra, con i richiami sopra */
+@layer componenti {
+.doppia { position: relative; padding-bottom: 22%; }
+.doppia > .fig__palco:first-child { inline-size: 88%; }
+.doppia__sopra { position: absolute; right: 0; bottom: 0; inline-size: 62%; }
+#fig-console .r1 { left: 18%; top: 22%; }
+#fig-console .r2 { left: 34%; top: 50%; }
+#fig-console .r3 { left: 52%; top: 76%; }
+@media (prefers-reduced-motion: no-preference) {
+    .js .doppia__sopra { transform: translate(6%, 8%); opacity: 0; transition: transform var(--dur-slow) var(--ease-out) 200ms, opacity var(--dur-slow) var(--ease-out) 200ms; }
+    .js .visto .doppia__sopra { transform: none; opacity: 1; }
+}
+}
+
+/* scheda tecnica: due colonne, righe sottili, valori in mono */
+@layer componenti {
+.specifiche { margin: 0; display: grid; }
+.specifiche > div { display: grid; gap: var(--sp-1); padding: var(--sp-3) 0; border-top: var(--hair) solid var(--border); }
+.specifiche dt { color: var(--text-muted); font-size: var(--text-sm); }
+.specifiche dd { margin: 0; color: var(--text); }
+.specifiche dd.mono { font-size: var(--text-sm); }
+@media (min-width: 48rem) { .specifiche > div { grid-template-columns: 12rem 1fr; gap: var(--sp-5); } }
+}
+
+/* fig. 1: finestra principale sotto, ricerca rapida sopra (come appare davvero premendo Alt+M) */
+@layer componenti {
+.sovrapposta > img:not(.sovrapposta__sopra) { filter: brightness(0.55); }
+.sovrapposta__sopra { position: absolute; left: 50%; top: 14%; inline-size: 56%; translate: -50% 0; border-radius: var(--r-md); box-shadow: var(--shadow-figure); }
+@media (prefers-reduced-motion: no-preference) {
+    .js .sovrapposta__sopra { opacity: 0; transform: translateY(-14px) scale(0.97); transition: opacity var(--dur-slow) var(--ease-out) 250ms, transform var(--dur-slow) var(--ease-out) 250ms; }
+    .js .visto .sovrapposta__sopra { opacity: 1; transform: none; }
+}
+/* fig. 2: posizioni dei richiami sulla pagina della cartella (dominio, rete, sottocartelle) */
+#fig-cartella .r1 { left: 20%; top: 48.5%; }
+#fig-cartella .r2 { left: 58%; top: 48.5%; }
+#fig-cartella .r3 { left: 40%; top: 73.5%; }
+}
+
+/* fig. 10: la stessa finestra in chiaro e in scuro, divisa in diagonale; la linea scorre con lo scorrimento */
+@layer componenti {
+.temi { margin-top: var(--sp-6); inline-size: 100%; }
+.temi__palco { position: relative; }
+.temi__scuro { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; clip-path: polygon(55% 0, 100% 0, 100% 100%, 40% 100%); }
+@media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+        .temi__scuro { animation: taglio linear both; animation-timeline: view(); animation-range: entry 20% cover 60%; }
+    }
+}
+@keyframes taglio { from { clip-path: polygon(95% 0, 100% 0, 100% 100%, 85% 100%); } to { clip-path: polygon(45% 0, 100% 0, 100% 100%, 30% 100%); } }
+}
+
+/* fig. 3: pagina delle password della cartella sotto, popup vero della sessione sopra a destra */
+@layer componenti {
+#fig-password .fig__palco { overflow: visible; }
+#fig-password .fig__palco > img:not(.riquadro-popup) { border-radius: var(--r-lg); }
+.riquadro-popup { position: absolute; right: -2%; top: 10%; inline-size: 30%; border-radius: var(--r-md); border: var(--hair) solid var(--app-edge-2); box-shadow: var(--shadow-figure); }
+#fig-password .r1 { left: 4%; top: 36%; }
+#fig-password .r2 { left: 58%; top: 4%; }
+@media (prefers-reduced-motion: no-preference) {
+    .js .riquadro-popup { opacity: 0; transform: translateX(var(--move-md)); transition: opacity var(--dur-slow) var(--ease-out) 300ms, transform var(--dur-slow) var(--ease-out) 300ms; }
+    .js .visto .riquadro-popup { opacity: 1; transform: none; }
+}
+@media (min-width: 64rem) and (max-width: 89.99rem) { .riquadro-popup { right: 2%; } }
+}
+
+/* stato del download: punto ambra finche' non c'e' una versione pubblica */
+@layer componenti {
+.scarica__stato { display: flex; align-items: center; gap: var(--sp-2); font-weight: var(--fw-medium); }
+.punto--attesa { background: var(--warning); box-shadow: 0 0 0 3px color-mix(in oklch, var(--warning) 18%, transparent); }
+}
+
+/* figure con due versioni: si vede quella del tema attivo (sistema o scelta con l'interruttore) */
+@layer componenti {
+.solo-chiaro { display: none; }
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) .solo-chiaro { display: block; }
+    :root:not([data-theme="dark"]) .solo-scuro { display: none; }
+}
+:root[data-theme="light"] .solo-chiaro { display: block; }
+:root[data-theme="light"] .solo-scuro { display: none; }
+}

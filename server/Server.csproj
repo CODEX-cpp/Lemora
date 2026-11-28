@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>Lemora.Server</AssemblyName>
+    <!-- server version: the automatic update compares it with the "server-x.y.z" releases. Raise it at every server release -->
+    <Version>1.1.2</Version>
+    <ApplicationIcon>Lemora.ico</ApplicationIcon>
+    <RootNamespace>Lemora.Server</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- no ICU localization libraries: the server also runs on Linux without extra packages -->
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <!-- the web console lives inside the exe: a single file to copy to the server -->
+    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+    <!-- same metadata as the Lemora app (exe properties) -->
+    <Authors>CODEX-cpp</Authors>
+    <Company>Lemora</Company>
+    <Product>Lemora Server</Product>
+    <Description>https://github.com/CODEX-cpp</Description>
+    <Copyright>Copyright © 2026 CODEX-cpp</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\**" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.14" />
+    <!-- updated native SQLite: the one bundled with Microsoft.Data.Sqlite (2.1.10) has the CVE-2025-6965 flaw (SQLite before 3.50.2) -->
+    <!-- 3.53.3: the package numbering now follows SQLite's -->
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="3.53.3" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="10.0.14" />
+    <!-- lets the exe run as a Windows service (answers the service manager); outside the service it does nothing -->
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="10.0.14" />
+  </ItemGroup>
+
+</Project>

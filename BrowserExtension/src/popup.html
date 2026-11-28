@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lemora</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="popup.css">
+  <script src="icons.js" defer></script>
+  <script src="popup.js" defer></script>
+</head>
+<body class="is-state">
+  <!-- texts: data-i18n (text), data-i18n-placeholder, data-i18n-label (aria-label), data-i18n-title: filled from _locales by popup.js -->
+  <!-- states: waiting, Lemora closed, to be linked, locked (narrow window) -->
+  <section class="state" id="state" aria-live="polite">
+    <header class="bar">
+      <h1 class="brand">Lemora</h1>
+      <span class="conn" id="conn" hidden><i class="dot" id="conn-dot"></i><span id="conn-text"></span></span>
+    </header>
+    <div class="state-body" id="state-body">
+      <span class="tile tile-logo" id="state-tile"><img src="icons/icon128.png" alt="Lemora" width="72" height="72"></span>
+      <h2 class="state-title" id="state-title" data-i18n="popup_connecting">Connecting to Lemora…</h2>
+      <p class="state-text" id="state-text"></p>
+      <p class="state-wait" id="state-wait" hidden><i class="dot dot-accent"></i><span id="state-wait-text"></span></p>
+      <span class="spacer"></span>
+      <button class="btn btn-pri btn-wide" id="state-pri" type="button" hidden></button>
+      <button class="btn btn-sec btn-wide" id="state-sec" type="button" hidden></button>
+    </div>
+  </section>
+
+  <!-- every 20 minutes, without Windows Hello: only the master password, in a small window -->
+  <form class="unlock" id="unlock" hidden autocomplete="off">
+    <h2 class="state-title" data-i18n="unlock_db">Unlock the database</h2>
+    <label class="visually-hidden" for="unlock-pw" data-i18n="master_password">Master password</label>
+    <input class="in" id="unlock-pw" type="password" placeholder="Master password" data-i18n-placeholder="master_password" autocomplete="current-password" spellcheck="false" maxlength="500">
+    <p class="error" id="unlock-err" role="alert" hidden></p>
+    <button class="btn btn-pri btn-wide" id="unlock-ok" type="submit" data-i18n="popup_unlock_btn">Unlock</button>
+  </form>
+
+  <!-- list and detail (wide window) -->
+  <section class="app" id="app" hidden>
+    <header class="bar">
+      <div class="menu-wrap">
+        <button class="btn btn-sec btn-square" id="menu-btn" type="button" aria-label="Menu" aria-haspopup="menu" aria-expanded="false" data-icon="menu"></button>
+        <div class="pop" id="menu" role="menu" hidden>
+          <div class="pop-head"><span class="conn"><i class="dot dot-ok"></i><span data-i18n="popup_connected_to_lemora">Connected to Lemora</span></span><span class="pop-sub" id="menu-count"></span></div>
+          <button class="pop-item" id="menu-open" type="button" role="menuitem"><span data-icon="external"></span><span data-i18n="open_lemora">Open Lemora</span></button>
+          <button class="pop-item" id="menu-reload" type="button" role="menuitem"><span data-icon="refresh"></span><span data-i18n="popup_reload_list">Refresh the list</span></button>
+        </div>
+      </div>
+      <div class="menu-wrap">
+        <button class="btn btn-sec btn-folder" id="folder-btn" type="button" aria-haspopup="menu" aria-expanded="false"><span data-icon="folder" class="ico-accent"></span><span id="folder-label" data-i18n="all_folders">All folders</span><span data-icon="chevron"></span></button>
+        <div class="pop pop-folders" id="folder-menu" role="menu" hidden></div>
+      </div>
+      <div class="search">
+        <span data-icon="search"></span>
+        <label class="visually-hidden" for="q" data-i18n="popup_search_label">Search the device passwords</label>
+        <input id="q" type="search" placeholder="Search all folders…" data-i18n-placeholder="popup_search_all" autocomplete="off" spellcheck="false">
+      </div>
+      <button class="btn btn-pri btn-square" id="add" type="button" aria-label="New entry" title="New entry" data-i18n-label="new_entry" data-i18n-title="new_entry" data-icon="plus"></button>
+    </header>
+
+    <div class="cols">
+      <nav class="side" aria-label="Entries" data-i18n-label="popup_entries">
+        <div class="chips" role="group" aria-label="Show" data-i18n-label="popup_show">
+          <button class="chip" id="chip-all" type="button" aria-pressed="true" data-i18n="popup_all">All</button>
+          <button class="chip" id="chip-recent" type="button" aria-pressed="false" data-i18n="popup_recent">Recent</button>
+        </div>
+        <div class="list" id="list"></div>
+        <p class="empty" id="empty" hidden></p>
+      </nav>
+
+      <main class="pane" id="detail" aria-live="polite">
+        <div class="pane-empty" id="detail-empty"><span data-icon="key"></span><p data-i18n="popup_pick_entry">Pick an entry on the left, or add one with +.</p></div>
+        <div class="detail" id="detail-body" hidden>
+          <div class="detail-head">
+            <h2 class="detail-title" id="d-title"></h2>
+            <button class="btn btn-pri" id="d-fill" type="button" hidden data-i18n="popup_fill">Fill in</button>
+            <button class="btn btn-sec" id="d-edit" type="button"><span data-icon="pen"></span><span data-i18n="popup_edit">Edit</span></button>
+            <button class="btn btn-sec btn-square-s" id="d-open" type="button" aria-label="Open in the Lemora app" title="Open in the app" data-i18n-label="popup_open_in_app_label" data-i18n-title="popup_open_in_app" data-icon="external"></button>
+            <div class="menu-wrap">
+              <button class="btn btn-sec btn-square-s" id="d-more" type="button" aria-label="More actions" data-i18n-label="popup_more_actions" aria-haspopup="menu" aria-expanded="false" data-icon="dots"></button>
+              <div class="pop pop-right" id="d-menu" role="menu" hidden>
+                <button class="pop-item pop-danger" id="d-delete" type="button" role="menuitem"><span data-icon="trash"></span><span id="d-delete-text" data-i18n="popup_delete_entry">Delete the entry</span></button>
+              </div>
+            </div>
+          </div>
+          <p class="note" id="d-orphan" hidden><span data-icon="warn"></span><span data-i18n="popup_orphan_note">This entry has no folder: assign one in the Lemora app. Until it has one, it cannot be edited or deleted from the extension.</span></p>
+          <!-- one card per saved user (user and password, copy buttons): built by popup.js -->
+          <div class="d-users" id="d-users"></div>
+          <div class="card card-pad">
+            <div class="field-label-row"><span data-icon="globe"></span><span class="field-label" id="d-url-label" data-i18n="address">Address</span></div>
+            <!-- one box per address (a device can have more than one) -->
+            <div class="urls" id="d-urls"></div>
+            <button class="link" id="d-add-ip" type="button" hidden></button>
+          </div>
+          <div class="card">
+            <div class="field field-s"><span data-icon="folder" class="ico-accent"></span><div class="field-main"><span class="field-label" data-i18n="folder">Folder</span><span class="field-value field-accent" id="d-folder"></span></div><span class="tag" id="d-shared" hidden data-i18n="popup_shared_team">Shared with the team</span></div>
+            <div class="field field-s"><span data-icon="bolt"></span><div class="field-main"><span class="field-label" data-i18n="popup_last_use">Last used from this browser</span><span class="field-value field-plain" id="d-last"></span></div></div>
+          </div>
+        </div>
+
+        <!-- edit / new entry -->
+        <form class="edit" id="form" novalidate hidden>
+          <div class="edit-bar">
+            <button class="btn btn-sec btn-square" id="f-cancel" type="button" aria-label="Close without saving" data-i18n-label="popup_close_no_save">✕</button>
+            <h2 class="edit-title" id="edit-title" data-i18n="new_entry">New entry</h2>
+            <button class="btn btn-pri" id="f-save" type="submit" data-i18n="save">Save</button>
+          </div>
+          <p class="error edit-error" id="f-error" role="alert" tabindex="-1" hidden></p>
+          <div class="edit-body">
+            <div class="card card-pad"><label class="field-label" for="f-name" data-i18n="title">Title</label><input class="in in-big" id="f-name" type="text" autocomplete="off" maxlength="200"></div>
+            <div class="card card-pad">
+              <span class="field-label" id="f-users-label" data-i18n="popup_users_passwords">Users and passwords</span>
+              <div class="users" id="f-users" role="group" aria-labelledby="f-users-label"></div>
+              <button class="link" id="f-add-user" type="button" data-i18n="popup_add_user">+ Add user</button>
+            </div>
+            <div class="card card-pad">
+              <span class="field-label" id="f-ips-label" data-i18n="popup_address_hint">Addresses (IP or name, optional port)</span>
+              <div class="users" id="f-ips" role="group" aria-labelledby="f-ips-label"></div>
+              <button class="link" id="f-add-ip" type="button" data-i18n="popup_add_address">+ Add address</button>
+            </div>
+            <div class="card card-pad"><label class="field-label" for="f-folder" data-i18n="folder">Folder</label><select class="in" id="f-folder"></select></div>
+          </div>
+        </form>
+      </main>
+    </div>
+  </section>
+
+  <p class="toast" id="toast" role="status" hidden><span class="toast-ok" aria-hidden="true">✓</span><span id="toast-text"></span></p>
+</body>
+</html>

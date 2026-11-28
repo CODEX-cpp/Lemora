@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <!-- xunit v3: the tests are an executable program -->
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.12.0" />
+    <PackageReference Include="xunit.v3" Version="4.0.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="4.0.1" />
+    <PackageReference Include="coverlet.collector" Version="10.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ui\Ui.csproj" />
+    <!-- the server is built before the tests (it is not a library to reference): the pairing tests start it as a program -->
+    <ProjectReference Include="..\Server\Server.csproj" ReferenceOutputAssembly="false" />
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>ServerExe</_Parameter1>
+      <_Parameter2>$(MSBuildThisFileDirectory)..\Server\bin\$(Configuration)\net10.0\Lemora.Server.exe</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- TODO: these tests (MSTest) target the old data layer (Lemora.Model.DAO / non-static DataService)
+         and no longer compile since version 1.0. Excluded so the project builds on .NET 10;
+         to be rewritten on the current APIs (with xunit) instead of deleting them blindly. -->
+    <Compile Remove="Service\DataServiceTests.cs" />
+    <Compile Remove="ViewModel\Configuration\ConfigurationViewModelTests.cs" />
+    <Compile Remove="Utils\VersionHelperTests.cs" />
+    <Compile Remove="TestInit.cs" />
+  </ItemGroup>
+
+</Project>

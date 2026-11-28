@@ -1,0 +1,19 @@
+[package]
+name = "lemora-launcher"
+version = "0.1.0"
+edition = "2021"
+description = "Stable entry point of Lemora: reads current.txt and starts versions\\<version>\\Lemora.exe. It almost never changes, so an update does not touch it."
+
+[[bin]]
+name = "Lemora"
+path = "src/main.rs"
+
+# only to embed the icon in the exe (see build.rs): it does not end up in the final program
+[build-dependencies]
+tauri-winres = "0.3"
+
+[profile.release]
+opt-level = "s"
+lto = true
+strip = true
+panic = "abort"

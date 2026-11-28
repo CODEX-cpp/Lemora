@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Sicurezza di Lemora: cifratura, chiavi, server, estensione</title>
+<meta name="description" content="AES-256-GCM con chiave dalla password principale, Windows Hello, appunti a tempo, certificati RDP ricordati. Cosa cifra il server Teams, cosa vede l'estensione, cosa non può fare Claude.">
+<link rel="canonical" href="https://codex-cpp.github.io/Lemora/it/sicurezza/">
+<link rel="alternate" hreflang="it" href="https://codex-cpp.github.io/Lemora/it/sicurezza/">
+<link rel="alternate" hreflang="en" href="https://codex-cpp.github.io/Lemora/en/security/">
+<link rel="alternate" hreflang="x-default" href="https://codex-cpp.github.io/Lemora/en/security/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Lemora">
+<meta property="og:url" content="https://codex-cpp.github.io/Lemora/it/sicurezza/">
+<meta property="og:title" content="Sicurezza di Lemora">
+<meta property="og:description" content="Dove stanno i dati, con quale chiave sono cifrati, cosa resta in chiaro sul server.">
+<meta property="og:image" content="https://codex-cpp.github.io/Lemora/assets/img/og-it.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="it_IT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f5f4f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121312" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../../assets/img/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="../../assets/img/icon-180.png">
+<link rel="manifest" href="../../site.webmanifest">
+<link rel="preload" href="../../assets/fonts/plex-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/newsreader-400.woff2" as="font" type="font/woff2" crossorigin>
+<script src="../../assets/js/tema.js?v=23"></script>
+<link rel="stylesheet" href="../../assets/css/tokens.css?v=23">
+<link rel="stylesheet" href="../../assets/css/base.css?v=23">
+<link rel="stylesheet" href="../../assets/css/main.css?v=23">
+<link rel="stylesheet" href="../../assets/css/componenti.css?v=23">
+<link rel="stylesheet" href="../../assets/css/pagine.css?v=23">
+<link rel="stylesheet" href="../../assets/css/demos.css?v=23">
+<script src="../../assets/js/main.js?v=23" defer></script>
+<script src="../../assets/js/demos.js?v=23" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Lemora","item":"https://codex-cpp.github.io/Lemora/it/"},{"@type":"ListItem","position":2,"name":"Sicurezza","item":"https://codex-cpp.github.io/Lemora/it/sicurezza/"}]}</script>
+</head>
+<body>
+<a class="salta" href="#contenuto">Vai al contenuto</a>
+
+<header class="testata">
+  <div class="testata__in">
+    <a class="marchio" href="../" aria-label="Lemora, pagina iniziale">
+      <img src="../../assets/img/icon.png" alt="" width="28" height="28"><span>Lemora</span>
+    </a>
+    <nav class="menu" aria-label="Pagine">
+      <ul role="list">
+        <li><a href="../prodotto/">Prodotto</a></li>
+        <li><a href="../aziende/">Per aziende</a></li>
+        <li><a href="./" aria-current="page">Sicurezza</a></li>
+      </ul>
+    </nav>
+    <div class="testata__azioni">
+      <a class="lingua" href="../../en/security/" hreflang="en" lang="en" data-lang="en" aria-label="English version">EN</a>
+      <button class="tema" type="button" aria-label="Cambia tema chiaro o scuro" data-tema-btn>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg>
+      </button>
+      <a class="btn btn--gho btn--sm" href="../scarica/">Scarica</a>
+    </div>
+  </div>
+</header>
+
+<main id="contenuto">
+
+<header class="pagina-testa">
+  <ol class="percorso" role="list" aria-label="Percorso"><li><a href="../">Lemora</a></li><li>Sicurezza</li></ol>
+  <h1>Cosa è cifrato, con quale chiave, dove</h1>
+  <p class="pagina-testa__lead">Una sezione per ogni parte: il programma, il server, l'estensione, Claude, gli aggiornamenti.</p>
+  <dl class="dati"><div><dt>Cifratura</dt><dd>AES-256-GCM</dd></div><div><dt>Chiave</dt><dd>PBKDF2-SHA256 · 600.000 passaggi</dd></div><div><dt>Sblocco</dt><dd>password principale · Windows Hello</dd></div><div><dt>Firma</dt><dd>ECDSA P-256</dd></div></dl>
+</header>
+
+<div class="con-indice">
+  <nav class="indice" aria-labelledby="h-indice">
+    <p id="h-indice">In questa pagina</p>
+    <ol role="list">
+      <li><a href="#dati"><span>S.1</span>Dove stanno i dati</a></li>
+      <li><a href="#cassaforte"><span>S.2</span>Archivio cifrato</a></li>
+      <li><a href="#sblocco"><span>S.3</span>Sblocco e appunti</a></li>
+      <li><a href="#connessioni"><span>S.4</span>Connessioni</a></li>
+      <li><a href="#server"><span>S.5</span>Server Teams</a></li>
+      <li><a href="#claude"><span>S.6</span>Claude</a></li>
+      <li><a href="#estensione"><span>S.7</span>Estensione</a></li>
+      <li><a href="#aggiornamenti"><span>S.8</span>Aggiornamenti</a></li>
+      <li><a href="#verifiche"><span>S.9</span>Revisioni del codice</a></li>
+    </ol>
+  </nav>
+
+  <div class="corpo">
+
+    <!-- S.1 dove stanno i dati, per modo d'uso -->
+    <section class="blocco" id="dati" aria-labelledby="h-dati">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.1</span>
+        <h2 id="h-dati">Dove stanno i dati</h2>
+        <p>Un solo database cifrato, sul PC. Impostazioni, posizioni delle finestre e abbinamenti stanno nello stesso archivio: nessun file sparso.</p>
+      </header>
+      <div class="tab-scorre" tabindex="0" role="region" aria-label="Dove stanno i dati in ogni modo d'uso">
+        <table class="tab">
+          <caption>Tab. 1 · Il controllo delle versioni avviene all'apertura della finestra (S.8).</caption>
+          <thead><tr><th scope="col">Modo</th><th scope="col">Cosa esce dal PC</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Portatile</th><td>Solo il controllo delle versioni nuove</td></tr>
+            <tr><th scope="row">Locale</th><td>Solo il controllo delle versioni nuove</td></tr>
+            <tr><th scope="row">Teams</th><td>Sincronizzazione con il server dell'azienda, in HTTPS, e controllo delle versioni</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- S.2 archivio cifrato con figura animata -->
+    <section class="blocco" id="cassaforte" aria-labelledby="h-cassaforte">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.2</span>
+        <h2 id="h-cassaforte">Archivio cifrato</h2>
+      </header>
+      <div class="colonne colonne--inv">
+        <dl class="voci">
+          <div class="voce"><dt>Algoritmo</dt><dd>AES-256-GCM sulle righe intere di connessioni e credenziali: nomi, indirizzi, utenti e password.</dd></div>
+          <div class="voce"><dt>Chiave</dt><dd>Una chiave dei dati casuale, chiusa con una chiave derivata dalla password principale (PBKDF2-SHA256, 600.000 passaggi).</dd></div>
+          <div class="voce"><dt>Senza DPAPI</dt><dd>La protezione di Windows legata all'account non è usata: un amministratore del PC o del dominio non apre l'archivio senza la password principale.</dd></div>
+          <div class="voce"><dt>Nessuna porta di servizio</dt><dd>Senza password principale o Windows Hello nessuno apre l'archivio, nemmeno chi ha scritto il programma.</dd></div>
+        </dl>
+        <figure class="fig fig--piccola">
+          <div class="fig__palco fig__palco--sfondo"><img src="../../assets/img/cassaforte-sblocca.webp" alt="Finestra Sblocca Lemora: campo Password principale, casella per aprire con Windows Hello su questo PC, pulsanti Esci e Sblocca" loading="lazy" width="560" height="493"></div>
+          <figcaption><b>Fig. 1</b> All'avvio: password principale, oppure Windows Hello se attivato su questo PC.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- S.3 sblocco, verifiche, appunti -->
+    <section class="blocco" id="sblocco" aria-labelledby="h-sblocco">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.3</span>
+        <h2 id="h-sblocco">Sblocco, verifiche, appunti</h2>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>Windows Hello</dt><dd>Impronta, volto o PIN al posto della password principale. La chiave sta nel TPM del PC, una per ogni coppia di PC e utente.</dd></div>
+        <div class="voce"><dt>Verifica prima di mostrare</dt><dd>Per vedere o copiare la password di una connessione si chiede Hello o la password di Windows. Attiva per impostazione predefinita, si spegne dalle impostazioni.</dd></div>
+        <div class="voce"><dt>Linguetta Password</dt><dd>Durante una sessione la copia delle password dei dispositivi è immediata: l'archivio è già aperto e gli appunti si svuotano da soli.</dd></div>
+        <div class="voce"><dt>Appunti a tempo</dt><dd>Una password copiata viene tolta dagli appunti dopo 30 secondi ed esclusa dalla cronologia di <kbd>Win</kbd>+<kbd>V</kbd> e dagli appunti nel cloud.</dd></div>
+        <div class="voce"><dt>Mantieni sbloccata</dt><dd>Dopo l'impronta o la password, per il tempo scelto Lemora si riapre senza chiederle, anche se chiusa. Vale solo su quel PC e finisce uscendo da Windows. "Blocca e chiudi" la richiude subito.</dd></div>
+      </dl>
+      <figure class="fig">
+        <div class="fig__palco"><img src="../../assets/img/cassaforte-impostazioni.webp" srcset="../../assets/img/cassaforte-impostazioni-800.webp 800w, ../../assets/img/cassaforte-impostazioni.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Impostazioni, Sicurezza: Password principale con Cambia password, Mantieni sbloccata con la durata 15 minuti e il pulsante Blocca e chiudi" loading="lazy" width="1400" height="607"></div>
+        <figcaption><b>Fig. 2</b> Impostazioni › Generale › Sicurezza: cambio della password principale e durata dello sblocco.</figcaption>
+      </figure>
+    </section>
+
+    <!-- S.4 connessioni: certificati, password fuori dalla riga di comando, importazione -->
+    <section class="blocco" id="connessioni" aria-labelledby="h-connessioni">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.4</span>
+        <h2 id="h-connessioni">Connessioni</h2>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>Certificati e impronte</dt><dd>Lemora ricorda il certificato RDP e l'impronta dei server SSH e SFTP, per ogni connessione. Se cambiano, avvisa prima di mandare le credenziali.</dd></div>
+        <div class="voce"><dt>Server RDP datati</dt><dd>Con un TLS vecchio chiede prima di abbassare la sicurezza; la scelta "sempre" resta legata a quel certificato.</dd></div>
+        <div class="voce"><dt>FreeRDP</dt><dd>I parametri arrivano da una variabile d'ambiente del processo: la password non compare mai nella riga di comando. Il processo termina insieme a Lemora.</dd></div>
+        <div class="voce"><dt>Importazione</dt><dd>Programmi locali, gateway e file di sessione indicati da un file importato si vedono e si approvano prima dell'uso.</dd></div>
+        <div class="voce"><dt>Database aggiuntivi</dt><dd>Per MySQL e PostgreSQL l'impronta del certificato del server viene ricordata.</dd></div>
+      </dl>
+    </section>
+
+    <!-- S.5 server Teams: cosa e' cifrato e cosa no -->
+    <section class="blocco" id="server" aria-labelledby="h-server">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.5</span>
+        <h2 id="h-server">Server Teams</h2>
+        <p>Le password sul server sono cifrate con una chiave tenuta fuori dal database.</p>
+      </header>
+      <div class="tab-scorre" tabindex="0" role="region" aria-label="Protezione dei dati sul server">
+        <table class="tab">
+          <caption>Tab. 2 · Protezione dei dati sul server Teams.</caption>
+          <thead><tr><th scope="col">Dato</th><th scope="col">Protezione</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Password delle voci</th><td class="si">AES-256-GCM, legate all'identificativo della voce. Chiave casuale in <code>server.key</code>, fuori dal file del database.</td></tr>
+            <tr><th scope="row">Nomi, indirizzi, utenti, cartelle, registro</th><td class="si">Database SQLite in una cartella accessibile solo a SYSTEM, agli amministratori e al servizio su Windows; permessi 700 su Linux.</td></tr>
+            <tr><th scope="row">Traffico</th><td class="si">HTTPS con certificato autofirmato; il client ne pretende l'impronta vista al primo collegamento.</td></tr>
+            <tr><th scope="row">Sui PC del team</th><td class="si">Le password arrivano dentro HTTPS e finiscono nella copia locale cifrata (S.2).</td></tr>
+            <tr><th scope="row">Console</th><td class="si">Le password delle connessioni solo con "Mostra", che finisce nel registro. Quelle di cartella e dei dispositivi mai.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figure class="fig">
+        <div class="fig__palco"><img class="solo-scuro" src="../../assets/img/console-panoramica.webp" srcset="../../assets/img/console-panoramica-800.webp 800w, ../../assets/img/console-panoramica.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console del server, Stato del server: indirizzo HTTPS, impronta SHA-256 del certificato e cartella del database" loading="lazy" width="1400" height="464"><img class="solo-chiaro" src="../../assets/img/console-panoramica-chiaro.webp" srcset="../../assets/img/console-panoramica-chiaro-800.webp 800w, ../../assets/img/console-panoramica-chiaro.webp 1400w" sizes="(min-width: 40rem) 1400px, 100vw" alt="Console del server, Stato del server: indirizzo HTTPS, impronta SHA-256 del certificato e cartella del database" loading="lazy" width="1400" height="464"></div>
+        <figcaption><b>Fig. 3</b> L'impronta SHA-256 del certificato nella console: è quella che ogni PC ricorda al primo collegamento.</figcaption>
+      </figure>
+    </section>
+
+    <!-- S.6 Claude: confini -->
+    <section class="blocco" id="claude" aria-labelledby="h-claude">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.6</span>
+        <h2 id="h-claude">Claude</h2>
+        <p>Il server MCP è spento finché non lo si accende da Impostazioni › Server MCP.</p>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>Solo questo PC</dt><dd>Ascolta su <code>localhost</code> e chiede un token: un altro PC della rete non lo raggiunge.</dd></div>
+        <div class="voce"><dt>Connessioni scelte</dt><dd>Claude vede solo cartelle e connessioni spuntate. Un indirizzo non salvato vale finché Lemora resta aperta.</dd></div>
+        <div class="voce"><dt>Niente comandi sul PC remoto</dt><dd>Nessuno strumento esegue script o PowerShell sul PC del cliente. Claude lavora solo dall'interfaccia, come una persona.</dd></div>
+        <div class="voce"><dt>Mouse e tastiera</dt><dd>Clic e tasti arrivano alla finestra della sessione. Il puntatore del PC locale non si muove.</dd></div>
+        <div class="voce"><dt>File</dt><dd>Ogni trasferimento con <code>invia_file</code> o <code>prendi_file</code> chiede conferma all'utente.</dd></div>
+        <div class="voce"><dt>Fermarlo</dt><dd>Un riquadro spostabile sopra la sessione mette in pausa o ferma Claude.</dd></div>
+      </dl>
+    </section>
+
+    <!-- S.7 estensione: percorso della password e cosa vede -->
+    <section class="blocco" id="estensione" aria-labelledby="h-estensione">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.7</span>
+        <h2 id="h-estensione">Estensione del browser</h2>
+        <p>Nessun account, nessun archivio proprio, nessuna statistica. Parla solo con Lemora sullo stesso PC, attraverso il canale locale del browser (native messaging).</p>
+      </header>
+      <figure class="flusso">
+        <ol role="list" class="flusso__nodi">
+          <li><span class="mono">1</span><strong>Browser</strong><small>riconosce la pagina del dispositivo</small></li>
+          <li><span class="mono">2</span><strong>Lemora sullo stesso PC</strong><small>solo l'estensione abbinata</small></li>
+          <li><span class="mono">3</span><strong>Archivio cifrato</strong><small>password principale o Windows Hello</small></li>
+          <li class="flusso__no"><span class="mono">×</span><strong>Internet, cloud</strong><small>non coinvolti</small></li>
+        </ol>
+        <figcaption><b>Fig. 4</b> Il percorso di una password dall'archivio al modulo di accesso.</figcaption>
+      </figure>
+      <div class="colonne">
+        <div>
+          <h3>Cosa vede</h3>
+          <ul class="elenco" role="list">
+            <li>L'indirizzo della pagina aperta, per trovare le voci giuste.</li>
+            <li>Le password dei dispositivi, mai quelle delle connessioni.</li>
+            <li>La password solo al clic su Compila o Copia.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Come si difende</h3>
+          <ul class="elenco" role="list">
+            <li>Abbinamento confermato in Lemora; nell'archivio resta solo l'hash del codice.</li>
+            <li>Chiave legata al browser, valida 90 giorni; conferma di identità ogni 20 minuti.</li>
+            <li>Compila solo campi visibili e non coperti, mai nei riquadri di altri siti, mai da pagine https verso http.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- S.8 aggiornamenti -->
+    <section class="blocco" id="aggiornamenti" aria-labelledby="h-aggiornamenti">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.8</span>
+        <h2 id="h-aggiornamenti">Aggiornamenti</h2>
+        <p>Pacchetti firmati, verificati prima dell'installazione e installati accanto alla versione in uso.</p>
+      </header>
+      <dl class="voci">
+        <div class="voce"><dt>Firma</dt><dd>Ogni pacchetto è firmato con ECDSA P-256 e verificato due volte prima dell'installazione. Un pacchetto che non torna viene cancellato.</dd></div>
+        <div class="voce"><dt>Versioni affiancate</dt><dd>La versione nuova si installa accanto a quella in uso; il passaggio avviene al riavvio.</dd></div>
+        <div class="voce"><dt>Quando</dt><dd>All'apertura della finestra, mai durante l'avvio nel vassoio. Il riavvio lo decide l'utente.</dd></div>
+        <div class="voce"><dt>Impronta</dt><dd>Ogni versione pubblicata su questo sito ha la sua impronta SHA-256, da confrontare con quella del file scaricato.</dd></div>
+      </dl>
+    </section>
+
+    <!-- S.9 revisioni del codice -->
+    <section class="blocco" id="verifiche" aria-labelledby="h-verifiche">
+      <header class="blocco__testa">
+        <span class="blocco__cod">S.9</span>
+        <h2 id="h-verifiche">Revisioni del codice</h2>
+        <p>Otto revisioni di sicurezza del codice fino a novembre 2026, con un metodo strutturato: confini di fiducia, prova di ogni ipotesi, intervento e nuova verifica.</p>
+      </header>
+      <ul class="elenco" role="list">
+        <li>Dopo l'ultima revisione nessun problema aperto.</li>
+        <li>Protezioni nate dalle revisioni: controllo dei file all'importazione (S.4), password mai sulla riga di comando di FreeRDP, regole di compilazione dell'estensione (S.7), appunti svuotati dopo 30 secondi.</li>
+      </ul>
+    </section>
+
+  </div>
+</div>
+</main>
+
+<footer class="piede">
+  <div class="piede__in">
+    <div class="piede__col">
+      <p class="piede__marchio"><img src="../../assets/img/icon.png" alt="" width="20" height="20"> Lemora</p>
+      <p>Versione modificata di <a href="https://github.com/1Remote/1Remote">1Remote</a> (© VShawn e collaboratori), licenza GPL-3.0. Non affiliato al progetto 1Remote.</p>
+    </div>
+    <nav class="piede__col" aria-labelledby="pf-sito">
+      <h2 id="pf-sito">Sito</h2>
+      <a href="../prodotto/">Prodotto</a><a href="../aziende/">Per aziende</a><a href="./">Sicurezza</a><a href="../scarica/">Scarica</a>
+    </nav>
+    <nav class="piede__col" aria-labelledby="pf-doc">
+      <h2 id="pf-doc">Documenti</h2>
+      <a href="../privacy.html">Privacy dell'estensione</a><a href="../privacy-sito.html">Privacy e cookie del sito</a><a href="https://www.gnu.org/licenses/gpl-3.0.html">Licenza GPL-3.0</a>
+    </nav>
+    <div class="piede__col">
+      <h2>Versione</h2>
+      <p class="mono">1.3.1.11127<br>28 novembre 2026<br>Estensione 1.0.9</p>
+    </div>
+    <p class="piede__colophon"><span>Nessun cookie, nessuna statistica</span><span>Dati nelle figure: di esempio</span></p>
+  </div>
+</footer>
+</body>
+</html>
